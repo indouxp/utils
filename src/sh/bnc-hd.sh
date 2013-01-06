@@ -13,7 +13,17 @@ then
 fi
 OPT=$1
 DEV=$2
-
+case ${OPT:?} in
+"-t")
+    CUT="12"
+    ;;
+"-T")
+    CUT="11"
+    ;;
+*)
+    echo "Usage: `basename $0` -[tT] FILESYSTEM" 1>&2
+    exit 1
+esac 
 
 # It measures 12 times and displays a result.
 for i in 0 1 2 3 4 5 6 7 8 9 10 11
@@ -23,7 +33,7 @@ do
     _lines[$i]=`hdparm ${OPT:?} ${DEV:?}`
     echo [$i]  ${_lines[$i]}
 
-    _speeds1[$i]=`echo ${_lines[$i]} | cut -d' ' -f12`
+    _speeds1[$i]=`echo ${_lines[$i]} | cut -d' ' -f${CUT:?}`
 done
 
 # A result is rearranged into an ascending order.
