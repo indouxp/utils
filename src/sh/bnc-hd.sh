@@ -10,30 +10,30 @@ NAME=`basename $0`
 export LANG=C
 
 USAGE() {
-	cat <<EOT 1>&2
-	Usage: ${NAME:?} -(t|T) FILESYSTEM
-		-t:read device
-		-T:read cache
+  cat <<EOT 1>&2
+  Usage: ${NAME:?} -(t|T) FILESYSTEM
+    -t:read device
+    -T:read cache
 EOT
 }
 
 if [ "$#" -ne "2" ]
 then
-		USAGE
-    exit 1
+  USAGE
+  exit 1
 fi
 OPT=$1
 DEV=$2
 case ${OPT:?} in
 "-t")
-    CUT="12"
-    ;;
+  CUT="12"
+  ;;
 "-T")
-    CUT="11"
-    ;;
+  CUT="11"
+  ;;
 *)
-		USAGE
-    exit 1
+  USAGE
+  exit 1
 esac 
 
 # It measures 12 times and displays a result.
