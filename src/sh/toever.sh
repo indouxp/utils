@@ -16,7 +16,11 @@ trap 'term' 0 1 2 3 15
 
 mail2(){
   BODY=$1
-  SUBJECT="${SUBJECT:?}"
+	# nkf
+	# -j  JIS コードを出力する。(デフォルト)
+	# -M  ヘッダ形式に変換する
+	# -W  UTF-8 を仮定する
+  SUBJECT=`echo "${SUBJECT:?}:$2" | nkf -W -M -j`
   cat ${BODY:?} | mail -s "${SUBJECT:?}" ${MAILTO:?}
   return $?
 }
@@ -30,10 +34,15 @@ if [ "$#" -eq "0" ]; then
   done > ${TMPFILE:?} 
   mail2 ${TMPFILE:?}
 else
+	#SUBJECT=""
   for file in $*
   do
-    mail2 ${file:?}
-  done
+		SUBJECT="${SUBJECT}${file:?} "
+		echo ${file:?}
+		ls -l ${file:?}
+		expand -t2 ${file:?}
+  done > ${TMPFILE:?}
+  mail2 ${TMPFILE:?} ${SUBJECT:?}
 fi
 
 exit ${RC:?}
