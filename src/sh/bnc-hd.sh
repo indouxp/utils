@@ -1,14 +1,25 @@
 #!/bin/bash
 ###############################################################################
-#
+# デバイスの読み込み速度の測定
 # 12回測定し、最小値と最大値を除く
 # REFERENCE:http://d.hatena.ne.jp/tetsuyai/20111125/1322208311
 #
 ###############################################################################
+NAME=`basename $0`
+
+export LANG=C
+
+USAGE() {
+	cat <<EOT 1>&2
+	Usage: ${NAME:?} -(t|T) FILESYSTEM
+		-t:read device
+		-T:read cache
+EOT
+}
 
 if [ "$#" -ne "2" ]
 then
-    echo "Usage: `basename $0` -[tT] FILESYSTEM" 1>&2
+		USAGE
     exit 1
 fi
 OPT=$1
@@ -21,7 +32,7 @@ case ${OPT:?} in
     CUT="11"
     ;;
 *)
-    echo "Usage: `basename $0` -[tT] FILESYSTEM" 1>&2
+		USAGE
     exit 1
 esac 
 
