@@ -5,6 +5,7 @@
 ###############################################################################
 NAME="doapt.sh"  # atで実行すると、basename $0は、shになるため
 export LANG="ja_JP.UTF-8"
+export PATH=${PATH:?}:/sbin
 SUBJECT="`hostname`:`uname -s`:${NAME:?}:`date '+%Y%m%d.%H%M%S'`"
 MAILTO="tatsuo-i@mtb.biglobe.ne.jp"
 LASTRUN=/var/log/${NAME:?}.last.at.`date '+%Y%m%d'`
