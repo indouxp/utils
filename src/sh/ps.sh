@@ -3,9 +3,12 @@
 # description:
 #
 keyword=$1
-case `uname -o` in
+case `uname -o || uname -s 2>/dev/null` in
 FreeBSD)
   CMD="ps ax -o pid,ppid,uid,gid,%cpu,%mem,command"
+  ;;
+Darwin)
+  CMD="ps -e -o pid,ppid,uid,gid,%cpu,%mem,command"
   ;;
 *)
   exit 1
