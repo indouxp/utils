@@ -14,11 +14,11 @@ tar_dir=/tmp/${timestamp:?}
 
 mkdir ${tar_dir:?}
 if cd ${tar_dir:?}; then
-  for file in `find / -name "*.bk[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]" | grep -v "^/tmp"`
+  for file in `find / -name "*.bk[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]*" | grep -v "^/tmp"`
   do
     dirname=`dirname ${file:?}`
     basename=`basename ${file:?}`
-    original=`echo ${basename:?} | sed "s/\.bk[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]//"`
+    original=`echo ${basename:?} | sed "s/\.bk[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9].*//"`
     prefix=`echo ${dirname:?} | sed "s%/%,%g"`
     cp -p ${file:?} ./${prefix:?},${basename:?}
     cp -p ${dirname:?}/${original:?} ./${prefix:?},${original:?}
