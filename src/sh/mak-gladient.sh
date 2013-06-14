@@ -1,10 +1,17 @@
 #!/bin/sh
+###############################################################################
+# to bottomのグラデーションのbackground-imageのcss構文を作成する。
+# href="http://www.css-lecture.com/log/css3/css3-gradient.html"
+# href="http://ie.microsoft.com/testdrive/Graphics/CSSGradientBackgroundMaker/"
+###############################################################################
 SCRIPT_NAME=`basename $0`
 usage() {
   cat <<EOT 1>&2
+Usage
 \$ ${SCRIPT_NAME:?} from-color to-color
 \$ ${SCRIPT_NAME:?} from-color from-rate to-color to-rate
 EOT
+  grep -E "^#[^!]+[^#]+" $0
 }
 if [ "$#" -eq "0" ]; then
   usage
@@ -42,6 +49,7 @@ cat <<EOT
   /* W3C Markup, IE10 Release Preview */ 
   background-image: linear-gradient(to bottom, #${FROM_COLOR:?} ${FROM_RATE:?}%, #${TO_COLOR:?} ${TO_RATE:?}%);
 
+  /* 角丸め */
   border-radius: 10px;          /* CSS3草案 */  
   -webkit-border-radius: 10px;  /* Safari,Google Chrome用 */  
   -moz-border-radius: 10px;     /* Firefox用 */ 
