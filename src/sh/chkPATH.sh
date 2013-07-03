@@ -1,5 +1,6 @@
 #!/bin/sh
 BKIFS=${IFS}
+RC=0
 term() {
   IFS=${BKIFS:?}
 }
@@ -11,9 +12,9 @@ do
   IFS=":"
   for path in $paths
   do
-    [ ! -d ${path} ] && echo "ng:${path}"
+    [ ! -d ${path} ] && echo "ng:${path}" && RC=1
   done
   IFS=${BKIFS:?}
 done
-exit 0
+exit ${RC}
 
