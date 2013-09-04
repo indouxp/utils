@@ -26,6 +26,7 @@ date > ${LOG:?}
 
 ###############################################################################
 CMD="freshclam"
+echo "`date '+%Y%m%d %H%M%S'`:${CMD:?} START" >> ${LOG:?}
 ${CMD:?} >> ${LOG:?} 2>&1
 RC=$?
 if [ "${RC:?}" -ne "0" ]; then
@@ -33,9 +34,11 @@ if [ "${RC:?}" -ne "0" ]; then
   mail2 "${CMD:?}:${RC:?}"
   exit ${RC:?}
 fi
+echo "`date '+%Y%m%d %H%M%S'`:${CMD:?} DONE " >> ${LOG:?}
 
 ###############################################################################
 CMD="clamscan"
+echo "`date '+%Y%m%d %H%M%S'`:${CMD:?} START" >> ${LOG:?}
 nice ${CMD:?} --exclude-dir=/sys/ --infected --remove --recursive / >> ${LOG:?} 2>&1
 RC=$?
 
@@ -44,6 +47,7 @@ if [ "${RC:?}" -ne "0" ]; then
   mail2 "${CMD:?}:${RC:?}"
   exit ${RC:?}
 fi
+echo "`date '+%Y%m%d %H%M%S'`:${CMD:?} DONE " >> ${LOG:?}
 
 ###############################################################################
 mail2 "done"
