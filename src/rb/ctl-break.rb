@@ -1,4 +1,6 @@
 # -*- encoding: utf-8 -*-
+# find dir -type d | xargs ruby ./ctl-break.rb
+#
 
 class Remainder
   def initialize(dir)
