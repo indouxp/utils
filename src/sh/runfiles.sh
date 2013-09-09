@@ -20,7 +20,7 @@ trap 'term' 0
 main() {
   FILE=`basename $1`
   awk -vlogfile=/tmp/${SELF:?}.${FILE:?}.log '
-    function line(n) {
+    function hline(n) {
       for (i = 0; i < n; i++) {
         printf("#");
       }
@@ -32,7 +32,7 @@ main() {
       printf("rm -f %s\n", logfile);
     }
     {
-      line(79);
+      hline(79);
       printf("echo \"%s\"\n", $0);
       printf("%s\n", $0);
       printf("if [ \"$?\" -ne \"0\" ]; then\n");
