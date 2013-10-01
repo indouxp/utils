@@ -1,5 +1,6 @@
 #!/bin/sh
 # 引数で与えられたファイルを、スクリプト化して実行する。
+# 同一ファイルのパラレル実行に対応
 #
 #
 SELF=`basename $0`
@@ -12,27 +13,34 @@ EOT
 fi
 
 term() {
-  rm -f /tmp/${SELF:?}.*.sh
+  rm -f /tmp/${SELF:?}.*.$$.sh
 }
 
 trap 'term' 0
 
 main() {
-  FILE=`basename $1`
+  FULLNAME=$1
+  BASENAME=`basename $1`
   awk '
     function hline(n) {
+      result = "";
       for (i = 0; i < n; i++) {
-        printf("#");
+        result = result "#"
       }
-      printf("\n");
+      return result;
     }
     BEGIN{
       time = sprintf("`date %c+%%Y%%m%%d.%%H%%M%%S%c`", 39, 39);
       printf("#!/bin/sh\n");
+      printf("echo `basename \$0`\n");
     }
     {
-      hline(79);
-      printf("echo \"%s\"\n", $0);
+      gsub(/#+.*/, "");
+      if (NF == 0) {next;}
+      #printf("%s\n",hline(79));
+      printf("\n");
+      printf("echo \"%s\"\n",hline(79));
+      printf("echo \"%s:%s\"\n", time, $0);
       printf("%s\n", $0);
       printf("if [ \"$?\" -ne \"0\" ]; then\n");
       printf("  echo \"%s:%s:fail.\" 1>&2\n", time, $0);
@@ -43,23 +51,30 @@ main() {
     END{
       printf("exit 0\n");
     }
-  ' $1 > /tmp/${SELF:?}.${FILE:?}.sh
+  ' ${FULLNAME:?} > /tmp/${SELF:?}.${BASENAME:?}.$$.sh
   if [ "$?" -ne "0" ]; then
-    echo "main-awk $1 fail." 1>&2
+    echo "main-awk ${FULLNAME:?} fail." 1>&2
     exit 1
   fi
 
-  chmod u+x /tmp/${SELF:?}.${FILE:?}.sh
-  cat /tmp/${SELF:?}.${FILE:?}.sh >   /tmp/${SELF:?}.${FILE:?}.log
-  /tmp/${SELF:?}.${FILE:?}.sh     >>  /tmp/${SELF:?}.${FILE:?}.log 2>&1
+  chmod u+x /tmp/${SELF:?}.${BASENAME:?}.$$.sh
+  cat /dev/null                             >   /tmp/${SELF:?}.${BASENAME:?}.$$.log
+  echo "${BASENAME:?} list"                 >>  /tmp/${SELF:?}.${BASENAME:?}.$$.log
+  cat -n ${FULLNAME:?}                      >>  /tmp/${SELF:?}.${BASENAME:?}.$$.log
+  echo "${SELF:?}.${BASENAME:?}.$$.sh list" >>  /tmp/${SELF:?}.${BASENAME:?}.$$.log
+  cat -n /tmp/${SELF:?}.${BASENAME:?}.$$.sh >>  /tmp/${SELF:?}.${BASENAME:?}.$$.log
+  echo ""                                   >>  /tmp/${SELF:?}.${BASENAME:?}.$$.log 
+  echo "${SELF:?}.${BASENAME:?}.$$.sh log"  >>  /tmp/${SELF:?}.${BASENAME:?}.$$.log
+  /tmp/${SELF:?}.${BASENAME:?}.$$.sh        >>  /tmp/${SELF:?}.${BASENAME:?}.$$.log 2>&1
   return $?
 }
 
 for FILE in $*
 do
   main ${FILE:?}
-  if [ "$?" -ne "0" ]; then
-    echo "main ${FILE:?} fail." 1>&2 
+  RC=$?
+  if [ "${RC:?}" -ne "0" ]; then
+    echo "main ${FILE:?} fail. Status is ${RC:?}." | tee -a /tmp/${SELF:?}.${BASENAME:?}.$$.log 1>&2 
     exit 1
   fi
 done
