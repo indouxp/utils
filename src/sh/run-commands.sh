@@ -1,8 +1,10 @@
 #!/bin/sh
+###############################################################################
 # 引数で与えられたファイルを、スクリプト化して実行する。
 # 同一ファイルのパラレル実行に対応
 #
 #
+###############################################################################
 SELF=`basename $0`
 if [ $# -eq "0" ]; then
   cat <<EOT
@@ -22,6 +24,7 @@ main() {
   FULLNAME=$1
   BASENAME=`basename $1`
   awk '
+    # nカラムのコメント作成
     function hline(n) {
       result = "";
       for (i = 0; i < n; i++) {
@@ -30,7 +33,9 @@ main() {
       return result;
     }
     BEGIN{
+      # date
       time = sprintf("`date %c+%%Y%%m%%d.%%H%%M%%S%c`", 39, 39);
+      # シェバング行
       printf("#!/bin/sh\n");
       printf("echo `basename \$0`\n");
     }
