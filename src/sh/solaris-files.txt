@@ -1,0 +1,22 @@
+###############################################################################
+# network
+/etc/inet/hosts
+/etc/inet/netmasks
+
+# user
+/etc/passwd
+/etc/group
+/etc/shadow
+/etc/profile
+/etc/skel/local.profile
+/etc/skel/.profile
+
+# kernel
+/etc/system
+/etc/project
+
+
+#
+/etc/vfstab
+/etc/dfs/dfstab
+/etc/dfs/sharetab

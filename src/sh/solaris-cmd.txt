@@ -1,0 +1,22 @@
+###############################################################################
+
+uname uname -a
+
+hostname hostname
+
+# network
+ifconfig /usr/sbin/ifconfig -a
+netstat  netstat -rn
+arp      /usr/sbin/arp -a
+
+# service
+service	svcs -av
+
+# project
+projects projects
+prctl prctl $$
+
+# crontab
+crontab crontab -l
+
+format /usr/sbin/format
