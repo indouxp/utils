@@ -5,6 +5,7 @@
 require 'optparse'
 
 $CHAR = "-"
+$FIVE = "+"
 $COLUMNS = 80
 
 opt = OptionParser.new
@@ -13,7 +14,16 @@ opt.on('-c CHAR') {|v| $CHAR = v }
 
 opt.parse(ARGV)
 
-$COLUMNS.to_i.times do
-  print $CHAR
+$COLUMNS.to_i.times do |t|
+  columns = t + 1
+  if columns % 10 == 0 then
+    print (columns / 10).to_s
+  elsif columns % 5 == 0 then
+    print $FIVE
+  else
+    print $CHAR
+  end
 end
 print "\n"
+
+exit 0
