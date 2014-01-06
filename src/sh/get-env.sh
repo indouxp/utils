@@ -4,7 +4,11 @@ LOG=/tmp/${SCRIPT:?}.`date '+%Y%m%d.%H%M%S'`.log
 
 # 引数が0の場合
 if [ "$#" -eq "0" ]; then
-  echo "${SCRIPT:?} COMMAND-FILE [FILES_FILE-FILE]" 1>&2
+  cat <<EOT 1>&2
+\$ ./${SCRIPT:?} COMMAND-FILE [FILES_FILE-FILE]
+ex)
+\$ ./${SCRIPT:?} get-env-sol.txt [ get-file-sol.txt ]
+EOT
   exit 1
 fi
 
