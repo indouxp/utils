@@ -9,10 +9,11 @@ $FIVE = "+"
 $COLUMNS = 80
 
 opt = OptionParser.new
+# optにコマンドラインオプションを登録
 opt.on('-n COLUMNS') {|v| $COLUMNS = v }  
 opt.on('-c CHAR') {|v| $CHAR = v }  
 
-opt.parse(ARGV)
+opt.parse(ARGV) # ARGVの解析
 
 $COLUMNS.to_i.times do |t|
   columns = t + 1
