@@ -43,6 +43,9 @@ main() {
   format </dev/null
 
   hl 40
+  run "*mount"  mount
+
+  hl 40
   run "*kernel"  ls -il /platform/`uname -m`/kernel
   hl 10
   run "*kernel module" modinfo
