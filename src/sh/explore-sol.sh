@@ -119,6 +119,13 @@ main() {
   run "*groups" groups
 
   hl 40
+  run "locale" locale -a
+
+  hl 40
+  run "Timezone" ls -l /etc/TIMEZONE /etc/default/init
+  run "Timezone" cat /etc/TIMEZONE
+
+  hl 40
   run "find" find / -exec ls -ld {} \;
 }
 
