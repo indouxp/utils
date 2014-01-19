@@ -108,7 +108,8 @@ main() {
   hl 40
   run "*services" svcs -a
   hl 10
-  run "*services" inetadm -l
+  echo "*services"
+  run_inetadm
 
   hl 40
   run "*users" cat /etc/passwd
@@ -136,6 +137,20 @@ run() {
   command=$1
   shift
   [ -x `which ${command:?}` ] && ${command:?} $@
+}
+
+run_inetadm() {
+  for file in `svcs | nawk\
+                          '{ if ($1 == "online") {\
+                               print $3;\
+                             }\
+                           }'`
+  do
+    if  inetadm -l $file > /tmp/${name:?}.$$.log 2>/dev/null; then
+      cat /tmp/${name:?}.$$.log
+    fi
+    rm -f /tmp/${name:?}.$$.log
+  done
 }
 
 main
