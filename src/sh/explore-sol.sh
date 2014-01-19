@@ -43,7 +43,6 @@ main() {
   format </dev/null
 
   hl 40
-  run "*kernel"  ls -il /kernel/genunix
   run "*kernel"  ls -il /platform/`uname -m`/kernel
   hl 10
   run "*kernel module" modinfo
@@ -86,10 +85,6 @@ main() {
   hl 10
   run "*network" dladm show-linkprop
   hl 10
-  run "*network" dladm show-vnic
-  hl 10
-  run "*network" dladm show-etherstub
-  hl 10
   run "*network" ipadm show-if
   hl 10
   run "*network" ipadm show-ifprop 
@@ -120,6 +115,9 @@ main() {
 
   hl 40
   run "locale" locale -a
+
+  hl 40
+  run "auto_home" cat /etc/auto_home
 
   hl 40
   run "Timezone" ls -l /etc/TIMEZONE /etc/default/init
