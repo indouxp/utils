@@ -114,17 +114,17 @@ main() {
   run "*groups" groups
 
   hl 40
-  run "locale" locale -a
+  run "*locale" locale -a
 
   hl 40
-  run "auto_home" cat /etc/auto_home
+  run "*auto_home" cat /etc/auto_home
 
   hl 40
-  run "Timezone" ls -l /etc/TIMEZONE /etc/default/init
-  run "Timezone" cat /etc/TIMEZONE
+  run "*Timezone" ls -l /etc/TIMEZONE /etc/default/init
+  run "*Timezone" cat /etc/TIMEZONE
 
   hl 40
-  run "find" find / -exec ls -ld {} \;
+  run "*find" find / -exec ls -ld {} \;
 }
 
 hl() {
