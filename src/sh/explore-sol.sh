@@ -37,7 +37,9 @@ main() {
   run "*storage"  iostat -En
 
   hl 40
-  run "*disk"  cat /etc/vfstab
+  run "*/etc/vfstab" cat /etc/vfstab
+  run "*/etc/dfs/dfstab" cat /etc/dfs/dfstab
+  run "*/etc/dfs/sharetab" cat /etc/dfs/sharetab
 
   hl 40
   echo "*format"
@@ -53,6 +55,9 @@ main() {
 
   hl 40
   run "*kernel parameter" sysdef -i
+  hl 20
+  run "*/etc/system" cat /etc/system
+  run "*/etc/project" cat /etc/project
 
   hl 40
   run "*32 or 64"  isainfo -b
@@ -100,6 +105,8 @@ main() {
   hl 40
   run "*hosts" cat /etc/inet/hosts
   hl 40
+  run "netmasks" cat /etc/inet/netmasks
+  hl 40
   run "*gw" cat /etc/defaultrouter
   hl 40
   run "*route" netstat -rn
@@ -121,6 +128,7 @@ main() {
   run "*locale" locale -a
 
   hl 40
+  run "*auto_master" cat /etc/auto_master
   run "*auto_home" cat /etc/auto_home
 
   hl 40
