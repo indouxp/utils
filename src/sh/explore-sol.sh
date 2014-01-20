@@ -40,7 +40,7 @@ main() {
   run "*disk"  cat /etc/vfstab
 
   hl 40
-  echo "format"
+  echo "*format"
   format </dev/null
 
   hl 40
