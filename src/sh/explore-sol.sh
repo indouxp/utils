@@ -3,6 +3,7 @@
 # EXPLANATION:explore solaris
 #
 #
+LANG=C
 name=`basename $0`
 logd="/tmp"
 #logf=${name:?}.`hostname`.`date +%Y%m%d.%H%M%S`.log
@@ -148,13 +149,15 @@ run() {
 }
 
 run_inetadm() {
-  for file in `svcs | nawk\
+  for fmri in `svcs | nawk\
                           '{ if ($1 == "online") {\
                                print $3;\
                              }\
                            }'`
   do
-    if  inetadm -l $file > /tmp/${name:?}.$$.log 2>/dev/null; then
+    if  inetadm -l ${fmri:?} > /tmp/${name:?}.$$.log 2>/dev/null; then
+      hl 20
+      echo ${fmri:?}
       cat /tmp/${name:?}.$$.log
     fi
     rm -f /tmp/${name:?}.$$.log
