@@ -14,7 +14,9 @@ EXTERNAL_SERVER="www.google.co.jp"
 mail2(){
   TEXT=$1
   SUBJECT="${SUBJECT:?}-`date '+%Y%m%d.%H%M%S'`:${TEXT:?}"
-  su - indou -c "sed -n '/SCAN SUMMARY/,\$p' ${LOG:?} |\
+  #su - indou -c "sed -n '/SCAN SUMMARY/,\$p' ${LOG:?} |\
+  #                mail -s \"${SUBJECT}\" ${MAILTO:?}"
+  su - indou -c "sed -n '/freshclam START/,\$p' ${LOG:?} |\
                   mail -s \"${SUBJECT}\" ${MAILTO:?}"
 }
 
