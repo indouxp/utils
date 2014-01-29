@@ -28,7 +28,7 @@ echo "${NAME:?}:`date`:start." > ${LOG:?}
 until ping -c1 ${EXTERNAL_SERVER:?}
 do
   sleep 5
-  echo "${NAME:?}:`date`:sleeping." > ${LOG:?}
+  echo "${NAME:?}:`date`:sleeping." >> ${LOG:?}
 done
 
 ###############################################################################
