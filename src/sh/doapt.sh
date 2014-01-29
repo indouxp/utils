@@ -21,13 +21,16 @@ mail2(){
 }
 
 ###############################################################################
+# 前回の処理が今日の場合は終了。又、前回の処理成功ファイルを削除。
 [ -f ${LASTRUN:?} ] && exit 0
+rm -f /var/log/${NAME:?}.last.at.*
 
 ###############################################################################
+# 外部サーバーへのpingによりネットワークの接続を確認
 echo "${NAME:?}:`date`:start." > ${LOG:?}
 until ping -c1 ${EXTERNAL_SERVER:?}
 do
-  sleep 5
+  sleep 60
   echo "${NAME:?}:`date`:sleeping." >> ${LOG:?}
 done
 
@@ -35,7 +38,9 @@ done
 RC=0
 
 ###############################################################################
+#
 CMD="apt-get update"
+echo "`date '+%Y%m%d %H%M%S'`:${CMD:?} START" >> ${LOG:?}
 nice ${CMD:?} >> ${LOG:?} 2>&1
 RC=$?
 if [ "${RC:?}" -ne "0" ]; then
@@ -43,9 +48,12 @@ if [ "${RC:?}" -ne "0" ]; then
   mail2 "${CMD:?}:${RC:?}"
   exit ${RC:?}
 fi
+echo "`date '+%Y%m%d %H%M%S'`:${CMD:?} DONE " >> ${LOG:?}
 
 ###############################################################################
+#
 CMD="apt-get upgrade -y"
+echo "`date '+%Y%m%d %H%M%S'`:${CMD:?} START" >> ${LOG:?}
 nice ${CMD:?} >> ${LOG:?} 2>&1
 RC=$?
 if [ "${RC:?}" -ne "0" ]; then
@@ -53,8 +61,11 @@ if [ "${RC:?}" -ne "0" ]; then
   mail2 "${CMD:?}:${RC:?}"
   exit ${RC:?}
 fi
+echo "`date '+%Y%m%d %H%M%S'`:${CMD:?} DONE " >> ${LOG:?}
 
 ###############################################################################
+# 正常終了
 mail2 "done"
-rm -f /var/log/${NAME:?}.last.at.* && touch ${LASTRUN:?}
+# last.atファイルは正常時のみ作成される
+touch ${LASTRUN:?}
 exit ${RC:?}
