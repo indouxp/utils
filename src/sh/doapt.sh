@@ -10,6 +10,7 @@ SUBJECT="`hostname`:`uname -s`:${NAME:?}:`date '+%Y%m%d.%H%M%S'`"
 MAILTO="tatsuo-i@mtb.biglobe.ne.jp"
 LASTRUN=/var/log/${NAME:?}.last.at.`date '+%Y%m%d'`
 LOG=/var/log/${NAME:?}.log
+EXTERNAL_SERVER="www.google.co.jp"
 
 ###############################################################################
 mail2(){
@@ -23,8 +24,15 @@ mail2(){
 [ -f ${LASTRUN:?} ] && exit 0
 
 ###############################################################################
+echo "${NAME:?}:`date`:start." > ${LOG:?}
+until ping -c1 ${EXTERNAL_SERVER:?}
+do
+  sleep 5
+  echo "${NAME:?}:`date`:sleeping." > ${LOG:?}
+done
+
+###############################################################################
 RC=0
-date > ${LOG:?}
 
 ###############################################################################
 CMD="apt-get update"
