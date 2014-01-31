@@ -12,12 +12,15 @@ EXTERNAL_SERVER="www.google.co.jp"
 
 ###############################################################################
 mail2(){
+  CMD="mail2"
+  echo "`date '+%Y%m%d %H%M%S'`:${CMD:?} START" >> ${LOG:?}
   TEXT=$1
   SUBJECT="${SUBJECT:?}-`date '+%Y%m%d.%H%M%S'`:${TEXT:?}"
   #su - indou -c "sed -n '/SCAN SUMMARY/,\$p' ${LOG:?} |\
   #                mail -s \"${SUBJECT}\" ${MAILTO:?}"
   su - indou -c "sed -n '/freshclam START/,\$p' ${LOG:?} |\
                   mail -s \"${SUBJECT}\" ${MAILTO:?}"
+  echo "`date '+%Y%m%d %H%M%S'`:${CMD:?} DONE " >> ${LOG:?}
 }
 
 ###############################################################################
