@@ -15,35 +15,48 @@ exec >> ${log:?}
 
 main() {
 
-  hl 40
-  run "*Host name" hostname
+  title 40 "ホスト名"
+  run "hostname" hostname
+  lcat /etc/inet/hosts
+  lcat /etc/inet/ipnodes
+  lcat /etc/hostname.*
+  lcat /etc/net/ticlts/hosts
+  lcat /etc/net/ticots/hosts
+  lcat /etc/net/ticotsord/hosts
 
-  hl 40
-  run "*Node name" uname -n
+  title 40 "ノード名"
+  run "uname -n" uname -n
+  lcat /etc/nodename
 
-  hl 40
-  run "*Server Release info" cat  /etc/release
+  title 40 "メモリ"
+  run "prtconf | grep -i mem" prtconf | grep -i mem
 
-  hl 40
-  run "*operating system"  uname -a
+  title 40 "ＣＰＵ"
+  run "prtdiag -v" /usr/platform/`uname -i`/sbin/prtdiag -v
 
-  hl 40
-  run "*memory" prtconf | grep -i mem
+  title 40 "デバイス"
+  run "iostat -En"  iostat -En
+  title 40 "ディスク"
+  run "format" format </dev/null
+  title 40 "スワップ"
+  run "swap -l" swap -l
+  run "swap"-s" swap -s
 
-  hl 40
-  run "*cpu" /usr/platform/`uname -i`/sbin/prtdiag -v
+  title 40 "リリースレベル"
+  run "uname -sr" uname -sr
+  lcat  /etc/release
 
-  hl 40
-  run "*storage"  iostat -En
+  title 40 "パッケージ"
+  run "pkginfo" pkginfo -l
+
+  title 40 "パッチ"
+  run "patchadd" patchadd -p
 
   hl 40
   run "*/etc/vfstab" cat /etc/vfstab
   run "*/etc/dfs/dfstab" cat /etc/dfs/dfstab
   run "*/etc/dfs/sharetab" cat /etc/dfs/sharetab
 
-  hl 40
-  echo "*format"
-  format </dev/null
 
   hl 40
   run "*mount"  mount
@@ -139,21 +152,54 @@ main() {
   run "*find" find / -exec ls -ld {} \;
 }
 
+lcat() {
+  for file in $@
+  do
+    hl 80
+    ls -lai $file
+    [ -f $file ] && cat $file
+  done
+}
+
 hl() {
-  COL=$1
-  nawk -v columns=$COL 'BEGIN{for(i = 1; i <= columns; i++){printf("-");}printf("\n");}'
+  COLS=$1
+  nawk -v columns=$COLS 'BEGIN{for(i = 1; i <= columns; i++){printf("-");}printf("\n");}'
+}
+
+title() {
+  COLS=$1; shift
+  TITLE=$@
+  nawk -v title="$TITLE" -v columns=$COLS \
+    'BEGIN{
+       for (i = 1; i <= columns; i++) {
+         printf("**");
+       }
+       printf("\n**  %s  ", title);
+       for (i = 1; i <= columns - length(title)/2 -3-1; i++) {
+         printf("  ");
+       }
+       printf("**\n");
+       for (i = 1; i <= columns; i++) {
+         printf("**");
+       }
+       printf("\n");
+   }'
 }
 
 run() {
-  # 1:������
-  # 2:���ޥ��
-  # 3-:���ץ����
+  # 1:コメント
+  # 2:コマンド
+  # 3-:オプション
   comment=$1
   echo ${comment:?}
   shift
   command=$1
   shift
   [ -x `which ${command:?}` ] && ${command:?} $@
+  rc=$?
+  if [ "${rc:?}" -ne "0" ];then
+    echo "${command:?}'s status is ${rc:?}"
+  fi
 }
 
 run_inetadm() {
