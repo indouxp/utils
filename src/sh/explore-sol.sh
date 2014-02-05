@@ -40,7 +40,7 @@ main() {
   run "format" format </dev/null
   title 40 "スワップ"
   run "swap -l" swap -l
-  run "swap"-s" swap -s
+  run "swap -s" swap -s
 
   title 40 "リリースレベル"
   run "uname -sr" uname -sr
@@ -56,7 +56,6 @@ main() {
   run "*/etc/vfstab" cat /etc/vfstab
   run "*/etc/dfs/dfstab" cat /etc/dfs/dfstab
   run "*/etc/dfs/sharetab" cat /etc/dfs/sharetab
-
 
   hl 40
   run "*mount"  mount
@@ -149,7 +148,7 @@ main() {
   run "*Timezone" cat /etc/TIMEZONE
 
   hl 40
-  run "*find" find / -exec ls -ld {} \;
+  #run "*find" find / -exec ls -ld {} \;
 }
 
 lcat() {
@@ -219,3 +218,5 @@ run_inetadm() {
 }
 
 main
+rc=$?
+exit $rc
