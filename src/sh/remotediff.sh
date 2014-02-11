@@ -37,7 +37,7 @@ fi
 diff /tmp/$src_host.$file /tmp/$dest_host.$file
 rc=$?
 if [ "${rc:?}" -eq "0" ]; then
-  echo "$script: $src, $dest is no diff."
+  echo "$script: $src, $dest is equal."
 fi
 exit 0
 
