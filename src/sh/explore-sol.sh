@@ -33,6 +33,7 @@ main() {
 
   title 40 "ＣＰＵ"
   run "prtdiag -v" /usr/platform/`uname -i`/sbin/prtdiag -v
+  run "psrinfo -v" psrinfo -v
 
   title 40 "デバイス"
   run "iostat -En"  iostat -En
