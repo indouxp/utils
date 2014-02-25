@@ -104,9 +104,9 @@ main() {
   run "ifconfig -a" ifconfig -a
   for dev in `ifconfig -a | grep '^[a-z]' | nawk '$1 !~ /lo/ {print $1;}' | sed "s/://"`
   do
-    for option in link_speed link_mode adv_autoneg_cap
+    for option in link_speed link_status link_duplex link_autoneg 
     do
-      run "ndd -get /dev/${dev:?}"  ndd -get /dev/${dev:?}
+      run "ndd -get /dev/${dev:?} ${option:?}"  ndd -get /dev/${dev:?} ${option:?}
     done
   done
   hl 10
