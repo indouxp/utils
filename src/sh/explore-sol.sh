@@ -101,7 +101,14 @@ main() {
   run "*patchs" patchadd -p
 
   hl 40
-  run "*network" ifconfig -a
+  run "ifconfig -a" ifconfig -a
+  for dev in `ifconfig -a | grep '^[a-z]' | nawk '$1 !~ /lo/ {print $1;}' | sed "s/://"`
+  do
+    for option in link_speed link_mode adv_autoneg_cap
+    do
+      run "ndd -get /dev/${dev:?}"  ndd -get /dev/${dev:?}
+    done
+  done
   hl 10
   run "*network" dladm show-link
   hl 10
