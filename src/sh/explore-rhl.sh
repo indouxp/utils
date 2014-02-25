@@ -76,6 +76,10 @@ main() {
 
   hl 40
   run "ifconfig -a" ifconfig -a
+  for dev in `ifconfig | grep '^[a-z]' | gawk '{print $1;}'`
+  do
+    run "ethtool ${dev:?}" ethtool ${dev:?}
+  done
   run "netstat -rn" netstat -an
 
   hl 40
