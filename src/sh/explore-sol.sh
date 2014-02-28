@@ -53,21 +53,24 @@ main() {
   title 40 "パッチ"
   run "patchadd" patchadd -p
 
-  hl 40
-  run "*/etc/vfstab" cat /etc/vfstab
-  run "*/etc/dfs/dfstab" cat /etc/dfs/dfstab
-  run "*/etc/dfs/sharetab" cat /etc/dfs/sharetab
+  title 40 "マウント"
+  run "mount" mount
+  lcat /etc/vfstab
+
+  title 40 "Network File System"
+  run "share" share
+  lcat /etc/dfs/dfstab
+  lcat /etc/dfs/sharetab
+
+  title 40 "kernel"
+  lcat  /platform/`uname -m`/kernel
+
+  title 40 "kernel module"
+  run "modinfo" modinfo
 
   hl 40
-  run "*mount"  mount
+  run "sysdef -i" sysdef -i
 
-  hl 40
-  run "*kernel"  ls -il /platform/`uname -m`/kernel
-  hl 10
-  run "*kernel module" modinfo
-
-  hl 40
-  run "*kernel parameter" sysdef -i
   hl 20
   run "*/etc/system" cat /etc/system
   run "*/etc/project" cat /etc/project
@@ -109,6 +112,8 @@ main() {
       run "ndd -get /dev/${dev:?} ${option:?}"  ndd -get /dev/${dev:?} ${option:?}
     done
   done
+  hl 10
+  run "dladm show-dev" dladm show-dev
   hl 10
   run "*network" dladm show-link
   hl 10
