@@ -28,26 +28,28 @@ END {
 EOT
 
 cat <<EOT > ${CAT:?}
-BEGIN{
-  for (i = 0; i < (max_cols + 4); i++) {
-    printf("*");
+function line() {
+  printf("+");
+  for (i = (0 + 1); i < (max_cols + 4 - 1); i++) {
+    printf("-");
   }
+  printf("+");
   printf("\n");
 }
+BEGIN{
+  line();
+}
 {
-  printf("* ");
+  printf("| ");
   printf("%s", \$0);
   for (i = 0; i < max_cols - length(\$0); i++) {
     printf(" ");
   }
-  printf(" *");
+  printf(" |");
   printf("\n");
 }
 END{
-  for (i = 0; i < (max_cols + 4); i++) {
-    printf("*");
-  }
-  printf("\n");
+  line();
 }
 EOT
 
