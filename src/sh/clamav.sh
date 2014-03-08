@@ -9,6 +9,17 @@ MAILTO="tatsuo-i@mtb.biglobe.ne.jp"
 LASTRUN=/var/log/${NAME:?}.last.at.`date '+%Y%m%d'`
 LOG=/var/log/${NAME:?}.log
 EXTERNAL_SERVER="www.google.co.jp"
+###############################################################################
+# macosは、clamavをhomebrewでインストールしているため、/usr/local/binにある。
+case `uname -s` in
+Darwin)
+  PATH=/usr/local/bin:${PATH}
+  echo $PATH
+  ;;
+*)
+  echo "NG"
+  ;;
+esac
 
 ###############################################################################
 mail2(){
