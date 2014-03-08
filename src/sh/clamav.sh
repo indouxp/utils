@@ -13,11 +13,8 @@ EXTERNAL_SERVER="www.google.co.jp"
 # macosは、clamavをhomebrewでインストールしているため、/usr/local/binにある。
 case `uname -s` in
 Darwin)
-  PATH=/usr/local/bin:${PATH}
-  echo $PATH
-  ;;
+  PATH=/usr/local/bin:${PATH} ;;
 *)
-  echo "NG"
   ;;
 esac
 
@@ -29,8 +26,16 @@ mail2(){
   SUBJECT="${SUBJECT:?}-`date '+%Y%m%d.%H%M%S'`:${TEXT:?}"
   #su - indou -c "sed -n '/SCAN SUMMARY/,\$p' ${LOG:?} |\
   #                mail -s \"${SUBJECT}\" ${MAILTO:?}"
-  su - indou -c "sed -n '/freshclam START/,\$p' ${LOG:?} |\
-                  mail -s \"${SUBJECT}\" ${MAILTO:?}"
+  case `uname -s` in
+  Darwin)
+    sed -n '/freshclam START/,$p' ${LOG:?} |\
+                  mail -s "${SUBJECT}" ${MAILTO:?}
+    ;;
+  *)
+    su - indou -c "sed -n '/freshclam START/,\$p' ${LOG:?} |\
+                   mail -s \"${SUBJECT}\" ${MAILTO:?}"
+    ;;
+  esac
   echo "`date '+%Y%m%d %H%M%S'`:${CMD:?} DONE " >> ${LOG:?}
 }
 
