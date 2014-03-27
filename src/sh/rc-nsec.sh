@@ -1,6 +1,11 @@
 #!/bin/sh
 # SUMMARY:第二引数以降のコマンドと引数をbgで実行し、第一引数の秒数後、bgのプロセスをkillする。
 
+SCRIPT=`basename $0`
+LOGD="/tmp"
+LOGF=`basename $0`.`hostname`.`date '+%Y%m%d.%H%M%S'`.log
+LOG=${LOGD:?}/${LOGF:?}
+
 usage() {
   cat <<EOT
 Usage
@@ -13,13 +18,13 @@ if [ "$#" -eq "0" ]; then
   exit 1
 fi
 
-sec=$1	# 第一引数は実行する秒数
+SEC=$1	# 第一引数は実行する秒数
 shift
 
-"$@" &	# 第二引数以降をbgで実行
+"$*" &	# 第二引数以降をbgで実行
 PID=$!
 
-sleep ${sec:?}
+sleep ${SEC:?}
 kill ${PID:?}
 
 exit 0
