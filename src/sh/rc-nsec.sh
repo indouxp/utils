@@ -1,10 +1,10 @@
 #!/bin/sh
-# SUMMARY:第一引数の秒数だけ、sleepし、第二引数以降のコマンドと引数をbgで実行し、そのプロセスidをkillする。
+# SUMMARY:第二引数以降のコマンドと引数をbgで実行し、第一引数の秒数後、bgのプロセスをkillする。
 
 usage() {
   cat <<EOT
 Usage
-$ `basename $0` sleepsec command args [...]
+$ `basename $0` sleepsec command [args ...]
 EOT
 }
 
@@ -13,10 +13,10 @@ if [ "$#" -eq "0" ]; then
   exit 1
 fi
 
-sec=$1	# 実行する秒数
+sec=$1	# 第一引数は実行する秒数
 shift
 
-"$@" &	# bgで実行
+"$@" &	# 第二引数以降をbgで実行
 PID=$!
 
 sleep ${sec:?}
