@@ -62,10 +62,19 @@ CMD="freshclam"
 echo "`date '+%Y%m%d %H%M%S'`:${CMD:?} START" >> ${LOG:?}
 ${CMD:?} >> ${LOG:?} 2>&1
 RC=$?
-if [ "${RC:?}" -ne "0" ]; then
+if [ "${RC:?}" -ne "62" -a "${RC:?}" -ne "0" ]; then
   echo "${CMD:?} fail. RC:${RC:?}" 1>&2
   mail2 "${CMD:?}:${RC:?}"
   exit ${RC:?}
+fi
+if [ "${RC:?}" -eq "62" ]; then
+  if ps -C ${CMD:?}; then
+    :  # freshclamデーモンが上がっている場合、ログはロックされている
+  else
+    echo "${CMD:?} fail. RC:${RC:?}" 1>&2
+    mail2 "${CMD:?}:${RC:?}"
+    exit ${RC:?}
+  fi
 fi
 echo "`date '+%Y%m%d %H%M%S'`:${CMD:?} DONE " >> ${LOG:?}
 
