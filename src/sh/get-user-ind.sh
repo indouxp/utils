@@ -23,20 +23,31 @@ sqlplus -S /nolog <<EOT
   column index_name format a30
   column uniqueness format a10
   column column_name format a30
+  column data_type format a10
+  column data_length format 990
+  clear breaks
+  break on table_name on index_name on uniqueness
   select
-    t1.TABLE_NAME,
-    t1.INDEX_NAME,
-    t1.UNIQUENESS,
-    t2.COLUMN_NAME
+    t1.TABLE_NAME TABLE_NAME,
+    t1.INDEX_NAME INDEX_NAME,
+    t1.UNIQUENESS UNIQUENESS,
+    t2.COLUMN_NAME,
+    t3.DATA_TYPE,
+    t3.DATA_LENGTH
   from
     USER_INDEXES t1,
-    USER_IND_COLUMNS t2
+    USER_IND_COLUMNS t2,
+    USER_TAB_COLUMNS t3
   where
     t1.TABLE_NAME = t2.TABLE_NAME
   and
     t1.INDEX_NAME = t2.INDEX_NAME
   and
     t1.TABLE_NAME = UPPER('${TAB:?}')
+  and
+    t1.TABLE_NAME = t3.TABLE_NAME
+  and
+    t2.COLUMN_NAME = t3.COLUMN_NAME
   order by
     t1.TABLE_NAME,
     t1.INDEX_NAME,
