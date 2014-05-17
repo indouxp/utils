@@ -13,6 +13,10 @@ EOT
 fi
 UP=$1
 TAB=$2
+if [ -e slt.${TAB:?}.sh -o -e slt.${TAB:?}.sql ]; then
+  echo "`basename $0`:slt.${TAB:?}.{sql,sh} exist." 1>&2
+  exit 1
+fi
 
 ###############################################################################
 # desc取得し、その出力をパイプする
@@ -91,4 +95,3 @@ EOT
 
 chmod a+x slt.${TAB:?}.sh
 exit 0
-
