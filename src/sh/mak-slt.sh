@@ -58,6 +58,7 @@ awk -v table=${TAB:?} '
   END{
       #printf("set linesize %d\n", linesize);
       printf("whenever sqlerror exit failure rollback\n");
+      printf("set tab off\n");
       for(i = 0; i < field_no; i++) {
         printf("%s\n", columns[i]);
       }
