@@ -17,11 +17,11 @@
 #artist_kana             アーティストカナ
 #artist_name             アーティスト名
 #authority_id            権限ID
-#cancel_end_date         ｷｬﾝｾﾙ待ち受付終了日
-#cancel_start_date               ｷｬﾝｾﾙ待ち受付開始日
-#cancel_touraku_date             ｷｬﾝｾﾙ当落発表日時
-#cancel_unit_ts          TSｷｬﾝｾﾙ待ち切替単位
-#cancel_wait_flag                ｷｬﾝｾﾙ待ち切換ﾌﾗｸﾞ
+#cancel_end_date         キャンセル待ち受付終了日
+#cancel_start_date               キャンセル待ち受付開始日
+#cancel_touraku_date             キャンセル当落発表日時
+#cancel_unit_ts          TSキャンセル待ち切替単位
+#cancel_wait_flag                キャンセル待ち切換フラグ
 #carrier_id              キャリアコード
 #[l_bat@c53 ut.tools]$
 #[l_bat@c53 ut.tools]$ ./mak-file-work.sh TEM240_SCHEDULE_S
@@ -81,7 +81,7 @@ awk -vfile=${FILE:?}.txt '
       printf("%s%s", "\044", field_ids[i]);
     }
     printf(")\n");
-    printf("      = unpack(");
+    printf("      = unpack(\"");
     for (i = 1; i <= max; i++) {
       printf("A%d", field_attributes[i]);
     }
