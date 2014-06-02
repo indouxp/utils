@@ -20,7 +20,7 @@ fi
 
 ###############################################################################
 # desc取得し、その出力をパイプする
-sqlplus -S /nolog <<EOT                     |
+sqlplus -S /nolog <<EOT                     | tee desc.${TAB:?} |
   whenever sqlerror exit failure rollback
   connect ${UP:?}
   set heading off
@@ -58,10 +58,12 @@ awk -v table=${TAB:?} '
   END{
       #printf("set linesize %d\n", linesize);
       printf("whenever sqlerror exit failure rollback\n");
+      printf("alter session set nls_date_format = %sYYYY/MM/DD HH24:MI:SS%s;\n", "\047", "\047");
       printf("set tab off\n");
       for(i = 0; i < field_no; i++) {
         printf("%s\n", columns[i]);
       }
+      printf("desc %s\n", table);
       printf("select\n");
       for(i = 0; i < field_no; i++) {
         printf("  %s", fields[i]);
@@ -85,7 +87,7 @@ fi
 
 cat <<EOT > slt.${TAB:?}.sh
 #!/bin/sh
-sqlplus -S ${UP:?} @slt.${TAB:?}.sql
+sqlplus -S ${UP:?} @\`dirname \$0\`/slt.${TAB:?}.sql
 RC=\$?
 if [ "\${RC:?}" -ne "0" ]; then
   echo "fail." 1>&2
@@ -94,5 +96,7 @@ fi
 exit 0
 EOT
 
-chmod a+x slt.${TAB:?}.sh
+grep -v "fail\." slt.${TAB:?}.sh > chk.${TAB:?}.sh
+
+chmod a+x {slt,chk}.${TAB:?}.sh
 exit 0
