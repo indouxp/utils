@@ -30,7 +30,7 @@ TAB=$2
 
 ###############################################################################
 # desc取得し、その出力をパイプする
-sqlplus -S /nolog <<EOT                     |
+sqlplus -S /nolog <<EOT                     | tee -a debug |
   whenever sqlerror exit failure rollback
   connect ${UP:?}
   set heading off
