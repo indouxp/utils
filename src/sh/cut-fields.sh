@@ -1,6 +1,6 @@
 #!/bin/sh
 ###############################################################################
-# 第一引数の定義ファイルを読み込み、レイアウト通りに第二引数以降のファイルを
+# 第一引数の定義ファイルを読み込み、レイアウト通りに第二引数以降のファイル(SJIS)を
 # 出力
 #
 SCRIPT=`basename $0`
@@ -47,7 +47,9 @@ BEGIN{
     attribute = $2;
     size = $3;
     printf("echo \"%s:%s(%d)\" \"cut -b%d-%d\"\n", name, attribute, size, start, start + size -1);
-    printf("LANG=ja_JP.SJIS cat %s1 | cut -b%d-%d | nkf -w \n", "\044", start, start + size -1);
+    #printf("LANG=ja_JP.SJIS cat %s1 | cut -b%d-%d | nkf -w \n", "\044", start, start + size -1);
+    #       grep -vE "(\*H\*|\*F\*)" .
+    printf("grep -vE \"\\*(H|F)\\*\" %s1 | cut -b%d-%d \n", "\044", start, start + size -1);
     start += size;
   }
 }
