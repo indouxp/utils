@@ -87,6 +87,7 @@ RC=$?
 
 if [ "${RC:?}" -ne "0" ]; then
   echo "${CMD:?} fail. RC:${RC:?}" 1>&2
+  echo "`date '+%Y%m%d %H%M%S'`:${CMD:?} fail. RC:${RC:?} " >> ${LOG:?}
   mail2 "${CMD:?}:${RC:?}"
   exit ${RC:?}
 fi
