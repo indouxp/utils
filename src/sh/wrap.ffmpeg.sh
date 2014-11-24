@@ -16,6 +16,7 @@ do
   if [ "${count:?}" -eq "0" ]; then
     echo "do ${Prefix:?}"
     ffmpeg -i $file -f image2 -vf fps=1 ${Prefix:?}.%05d.jpg
+    mv ${Prefix:?}.*.jpg /media/disk/PHTO
   else
     echo "skip ${Prefix:?}"
   fi 
