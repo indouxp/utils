@@ -16,6 +16,6 @@ for file in           \
   /var/log/auth.log
 do
   echo ${file:?}
-  sed "s/^/  /" ${file:?}
+  sed "s/^/  /" ${file:?} | tail -n 100
 done | mail -s "${SUBJECT}" ${MAILTO:?}
 
