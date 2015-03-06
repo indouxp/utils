@@ -84,7 +84,7 @@ awk -v user_remotehost=${USER_REMOTE_HOST:?} \
         printf("\"%s\" fail.\n", cmdfile);
         exit(rc);
       }
-      system(sprintf("cat %s", cmdfile));
+      system(sprintf("sed %cs/%s//%c %s", single_quote, password, single_quote, cmdfile));
       printf("done.\n");
       for(i in cmds) {
         cmds[i] = "";
@@ -105,7 +105,7 @@ awk -v user_remotehost=${USER_REMOTE_HOST:?} \
       printf("\"%s\" fail.\n", cmdfile);
       exit(rc);
     }
-    system(sprintf("cat %s", cmdfile));
+    system(sprintf("sed %cs/%s//%c %s", single_quote, password, single_quote, cmdfile));
     printf("done.\n");
   }
 ' ${TAR_LIST:?}
