@@ -1,6 +1,7 @@
 #!/bin/sh
 SCRIPT_NAME=`basename $0`
 
+RC=1
 # wzr-hp-g450hに振られている可能性のあるアドレスを順に処理
 for wzr_hp_g450h in \
   192.168.0.2\
@@ -19,6 +20,7 @@ do
       date  >   /var/log/${SCRIPT_NAME:?}.log
       route >>  /var/log/${SCRIPT_NAME:?}.log
       # pingが通ればOK
+      RC=0
       break
     else
       echo "NG" $wzr_hp_g450h
@@ -28,7 +30,6 @@ do
   else
     echo "NG" $wzr_hp_g450h
     logger "${SCRIPT_NAME:?}: $wzr_hp_g450h not found."
-    exit 1
   fi
 done
-exit 0
+exit ${RC:?}
