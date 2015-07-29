@@ -3,13 +3,9 @@ SCRIPT_NAME=`basename $0`
 
 RC=1
 # wzr-hp-g450hに振られている可能性のあるアドレスを順に処理
-for wzr_hp_g450h in \
-  192.168.0.2\
-  192.168.0.3\
-  192.168.0.4\
-  192.168.0.5\
-  192.168.0.6
+for fourth in `seq 1 244`
 do
+  wzr_hp_g450h="192.168.0.${fourth:?}"
   if ping -c1 $wzr_hp_g450h >/dev/null 2>&1; then
     # routeに192.168.11.0ネットワークを登録し、192.168.11.1へのpingを見る
     # wzr-hp-g450hには、192.168.11.1がLAN側のIP ADDRESSとして振られている
