@@ -14,5 +14,6 @@ trap 'term' 0 1 2 3 15
 
 # ntpq確認
 result=$(ntpq -p | tee $TMPFILE | /bin/grep "^\*")
-[ -z "$result" ] && logger -i "${SCRIPT:?}:ntpq fail"
+[ -z "$result" ] && logger -i "${SCRIPT:?}:ntpq fail" && exit 1
 logger -i "${SCRIPT:?}:ntpq ok"
+exit 0
