@@ -5,14 +5,14 @@
 SCRIPT=${0##*/}
 logger "${SCRIPT:?}:START"
 
-HOSTS="192.168.11.170 192.168.11.171"
+HOSTS="192.168.11.170 192.168.11.171 192.168.0.254"
 
 for HOST in $HOSTS
 do
   msg="${SCRIPT:?}:ping to ${HOST:?}"
   logger $msg; echo $msg
   if ping -c 1 ${HOST:?} >/dev/null; then              # pingで生きているもの
-    NAME=$(su pi -c "ssh pi@${HOST:?} 'hostname'")		 # 名前取得
+    NAME=$(su pi -c "ssh pi@${HOST:?} 'hostname'")     # 名前取得
     msg="${SCRIPT:?}:ssh ${HOST:?} and shutdown"
     logger $msg; echo $msg
     su pi -c "ssh pi@${HOST:?} 'hostname; sudo shutdown -h now'"
