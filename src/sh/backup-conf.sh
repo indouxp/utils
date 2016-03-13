@@ -9,6 +9,11 @@ for CONF in $*
 do
   ABS_PATH=$(readlink -f $CONF)
   BACKUP=`echo $ABS_PATH | sed "s%/%#%g"`.bk`date '+%Y%m%d.%H%M%S'`
-  #cp -p $CONF $HOME/backup-conf/$BACKUP
-  echo "$ABS_PATH -> $HOME/backup-conf/$BACKUP"
+  if cp -p $CONF $HOME/backup-conf.d/$BACKUP; then
+    echo "$ABS_PATH -> $HOME/backup-conf.d/$BACKUP done."
+  else
+    echo "$ABS_PATH -> $HOME/backup-conf.d/$BACKUP fail." 1>&2
+    exit 1
+  fi
 done
+exit 0
