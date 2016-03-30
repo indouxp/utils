@@ -20,5 +20,6 @@ result=$(ntpq -p | tee $TMPFILE | /bin/grep "^\*")
   logger -i "${SCRIPT:?}:ntpq fail" &&\
   exit 1
 
-logger -i "${SCRIPT:?}:ntpq ok"
+#logger -i "${SCRIPT:?}:ntpq ok"
+cp $TMPFILE /var/log/chk-ntpq.sh.success
 exit 0
