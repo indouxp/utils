@@ -15,8 +15,10 @@ trap 'term' 0 1 2 3 15
 # ntpq確認
 result=$(ntpq -p | tee $TMPFILE | /bin/grep "^\*")
 
+# 「ntpq -p」を実行して同期が取れていない場合
 [ -z "$result" ] &&\
-  cp $TMPFILE /var/log/chk-ntpq.sh.`date '+%d'` &&\
+  # ログをコピーしてreboot
+  cp $TMPFILE /var/log/chk-ntpq.sh.`date '+%d'`.fail &&\
   logger -i "${SCRIPT:?}:ntpq fail" &&\
   exit 1
 
