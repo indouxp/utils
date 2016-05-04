@@ -33,6 +33,7 @@ if [ "${GW:?}" = "" ]; then
   echo "${SCRIPT_NAME:?}:GW fail." | tee -a ${LOG_PATH:?} 1>&2
   exit 1
 fi
+echo "${SCRIPT_NAME:?}:GW:[${GW:?}]." | tee -a ${LOG_PATH:?}
 
 ###############################################################################
 ping -c1 ${GW:?}
@@ -41,4 +42,6 @@ if [ "${RC:?}" -ne "0" ];then
   echo "${SCRIPT_NAME:?}:ping fail." | tee -a ${LOG_PATH:?} 1>&2
   service networking restart | tee -a ${LOG_PATH:?} 2>&1
 fi
+echo "${SCRIPT_NAME:?}:ping status ${RC:?}." | tee -a ${LOG_PATH:?}
+
 exit 0
