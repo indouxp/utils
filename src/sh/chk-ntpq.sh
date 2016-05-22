@@ -17,10 +17,9 @@ result=$(ntpq -p | tee $TMPFILE | /bin/grep "^\*")
 
 # 「ntpq -p」を実行して同期が取れていない場合
 [ -z "$result" ] &&\
-  # ログをコピーしてサービスの再起動
+  # ログをコピー
   cp $TMPFILE /var/log/chk-ntpq.sh.`date '+%d'`.fail &&\
   logger -i "${SCRIPT:?}:ntpq fail" &&\
-  service ntp restart &&\
   exit 1
 
 #logger -i "${SCRIPT:?}:ntpq ok"
