@@ -50,7 +50,9 @@ while true; do
     continue
   fi
   echo "NOW:${NOW} PREV:${PREV}"                         >> ${LOG_PATH:?}
-  if [ X${NOW:?} != X${PREV} ]; then  # 前回と異なる場合
+  if [ X${NOW:?} = X${PREV} ]; then
+    continue
+  else                                # 前回と異なる場合
     if [ ${NOW:?} = ${PIP:?} ]; then  # 自分が立ち上がる
       echo "${SCRIPT:?} `date '+%Y%m%d.%H%M%S'` PRIMARY" >> ${LOG_PATH:?}
       ip addr show dev eth0                              >> ${LOG_PATH:?}
