@@ -51,6 +51,7 @@ while true; do
   fi
   echo "NOW:${NOW} PREV:${PREV}"                         >> ${LOG_PATH:?}
   if [ X${NOW:?} = X${PREV} ]; then
+    sleep 1
     continue
   else                                # 前回と異なる場合
     if [ ${NOW:?} = ${PIP:?} ]; then  # 自分が立ち上がる
