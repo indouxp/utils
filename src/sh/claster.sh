@@ -40,7 +40,7 @@ PREV="START"
 ###############################################################################
 # 
 VIP="192.168.0.252"
-PIP=`ip addr show eth0 | grep "inet " | awk '{if ($0 ~ /192\.168\.0/) {print $2;}}' | sed "s%/.*%%"`
+PIP=`ip addr show eth0 | grep "inet " | awk '{if ($0 ~ /192\.168\.0/) {print $2;exit 0}}' | sed "s%/.*%%"`
 echo "${SCRIPT:?} `date '+%Y%m%d.%H%M%S'` VIP:[${VIP:?}]" >> ${LOG_PATH:?}
 echo "${SCRIPT:?} `date '+%Y%m%d.%H%M%S'` PIP:[${PIP:?}]" >> ${LOG_PATH:?}
 
