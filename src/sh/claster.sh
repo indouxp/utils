@@ -65,6 +65,7 @@ while true; do
       echo "${SCRIPT:?} `date '+%Y%m%d.%H%M%S'` SECONDARY" >> ${LOG_PATH:?}
       ip addr show dev eth0                                >> ${LOG_PATH:?}
       ip addr del ${VIP:?} dev eth0                        >> ${LOG_PATH:?} 2>&1
+      RC=$?
       echo "ip addr del ${VIP:?} dev eth0 RC:${RC:?}"      >> ${LOG_PATH:?}
       ip addr show dev eth0                                >> ${LOG_PATH:?}
     fi
