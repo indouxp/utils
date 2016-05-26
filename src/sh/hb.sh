@@ -34,6 +34,7 @@ trap 'TERM' 0 2 3 15
 PREV="START"
 while true; do
   DIFF=0
+  OUT=""
   for ADR in ${ADDRESS:?}
   do
     if ping -c 1 ${ADR:?} > /dev/null 2>&1; then
