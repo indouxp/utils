@@ -40,22 +40,22 @@ while true; do
       case ${ADR:?} in
       ${HB_PRIMARY:?})
         #echo "1:${ADR:?}"
-        echo -n "${IP_PRIMARY:?} "   >  ${LOCK_PATH:?}
+        OUT="${IP_PRIMARY:?} "
         ;;
       ${HB_SECONDARY:?})
         #echo "2:${ADR:?}"
-        echo -n "${IP_SECONDARY:?} " >> ${LOCK_PATH:?}
+        OUT="${OUT:?}${IP_SECONDARY:?} "
         ;;
       esac
     fi
   done
-  if [ X"${PREV}" != X"`cat ${LOCK_PATH:?}`" ]; then
+  if [ X"${PREV}" != X"${OUT:?}" ]; then
     DIFF=1
   fi
-  echo "# ${0##*/}:`date '+%Y%m%d.%H%M%S'`" >> ${LOCK_PATH:?}
+  echo "${OUT:?}# ${0##*/}:`date '+%Y%m%d.%H%M%S'`" > ${LOCK_PATH:?}
   if [ "${DIFF:?}" = "1" ]; then
-    echo "${PREV:?} != `cat ${LOCK_PATH:?}`" >> ${LOG_PATH:?}
+    echo "${PREV:?} \!= `cat ${LOCK_PATH:?}`" >> ${LOG_PATH:?}
   fi
-  PREV=`sed 's/#.*$//' ${LOCK_PATH:?}`
+  PREV=${OUT:?}
   sleep 1
 done
