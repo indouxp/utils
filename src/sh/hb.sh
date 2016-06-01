@@ -3,6 +3,7 @@
 # hb.sh
 # HB_PRIMARYと、HB_SECONDARYに、pingし、LOCK_PATHに、生死を書き出す 
 ###############################################################################
+export LANG=ja_JP.UTF-8
 
 LOCK_NAME=${0##*/}.lock
 LOCK_DIR=/dev/shm
@@ -16,6 +17,7 @@ LOG_PATH=${LOG_DIR:?}/${LOG_NAME:?}
 ###############################################################################
 # 割り込み時
 TERM() {
+  echo "${0##*/}:`date '+%Y%m%d.%H%M%S'`:END" >> ${LOG_PATH:?}
   rm -f /dev/shm/hb.sh.lock
   exit 0
 }
@@ -31,6 +33,7 @@ ADDRESS="${HB_PRIMARY:?} ${HB_SECONDARY:?}"
 
 trap 'TERM' 0 2 3 15
 
+echo "${0##*/}:`date '+%Y%m%d.%H%M%S'`:START" > ${LOG_PATH:?}
 PREV="START"
 while true; do
   DIFF=0
