@@ -11,7 +11,6 @@ LOCK_PATH=${LOCK_DIR:?}/${LOCK_NAME:?}
 
 LOG_NAME=${0##*/}.log
 LOG_DIR=/var/log
-LOG_DIR=/tmp
 LOG_PATH=${LOG_DIR:?}/${LOG_NAME:?}
 
 ###############################################################################
@@ -48,7 +47,7 @@ while true; do
         ;;
       ${HB_SECONDARY:?})
         #echo "2:${ADR:?}"
-        OUT="${OUT:?}${IP_SECONDARY:?} "
+        OUT="${OUT}${IP_SECONDARY:?} "
         ;;
       esac
     fi
