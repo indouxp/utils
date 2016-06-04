@@ -49,11 +49,11 @@ while true; do
   if [ x"${NOW:?}" = x ]; then
     continue
   fi
-  echo "NOW:${NOW} PREV:${PREV}"                         >> ${LOG_PATH:?}
   if [ X${NOW:?} = X${PREV} ]; then
     sleep 1
     continue
   else                                # 前回と異なる場合
+    echo "`date '+%Y%m%d.%H%M%S'` ${PREV}->${NOW:?}"     >> ${LOG_PATH:?}
     if [ ${NOW:?} = ${PIP:?} ]; then  # 自分が立ち上がる
       echo "${SCRIPT:?} `date '+%Y%m%d.%H%M%S'` PRIMARY" >> ${LOG_PATH:?}
       ip addr show dev eth0                              >> ${LOG_PATH:?}
