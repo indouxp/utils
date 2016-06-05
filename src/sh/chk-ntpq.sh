@@ -7,12 +7,21 @@ TMPFILE=/tmp/${SCRIPT:?}.$$
 #
 ###############################################################################
 term() {
-  rm -f /tmp/${0##*}.$$
+  rm -f /tmp/${0##*/}.$$
 }
 
 trap 'term' 0 1 2 3 15
 
 # ntpq確認
 result=$(ntpq -p | tee $TMPFILE | /bin/grep "^\*")
-[ -z "$result" ] && logger -i "${SCRIPT:?}:ntpq fail"
-logger -i "${SCRIPT:?}:ntpq ok"
+
+# 「ntpq -p」を実行して同期が取れていない場合
+[ -z "$result" ] &&\
+  # ログをコピー
+  cp $TMPFILE /var/log/chk-ntpq.sh.`date '+%d'`.fail &&\
+  logger -i "${SCRIPT:?}:ntpq fail" &&\
+  exit 1
+
+#logger -i "${SCRIPT:?}:ntpq ok"
+cp $TMPFILE /var/log/chk-ntpq.sh.success
+exit 0
