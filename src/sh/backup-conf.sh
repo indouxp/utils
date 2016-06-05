@@ -7,8 +7,8 @@
 
 for CONF in $*
 do
-  ABS_PATH=$(readlink -f $CONF)
+  ABS_PATH=$(cd $(dirname $CONF) && pwd)/$(basename $CONF)
   BACKUP=`echo $ABS_PATH | sed "s%/%#%g"`.bk`date '+%Y%m%d.%H%M%S'`
-  #cp -p $CONF $HOME/backup-conf/$BACKUP
-  echo "$ABS_PATH -> $HOME/backup-conf/$BACKUP"
+  sudo cp -p $CONF $HOME/backup-conf.d/$BACKUP
+  echo "$ABS_PATH -> $HOME/backup-conf.d/$BACKUP"
 done
