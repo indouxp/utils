@@ -65,7 +65,7 @@ if [ "$color_prompt" = yes ]; then
       PS1="\$? \[\e[31m\e[40m\]\D{%y%m%d-%H%M%S} \u@\h:\W:\$\[\e[0m\] "
     else
       #PS1="\$? \[\e[37m\e[44m\]\D{%y%m%d-%H%M%S} \u@\h:\W:\$\[\e[0m\] "
-      PS1="\$? \[\e[32m\]\D{%y%m%d-%H%M%S} \u@\h:\W:\$\[\e[0m\] "
+      PS1="\$? \[\e[33m\]\D{%y%m%d-%H%M%S} \u@\h:\W:\$\[\e[0m\] "
     fi
 else
     #PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
