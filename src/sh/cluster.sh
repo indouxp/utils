@@ -63,7 +63,7 @@ while true; do
       ip addr show dev eth0                                >> ${LOG_PATH:?} 2>&1
       arping -q -A -I eth0 -c 1 ${VIP:?}                   >> ${LOG_PATH:?} 2>&1
       RC=$?
-      echo "arping -a -A -I eth0 -c 1 ${VIP:?} RC:?{RC:?}" >> ${LOG_PATH:?}
+      echo "arping -a -A -I eth0 -c 1 ${VIP:?} RC:${RC:?}" >> ${LOG_PATH:?}
       ip addr show dev eth0                                >> ${LOG_PATH:?}
     else
       echo "${SCRIPT:?} `date '+%Y%m%d.%H%M%S'` SECONDARY" >> ${LOG_PATH:?}
