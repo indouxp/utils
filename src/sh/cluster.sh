@@ -53,22 +53,25 @@ while true; do
     sleep 1
     continue
   else                                # 前回と異なる場合
-    echo "`date '+%Y%m%d.%H%M%S'` ${PREV}->${NOW:?}"     >> ${LOG_PATH:?}
+    echo "`date '+%Y%m%d.%H%M%S'` ${PREV}->${NOW:?}"       >> ${LOG_PATH:?}
     if [ ${NOW:?} = ${PIP:?} ]; then  # 自分が立ち上がる
-      echo "${SCRIPT:?} `date '+%Y%m%d.%H%M%S'` PRIMARY" >> ${LOG_PATH:?}
-      ip addr show dev eth0                              >> ${LOG_PATH:?}
-      ip addr del ${VIP:?} dev eth0                      >> ${LOG_PATH:?} 2>&1
-      ip addr add ${VIP:?} dev eth0                      >> ${LOG_PATH:?} 2>&1
+      echo "${SCRIPT:?} `date '+%Y%m%d.%H%M%S'` PRIMARY"   >> ${LOG_PATH:?}
+      ip addr show dev eth0                                >> ${LOG_PATH:?}
+      ip addr add ${VIP:?} dev eth0                        >> ${LOG_PATH:?} 2>&1
       RC=$?
-      echo "ip addr add ${VIP:?} dev eth0 RC:${RC:?}"    >> ${LOG_PATH:?}
-      ip addr show dev eth0                              >> ${LOG_PATH:?}
+      echo "ip addr add ${VIP:?} dev eth0 RC:${RC:?}"      >> ${LOG_PATH:?}
+      ip addr show dev eth0                                >> ${LOG_PATH:?} 2>&1
+      arping -q -A -I eth0 -c 1 ${VIP:?}                   >> ${LOG_PATH:?} 2>&1
+      RC=$?
+      echo "arping -a -A -I eth0 -c 1 ${VIP:?} RC:?{RC:?}" >> ${LOG_PATH:?}
+      ip addr show dev eth0                                >> ${LOG_PATH:?}
     else
       echo "${SCRIPT:?} `date '+%Y%m%d.%H%M%S'` SECONDARY" >> ${LOG_PATH:?}
-      ip addr show dev eth0                                >> ${LOG_PATH:?}
+      ip addr show dev eth0                                >> ${LOG_PATH:?} 2>&1
       ip addr del ${VIP:?} dev eth0                        >> ${LOG_PATH:?} 2>&1
       RC=$?
       echo "ip addr del ${VIP:?} dev eth0 RC:${RC:?}"      >> ${LOG_PATH:?}
-      ip addr show dev eth0                                >> ${LOG_PATH:?}
+      ip addr show dev eth0                                >> ${LOG_PATH:?} 2>&1
     fi
   fi 
   sleep 1
