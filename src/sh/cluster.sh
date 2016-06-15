@@ -61,7 +61,7 @@ while true; do
       RC=$?
       echo "ip addr add ${VIP:?} dev eth0 RC:${RC:?}"      >> ${LOG_PATH:?}
       ip addr show dev eth0                                >> ${LOG_PATH:?} 2>&1
-      arping -q -A -I eth0 -c 1 ${VIP:?}                   >> ${LOG_PATH:?} 2>&1
+      arping -a -A -I eth0 -c 1 ${VIP:?}                   >> ${LOG_PATH:?} 2>&1
       RC=$?
       echo "arping -a -A -I eth0 -c 1 ${VIP:?} RC:${RC:?}" >> ${LOG_PATH:?}
       ip addr show dev eth0                                >> ${LOG_PATH:?}
