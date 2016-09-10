@@ -12,7 +12,7 @@ echo ${msg:?} | tee ${LOG:?} | logger
 COUNT=0
 while true
 do
-  if ! ping -c1 ${GW:?} >> ${LOG:?}; then
+  if ! ping -c1 ${GW:?} > /dev/null 2>&1; then
     COUNT=`expr ${COUNT:?} + 1`
     echo $COUNT
     if [ ${COUNT:?} -eq 5 ]; then
@@ -26,3 +26,4 @@ done
 
 msg="`date '+%Y%m%d.%H%M%S'`:${0##*/}:shutdown"
 echo ${msg:?} | tee -a ${LOG:?} | logger
+shutdown -h now
