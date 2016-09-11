@@ -7,7 +7,7 @@ LOG=/var/log/${0##*/}.log
 GW=192.168.0.254
 
 msg="`date '+%Y%m%d.%H%M%S'`:${0##*/}:start"
-echo ${msg:?} | tee ${LOG:?} | logger
+echo ${msg:?} | tee -a ${LOG:?} | logger
 
 COUNT=0
 while true
@@ -26,4 +26,5 @@ done
 
 msg="`date '+%Y%m%d.%H%M%S'`:${0##*/}:shutdown"
 echo ${msg:?} | tee -a ${LOG:?} | logger
+tail -n 100 ${LOG:?} > ${LOG:?}
 shutdown -h now
