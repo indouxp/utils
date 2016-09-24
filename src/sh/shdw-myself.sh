@@ -5,6 +5,7 @@
 ###############################################################################
 export LANG=ja_JP.utf8
 LOG=/var/log/${0##*/}.log
+TMP=/var/tmp/${0##*/}.tmp
 DNS=192.168.0.254
 
 msg="`date '+%Y%m%d.%H%M%S'`:${0##*/}:init"
@@ -35,5 +36,5 @@ done
 
 msg="`date '+%Y%m%d.%H%M%S'`:${0##*/}:shutdown"
 echo ${msg:?} | tee -a ${LOG:?} | logger
-tail -n 100 ${LOG:?} > ${LOG:?}
+tail -n 100 ${LOG:?} > ${TMP:?} &&  mv ${TMP:?} ${LOG:?}
 shutdown -h now
