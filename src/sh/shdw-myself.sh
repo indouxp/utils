@@ -1,10 +1,18 @@
 #!/bin/sh
 ###############################################################################
-# shoutdown host by ping gw
+# shoutdown host by ping dns
 #
 ###############################################################################
 LOG=/var/log/${0##*/}.log
-GW=192.168.0.254
+DNS=192.168.0.254
+
+msg="`date '+%Y%m%d.%H%M%S'`:${0##*/}:init"
+echo ${msg:?} | tee -a ${LOG:?} | logger
+
+while ! ntpq -p | grep '^*' > /dev/null
+do
+  sleep 1
+done
 
 msg="`date '+%Y%m%d.%H%M%S'`:${0##*/}:start"
 echo ${msg:?} | tee -a ${LOG:?} | logger
@@ -12,7 +20,7 @@ echo ${msg:?} | tee -a ${LOG:?} | logger
 COUNT=0
 while true
 do
-  if ! ping -c1 ${GW:?} > /dev/null 2>&1; then
+  if ! ping -c1 ${DNS:?} > /dev/null 2>&1; then
     COUNT=`expr ${COUNT:?} + 1`
     echo $COUNT
     if [ ${COUNT:?} -eq 5 ]; then
