@@ -51,5 +51,6 @@ if [ ! -e ${ORG:?} ]; then
 else
   if ! diff ${ORG:?} ${OUT:?}; then
     cat ${TMP:?} | mail -s "WAN ADDRESS" indou.tsystem@docomo.ne.jp
+    mv ${OUT:?} ${ORG:?}
   fi
 fi
