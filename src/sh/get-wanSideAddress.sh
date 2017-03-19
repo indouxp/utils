@@ -1,21 +1,29 @@
 #!/bin/sh
 SCRIPT=${0##*/}
-TMP=/tmp/${SCRIPT:?}.$$
+TMP=/tmp/${SCRIPT:?}.$$.tmp
+LOG=/tmp/${SCRIPT:?}.$$.log
+MAILTO=indou.tsystem@docomo.ne.jp
 
 TERM() {
-  rm -f /tmp/${0##*/}.$$
+  rm -f /tmp/${0##*/}.$$.*
 }
 
 trap 'TERM' 0
 
 LF=$(printf '\\\012_');LF=${LF%_}
-USER="adm"
-PASS="defleppard"
-URL="http://192.168.0.1/index.cgi/info_main"
+USER="adm"                                    # 管理者
+PASS="defleppard"                             # password
+URL="http://192.168.0.1/index.cgi/info_main"  # lan側からルーターの管理画面にアクセス
 OUT=/home/pi/tmp/${SCRIPT:?}.out
 ORG=/home/pi/tmp/${SCRIPT:?}.org
 
-wget --http-user=${USER:?} --http-password=${PASS:?} -O ${OUT:?} ${URL:?}
+wget --http-user=${USER:?} --http-password=${PASS:?} -O ${OUT:?} ${URL:?} > ${LOG:?} 2>&1
+RC=$?
+
+if [ "${RC:?}" -ne "0" ]; then
+  cat ${LOG:?} | mail -s "WAN ADDRESS wget fail. RC:${RC:?}." ${MAILTO:?}
+  exit 1
+fi
 
 cat ${OUT:?}                    | # 必要な区間の行(<table>～</table>を抽出
 sed -n '/<table/,/<\/table>/p'  | # 一旦改行コードを全部取り去ってしまう
@@ -47,10 +55,11 @@ sed 's#</td>.*##'                     > ${TMP:?}
 
 if [ ! -e ${ORG:?} ]; then
   mv ${OUT:?} ${ORG:?}
-  cat ${TMP:?} | mail -s "WAN ADDRESS" indou.tsystem@docomo.ne.jp
+  cat ${TMP:?} | mail -s "WAN ADDRESS address infomation." ${MAILTO:?}
 else
   if ! diff ${ORG:?} ${OUT:?}; then
-    cat ${TMP:?} | mail -s "WAN ADDRESS" indou.tsystem@docomo.ne.jp
+    cat ${TMP:?} | mail -s "WAN ADDRESS address is changed." ${MAILTO:?}
     mv ${OUT:?} ${ORG:?}
   fi
 fi
+exit 0
