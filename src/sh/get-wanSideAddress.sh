@@ -2,6 +2,7 @@
 SCRIPT=${0##*/}
 TMP=/tmp/${SCRIPT:?}.$$.tmp
 LOG=/tmp/${SCRIPT:?}.$$.log
+LASTLOG=~/log/${SCRIPT:?}.log
 MAILTO=indou.tsystem@docomo.ne.jp
 export LANG=C
 
@@ -24,6 +25,7 @@ RC=$?
 
 if [ "${RC:?}" -ne "0" ]; then
   cat ${LOG:?} | mail -s "WAN ADDRESS wget fail. RC:${RC:?}." ${MAILTO:?}
+  cat ${LOG:?} >> ${LASTLOG:?}
   exit 1
 fi
 
@@ -64,9 +66,11 @@ cp -p ${TMP:?} ${TXT:?}
 if [ ! -e ${ORG:?} ]; then
   mv ${OUT:?} ${ORG:?}
   cat ${TMP:?} | mail -s "WAN ADDRESS address infomation." ${MAILTO:?}
+  cat ${TMP:?} >> ${LASTLOG:?}
 else
   if ! diff ${ORG:?} ${OUT:?}; then
     cat ${TMP:?} | mail -s "WAN ADDRESS address is changed." ${MAILTO:?}
+    cat ${TMP:?} >> ${LASTLOG:?}
     mv ${OUT:?} ${ORG:?}
   fi
 fi
