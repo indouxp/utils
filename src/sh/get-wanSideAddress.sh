@@ -7,9 +7,9 @@ MAILTO=indou.tsystem@docomo.ne.jp
 export LANG=C
 DF="+%Y%m%d.%H%M%S"
 
-echo "${SCRIPT:?}:`date ${DF:?}` start" >> ${SCRIPT:?}
+echo "${SCRIPT:?}:`date ${DF:?}` start" >> ${LASTLOG:?}
 TERM() {
-  echo "${SCRIPT:?}:`date ${DF:?}` done" >> ${SCRIPT:?}
+  echo "${SCRIPT:?}:`date ${DF:?}` done" >> ${LASTLOG:?}
   rm -f /tmp/${0##*/}.$$.*
 }
 
@@ -78,10 +78,3 @@ else
   fi
 fi
 exit 0
-
-get-wanSideAddress.sh: start
-get-wanSideAddress.sh: done
-get-wanSideAddress.sh: start
-get-wanSideAddress.sh: done
-get-wanSideAddress.sh: start
-get-wanSideAddress.sh: done
