@@ -3,7 +3,7 @@ SCRIPT=${0##*/}
 TMP=/tmp/${SCRIPT:?}.$$.tmp
 LOG=/tmp/${SCRIPT:?}.$$.log
 MAILTO=indou.tsystem@docomo.ne.jp
-LANG=C
+export LANG=C
 
 TERM() {
   rm -f /tmp/${0##*/}.$$.*
