@@ -1,8 +1,17 @@
 #!/bin/sh
+###############################################################################
+#
+# WAN、LAN間のルーターにアクセスし、管理画面から、WAN側のIP ADDRESSを取得
+# 前回との差分がある場合は、メールする。
+#
+###############################################################################
 SCRIPT=${0##*/}
 TMP=/tmp/${SCRIPT:?}.$$.tmp
 LOG=/tmp/${SCRIPT:?}.$$.log
-LASTLOG=~/log/${SCRIPT:?}.log
+LASTLOG=/home/pi/log/${SCRIPT:?}.log
+OUT=/home/pi/tmp/${SCRIPT:?}.out
+ORG=/home/pi/tmp/${SCRIPT:?}.org
+TXT=/home/pi/log/${SCRIPT:?}.txt
 MAILTO=indou.tsystem@docomo.ne.jp
 export LANG=C
 DF="+%Y%m%d.%H%M%S"
@@ -19,9 +28,6 @@ LF=$(printf '\\\012_');LF=${LF%_}
 USER="adm"                                    # 管理者
 PASS="defleppard"                             # password
 URL="http://192.168.0.1/index.cgi/info_main"  # lan側からルーターの管理画面にアクセス
-OUT=/home/pi/tmp/${SCRIPT:?}.out
-ORG=/home/pi/tmp/${SCRIPT:?}.org
-TXT=/home/pi/tmp/${SCRIPT:?}.txt
 
 wget --http-user=${USER:?} --http-password=${PASS:?} -O ${OUT:?} ${URL:?} > ${LOG:?} 2>&1
 RC=$?
