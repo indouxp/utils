@@ -51,8 +51,13 @@ main() {
 	[ ${RC:?} -ne 0 ] && msg="${SCRIPT:?}:fail. at 020" && logger $msg && tolog $msg && exit 9
 
 	if [ -s ${TMP:?} ]; then
+    cat ${TMP:?} >> ${LOG:?}
 		cat ${TMP:?} | mail -s "Invasion information" ${MAIL:?}
 		[ ${RC:?} -ne 0 ] && msg="${SCRIPT:?}:fail. at 030" && logger $msg && tolog $msg && exit 9
+    for i in `awk 'BEGIN{for (i = 0; i < 5; i++) {print i;}}'`
+    do
+      mpg321 /home/pi/data/se_maoudamashii_chime01.mp3 &
+    done
 	fi
 
 	mv ${NOW:?} ${MASTER:?}
