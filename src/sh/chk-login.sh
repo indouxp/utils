@@ -48,7 +48,7 @@ main() {
 
   touch ${MASTER:?}
   #diff ${MASTER:?} ${NOW:?} | head -2 | tail -1 > ${TMP:?}
-  diff ${MASTER:?} ${NOW:?} | grep ">" > ${TMP:?}
+  diff ${MASTER:?} ${NOW:?} | grep ">" > ${TMP:?}  # >のみ出力
   RC=$?
   [ ${RC:?} -ne 0 ] && msg="${SCRIPT:?}:fail. at 020" && logger $msg && tolog $msg && exit 9
 
