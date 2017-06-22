@@ -44,18 +44,18 @@ main() {
     END{
     }' > ${NOW:?}
   RC=$?
-  [ ${RC:?} -ne 0 ] && msg="${SCRIPT:?}:fail. at 010" && logger $msg && tolog $msg && exit 9
+  [ ${RC:?} -ne 0 ] && msg="${SCRIPT:?}:fail. at 010" ; logger "$msg" ; tolog "$msg" ; exit 9
 
   touch ${MASTER:?}
   #diff ${MASTER:?} ${NOW:?} | head -2 | tail -1 > ${TMP:?}
   diff ${MASTER:?} ${NOW:?} | grep ">" > ${TMP:?}  # >のみ出力
   RC=$?
-  [ ${RC:?} -ne 0 ] && msg="${SCRIPT:?}:fail. at 020" && logger $msg && tolog $msg && exit 9
+  [ ${RC:?} -ne 0 ] && msg="${SCRIPT:?}:fail. at 020" ; logger "$msg" ; tolog "$msg" ; exit 9
 
   if [ -s ${TMP:?} ]; then
     cat ${TMP:?} >> ${LOG:?}
     cat ${TMP:?} | mail -s "Invasion information" ${MAIL:?}
-    [ ${RC:?} -ne 0 ] && msg="${SCRIPT:?}:fail. at 030" && logger $msg && tolog $msg && exit 9
+    [ ${RC:?} -ne 0 ] && msg="${SCRIPT:?}:fail. at 030" ; logger "$msg" ; tolog "$msg" ; exit 9
     for i in `awk 'BEGIN{for (i = 0; i < 5; i++) {print i;}}'`
     do
       mpg321 /home/pi/data/se_maoudamashii_chime01.mp3 &
