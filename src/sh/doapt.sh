@@ -26,12 +26,15 @@ mail2(){
 rm -f /var/log/${NAME:?}.last.at.*
 
 ###############################################################################
-# 外部サーバーへのpingによりネットワークの接続を確認
+# 開始
 echo "${NAME:?}:`date`:start." > ${LOG:?}
+
+###############################################################################
+# 外部サーバーへのpingによりネットワークの接続を確認
 until ping -c1 ${EXTERNAL_SERVER:?}
 do
   sleep 60
-  echo "${NAME:?}:`date`:sleeping." >> ${LOG:?}
+  echo "${NAME:?}:`date`:ping fail. sleeping." >> ${LOG:?}
 done
 
 ###############################################################################
@@ -45,6 +48,7 @@ nice ${CMD:?} >> ${LOG:?} 2>&1
 RC=$?
 if [ "${RC:?}" -ne "0" ]; then
   echo "${CMD:?} fail. RC:${RC:?}" 1>&2
+  echo "${CMD:?}:${RC:?}" | logger
   mail2 "${CMD:?}:${RC:?}"
   exit ${RC:?}
 fi
@@ -58,6 +62,7 @@ nice ${CMD:?} >> ${LOG:?} 2>&1
 RC=$?
 if [ "${RC:?}" -ne "0" ]; then
   echo "${CMD:?} fail. RC:${RC:?}" 1>&2
+  echo "${CMD:?}:${RC:?}" | logger
   mail2 "${CMD:?}:${RC:?}"
   exit ${RC:?}
 fi
