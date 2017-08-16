@@ -1,7 +1,7 @@
 #!/bin/sh
 ###############################################################################
 #
-# crontabで、0 8 * * * CMD に実行され、第三水曜日の場合きゃーという
+# crontabで、0 8 * * * CMD に実行され、第三水曜日の場合音楽鳴らす
 #
 ###############################################################################
 TMP=/tmp/${0##*/}.tmp.$$
@@ -32,4 +32,4 @@ awk -v today=$TODAY '
 RC=$?
 [ $RC = 9 ] && mpg321 /home/pi/data/se_maoudamashii_voice_human02.mp3
 [ $RC = 9 ] && mpg321 /home/pi/data/se_maoudamashii_voice_human02.mp3
-[ $RC = 9 ] && mpg321 /home/pi/data/se_maoudamashii_voice_human02.mp3 &
+[ $RC = 9 ] && mpg321 /home/pi/data/song_22_ixia.mp3 &
