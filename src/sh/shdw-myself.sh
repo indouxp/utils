@@ -26,6 +26,8 @@ do
     COUNT=`expr ${COUNT:?} + 1`
     echo $COUNT
     if [ ${COUNT:?} -eq 5 ]; then
+      msg="`date '+%Y%m%d.%H%M%S'`:${0##*/}:ping status fail. ${COUNT:?} times."
+      echo ${msg:?} | tee -a ${LOG:?} | logger
       break
     fi
     sleep 1
