@@ -29,4 +29,4 @@ awk -v today=$TODAY '
     }
   }
 '
-[ $? = 9 ] && mpg321 /home/pi/data/se_maoudamashii_chime01.mp3 &
+[ $? = 9 ] && mpg321 /home/pi/data/se_maoudamashii_voice_human02.mp3 &
