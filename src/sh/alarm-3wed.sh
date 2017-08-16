@@ -19,6 +19,9 @@ TODAY=`date '+%d'`
 
 sed -n '/Su Mo Tu We Th Fr Sa/,$p' $TMP |
 awk -v today=$TODAY '
+  BEGIN{
+    printf("%s\n", system(date));
+  }
   {
     if (NR == 4) {                               # title行より3行目
       if (length($4) == 6 || length($4) == 3) {  # 第三水曜日は4フィールド目で、当日の場合制御文字を含むため文字列長が6
@@ -28,7 +31,7 @@ awk -v today=$TODAY '
           wed3 = sprintf("%s%s", substr($4, 3, 1), substr($4, 6, 1));
         }
         if (wed3 == today) {      
-          printf("%s は、第三水曜\n", system(date));
+          printf("%s は、第三水曜\n", today);
           exit 9;
         }
       }

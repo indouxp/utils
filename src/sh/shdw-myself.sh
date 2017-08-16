@@ -24,14 +24,14 @@ while true
 do
   if ! ping -c1 ${DNS:?} > /dev/null 2>&1; then
     COUNT=`expr ${COUNT:?} + 1`
-    echo $COUNT
+    msg="`date '+%Y%m%d.%H%M%S'`:${0##*/}:ping status fail. ${COUNT:?} times."
+    echo ${msg:?} | tee -a ${LOG:?} | logger
     if [ ${COUNT:?} -eq 5 ]; then
-      msg="`date '+%Y%m%d.%H%M%S'`:${0##*/}:ping status fail. ${COUNT:?} times."
-      echo ${msg:?} | tee -a ${LOG:?} | logger
       break
     fi
     sleep 1
   else
+    COUNT=0
     sleep 30
   fi
 done
@@ -40,3 +40,4 @@ msg="`date '+%Y%m%d.%H%M%S'`:${0##*/}:shutdown"
 echo ${msg:?} | tee -a ${LOG:?} | logger
 tail -n 100 ${LOG:?} > ${TMP:?} &&  mv ${TMP:?} ${LOG:?}
 shutdown -h now
+
