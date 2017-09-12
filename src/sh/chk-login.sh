@@ -50,7 +50,7 @@ main() {
   #diff ${MASTER:?} ${NOW:?} | head -2 | tail -1 > ${TMP:?}
   diff ${MASTER:?} ${NOW:?} | grep ">" > ${TMP:?}  # >のみ出力
   RC=$?	# grep ">"がhitする場合、0。grep ">"がhitしない場合、1。
-  [ ${RC:?} -ne 0 ] && ( msg="${SCRIPT:?}:status ${RC:?}" ; logger "$msg" ; tolog "$msg" )
+  [ ${RC:?} -ne 0 ] && ( msg="${SCRIPT:?}:status ${RC:?} 追加ログインなし" ; logger "$msg" ; tolog "$msg" )
 
   if [ -s ${TMP:?} ]; then
     cat ${TMP:?} >> ${LOG:?}
