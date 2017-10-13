@@ -1,0 +1,8 @@
+ENTRY_NON_DISPLAY="\["
+EXIT_NON_DISPLAY="\]"
+RED="\e[31m"
+GREEN="\e[32m"
+CYAN="\e[36m"
+ORG="\e[0m\]"
+
+PS1="${ENTRY_NON_DISPLAY:?}${RED:?}\$? ${CYAN:?}\D{%y%m%d-%H%M%S} ${GREEN:?}\u@${RED:?}\h${ORG:?}:\w${EXIT_NON_DISPLAY:?}\n\$ "
