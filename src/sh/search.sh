@@ -17,7 +17,10 @@ do
     continue 
   fi
   if [ $DIR != $SCRIPT_DIR ]; then
-    DEST=`echo $LINE |sed 's%/%@%g'`
+    DEST=`echo $LINE | sed 's%/%@%g'`
     mv ${LINE:?} ${DEST:?}
+    NOW=`echo ${LINE:?} | sed 's/\.bk[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9].*//'`
+    DEST=`echo $NOW |sed 's%/%@%g'`
+    cp -p ${NOW:?} ${DEST:?}
   fi
 done
