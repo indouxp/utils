@@ -1,8 +1,9 @@
 #!/bin/sh
 # https://qiita.com/koara-local/items/1fac13704123717f5cc8
-#
+# cpu温度取得(macbook)
 
-if cd /sys/devices/platform/coretemp.0/hwmon/hwmon1
+hostname
+if cd /sys/devices/platform/coretemp.0/hwmon/hwmon[01]
 then
   for FILE in *input
   do
