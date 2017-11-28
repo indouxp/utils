@@ -1,13 +1,13 @@
 #!/bin/sh
 ###############################################################################
-# $B;E;v$NF|$N%"%i!<%`(B
+# 仕事の日のアラーム
 #
 #
 ###############################################################################
 LOG=/home/pi/log/${0##*/}.log
 export LANG=C
 
-# $B;E;v$NF|0J30$O=*N;$9$k(B
+# 仕事の日以外は終了する
 TODAY=`date +%A`
 [ ${TODAY:?}  = "Sunday"    ] && exit 0
 #[ ${TODAY:?} = "Monday"    ] && exit 0
@@ -17,7 +17,8 @@ TODAY=`date +%A`
 #[ ${TODAY:?} = "Friday"    ] && exit 0
 [ ${TODAY:?}  = "Saturday"  ] && exit 0
 
-# ~/data$B0J2<$N(Bogg$B$N<B9T(B
+date '+%Y%m%d.%H%M%S'       >> ${LOG:?}
+# ~/data以下のoggの実行
 for FILE in `ls -1 /home/pi/data/*.ogg`
 do
   echo $FILE                >> ${LOG:?}
