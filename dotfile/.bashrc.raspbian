@@ -96,6 +96,8 @@ fi
 alias rm='rm -i'
 alias cp='cp -i'
 alias mv='mv -i'
+alias update='sudo apt-get update && sudo apt-get upgrade -y'
+alias ssh='ssh -o "StrictHostKeyChecking no"'
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like
