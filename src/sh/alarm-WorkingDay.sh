@@ -18,12 +18,14 @@ TODAY=`date +%A`
 [ ${TODAY:?}  = "Saturday"  ] && exit 0
 
 date '+%Y%m%d.%H%M%S'       >> ${LOG:?}
-# ~/data以下のoggの実行
-for FILE in `ls -1 /home/pi/data/*.ogg`
-do
-  echo $FILE                >> ${LOG:?}
-  sudo /usr/bin/aumix -v 50 >> ${LOG:?} 2>&1
-  /usr/bin/ogg123 $FILE     >> ${LOG:?}
-done
-
+## ~/data以下のoggの実行
+#for FILE in `ls -1 /home/pi/data/*.ogg`
+#do
+#  echo $FILE                >> ${LOG:?}
+#  sudo /usr/bin/aumix -v 50 >> ${LOG:?} 2>&1
+#  /usr/bin/ogg123 $FILE     >> ${LOG:?}
+#done
+#
+ssh volumio@rpi2 'volumio random'
+ssh volumio@rpi2 'volumio play'
 exit 0
