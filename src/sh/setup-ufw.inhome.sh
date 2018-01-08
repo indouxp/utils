@@ -10,6 +10,7 @@ sudo ufw default deny
 sudo ufw allow 22
 sudo ufw allow from 192.168.0.0/24 to any port 53
 sudo ufw allow 123/udp
+sudo ufw allow 445/tcp
 sudo ufw allow out 123/udp
 
 echo "type \"sudo ufw enable\" and type \"sudo ufw status\""

@@ -13,6 +13,7 @@ LOG=/tmp/${SCRIPT:?}.$$.log
 LASTLOG=/home/pi/log/${SCRIPT:?}.log
 OUT=/home/pi/tmp/${SCRIPT:?}.out
 ORG=/home/pi/tmp/${SCRIPT:?}.org
+DATE=/home/pi/tmp/${SCRIPT:?}.date
 TXT=/home/pi/log/${SCRIPT:?}.txt
 MAILTO=indou.tsystem@docomo.ne.jp
 export LANG=C
@@ -83,6 +84,15 @@ else
     cat ${TMP:?} | mail -s "WAN ADDRESS address is changed." ${MAILTO:?}
     cat ${TMP:?} >> ${LASTLOG:?}
     mv ${OUT:?} ${ORG:?}
+  fi
+fi
+
+if [ ! -e ${DATE:?} ]; then
+  date '+%Y%m%d' > ${DATE:?}
+else
+  if [ `cat ${DATE:?}` != `date '+%Y%m%d'` ]; then
+    cat ${TMP:?} | mail -s "WAN ADDRESS address infomation." ${MAILTO:?}
+    date '+%Y%m%d' > ${DATE:?}
   fi
 fi
 exit 0
