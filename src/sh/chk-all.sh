@@ -1,6 +1,6 @@
 #!/bin/sh
 
-NAMES="ml110g7 ml110g7-2 t3600 vip rpi-bp rpi2 rpi-b macbook stormZ170"
+NAMES="ml110g7 ml110g7-2 t3600 vip rpi-bp rpi2 rpi-b macbook stormZ170 r60e"
 
 for NAME in ${NAMES:?}
 do
