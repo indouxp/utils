@@ -18,7 +18,7 @@ if open_jtalk \
     -ow ${WAV:?} \
     ${VOICE:?}; then
 
-  aplay ${WAV:?}
+  aplay --quiet ${WAV:?}
 fi
 rm /tmp/${0##*/}.$$.voice
 rm /tmp/${0##*/}.$$.wav
