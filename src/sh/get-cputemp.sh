@@ -3,11 +3,22 @@
 # cpu温度取得(macbook)
 
 hostname
-if cd /sys/devices/platform/coretemp.0/hwmon/hwmon[01]
-then
-  for FILE in *input
-  do
-    echo $FILE
-    echo "scale=2; `cat $FILE` / 1000" | bc
-  done
-fi
+
+case `uname -m` in
+armv6l)
+  if cd  /sys/class/thermal/thermal_zone0
+  then
+    echo "scale=2; `cat temp` / 1000" | bc
+  fi
+  ;;
+*)
+  if cd /sys/devices/platform/coretemp.0/hwmon/hwmon[01]
+  then
+    for FILE in *input
+    do
+      echo $FILE
+      echo "scale=2; `cat $FILE` / 1000" | bc
+    done
+  fi
+  ;;
+esac
