@@ -7,6 +7,9 @@
 VOICE=/tmp/${0##*/}.$$.voice
 WAV=/tmp/${0##*/}.$$.wav
 
+sudo amixer cset numid=1 98.4%
+sudo alsactl store
+
 cat | nkf -w > ${VOICE:?}
 
 MAN=/usr/share/hts-voice/nitech-jp-atr503-m001/nitech_jp_atr503_m001.htsvoice
