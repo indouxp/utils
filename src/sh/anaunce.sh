@@ -53,7 +53,7 @@ if ! diff ${TMP_NOTICE:?} ${OLD_NOTICE:?} > /dev/null; then
   echo "`date ${DATE_FORMAT:?}`:${NAME:?}:TALK:`nkf ${TMP_NOTICE:?}`" >> ${LOG_PATH:?}
   NOW=1
 else
-  if [ ${NOW:?} -lt ${MAX_TALK:?} ]; then
+  if [ ${NOW:?} -le ${MAX_TALK:?} ]; then
     cat ${TMP_NOTICE:?} | ${TALK:?}
     echo "`date ${DATE_FORMAT:?}`:${NAME:?}:TALK:`nkf ${TMP_NOTICE:?}`" >> ${LOG_PATH:?}
   fi
