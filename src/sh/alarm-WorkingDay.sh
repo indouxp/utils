@@ -7,15 +7,21 @@
 LOG=/home/pi/log/${0##*/}.log
 export LANG=C
 
+DONE() {
+  echo "skip" >> ${LOG:?}
+  exit 1
+}
+
+
 # 仕事の日以外は終了する
 TODAY=`date +%A`
-[ ${TODAY:?}  = "Sunday"    ] && exit 0
-#[ ${TODAY:?} = "Monday"    ] && exit 0
-#[ ${TODAY:?} = "Tuesday"   ] && exit 0
-[ ${TODAY:?}  = "Wednesday" ] && exit 0
-#[ ${TODAY:?} = "Thursday"  ] && exit 0
-#[ ${TODAY:?} = "Friday"    ] && exit 0
-[ ${TODAY:?}  = "Saturday"  ] && exit 0
+[ ${TODAY:?}  = "Sunday"    ] && DONE
+#[ ${TODAY:?} = "Monday"    ] && DONE
+#[ ${TODAY:?} = "Tuesday"   ] && DONE
+[ ${TODAY:?}  = "Wednesday" ] && DONE
+#[ ${TODAY:?} = "Thursday"  ] && DONE
+#[ ${TODAY:?} = "Friday"    ] && DONE
+[ ${TODAY:?}  = "Saturday"  ] && DONE
 
 date '+%Y%m%d.%H%M%S'       >> ${LOG:?}
 ## ~/data以下のoggの実行
@@ -26,6 +32,8 @@ date '+%Y%m%d.%H%M%S'       >> ${LOG:?}
 #  /usr/bin/ogg123 $FILE     >> ${LOG:?}
 #done
 #
-ssh volumio@rpi2 'volumio random'
-ssh volumio@rpi2 'volumio play'
+ssh volumio@rpi2 'volumio random' >> ${LOG:?}
+echo ""                           >> ${LOG:?}
+ssh volumio@rpi2 'volumio play'   >> ${LOG:?}
+echo ""                           >> ${LOG:?}
 exit 0
