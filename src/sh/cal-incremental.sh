@@ -1,5 +1,6 @@
 #!/bin/sh
 NAME=${0##*/}
+
 USAGE() {
   cat <<EOT
 \$ ${NAME:?} DIR SEC
@@ -20,11 +21,18 @@ MAIN() {
     exit 1
   fi
   FROM_EPOCH=$(date '+%s')
-  FROM_BYTE=$(du -sb ${DIR:?} | awk '{print $1;}')
+  FROM_BYTE=$(du -sk ${DIR:?} | awk '{print $1;}')
   sleep ${SEC:?}
   TO_EPOCH=$(date '+%s')
-  TO_BYTE=$(du -sb ${DIR:?} | awk '{print $1;}')
-  echo "$(echo "scale=2; (${TO_BYTE:?} - ${FROM_BYTE:?}) / (${TO_EPOCH:?} - ${FROM_EPOCH:?})" | bc) bytes/sec"
+  TO_BYTE=$(du -sk ${DIR:?} | awk '{print $1;}')
+  if [ "$(which bc)" != "" ]; then
+    RESULT=`echo "scale=2; (${TO_BYTE:?} - ${FROM_BYTE:?}) / (${TO_EPOCH:?} - ${FROM_EPOCH:?})" | bc`
+    echo "${RESULT:?} Kbytes/sec"
+  else
+    expr "(${TO_BYTE:?} - ${FROM_BYTE:?}) / (${TO_EPOCH:?} - ${FROM_EPOCH:?}) "
+    echo "echo \"(${TO_BYTE:?} - ${FROM_BYTE:?}) / (${TO_EPOCH:?} - ${FROM_EPOCH:?})\" | bc"
+    #expr (${TO_BYTE:?} - ${FROM_BYTE:?}) / (${TO_EPOCH:?} - ${FROM_EPOCH:?})
+  fi
 }
 
 if [ $# -eq 0 ]; then
