@@ -15,7 +15,7 @@ NOTICE=~/notice.txt
 TMP_NOTICE=~/tmp/notice.txt
 TMP_COUNT=~/tmp/count.txt
 OLD_NOTICE=~/tmp/notice.old
-MAX_TALK=5
+MAX_TALK=2
 
 DATE_FORMAT='+%Y%m%d.%H%M%S'
 
