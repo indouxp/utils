@@ -15,8 +15,8 @@ do
   NOW_AVI=$(ls ${TARGET_DIR:?}/*.avi | wc -l)
   NOW=`date '+%m月%d日 %H時%M分%S秒'`
   if [ "${NOW_AVI:?}" -ne "${ORG_AVI:?}" ]; then
-    echo "動体を検知しました。" > ${NOTICE:?}
-    echo "動体を検知しました。$NOW" >> ${LOG:?}
+    echo "動体を検知しました。${ORG_AVI:?} -> ${NOW_AVI:?}" >  ${NOTICE:?}
+    echo "動体を検知しました。$NOW"                         >> ${LOG:?}
   #else
   #  echo "変化はありません。$NOW"   > ${NOTICE:?}
   fi
