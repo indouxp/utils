@@ -7,7 +7,7 @@
 VOICE=/tmp/${0##*/}.$$.voice
 WAV=/tmp/${0##*/}.$$.wav
 
-sudo amixer cset numid=1 98.4%
+sudo amixer cset numid=1 98.4% > /dev/null 2>&1
 sudo alsactl store
 
 cat | nkf -w > ${VOICE:?}
