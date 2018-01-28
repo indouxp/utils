@@ -52,11 +52,11 @@ fi
 
 if ! diff ${TMP_NOTICE:?} ${OLD_NOTICE:?} > /dev/null; then
   NOW=1
-  echo "`cat ${TMP_NOTICE:?}`。${NOW:?}回目。" | ${TALK:?}
+  echo "`cat ${TMP_NOTICE:?}`。${NOW:?}回目のアナウンスです。" | ${TALK:?}
   echo "`date ${DATE_FORMAT:?}`:${NAME:?}:TALK:`nkf ${TMP_NOTICE:?}`" >> ${LOG_PATH:?}
 else
   if [ ${NOW:?} -le ${MAX_TALK:?} ]; then
-    echo "`cat ${TMP_NOTICE:?}`。${NOW:?}回目。" | ${TALK:?}
+    echo "`cat ${TMP_NOTICE:?}`。${NOW:?}回目のアナウンスです。" | ${TALK:?}
     echo "`date ${DATE_FORMAT:?}`:${NAME:?}:TALK:`nkf ${TMP_NOTICE:?}`" >> ${LOG_PATH:?}
   fi
 fi
