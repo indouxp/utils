@@ -5,7 +5,8 @@ LOG_DIR=/var/log
 LOG_NAME=${NAME:?}.log
 LOG=${LOG_DIR:?}/${LOG_NAME:?}
 
-NOTICE=/home/pi/notice.txt
+NO=1
+NOTICE=/home/pi/notice${NO:?}.txt
 TARGET_DIR=/mnt/usb8G/webcam
 SLEEP_SEC=5
 
