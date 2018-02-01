@@ -1,21 +1,25 @@
 #!/bin/sh
 ###############################################################################
 #
-# ~/notice.txtの内容を、talk.shに送る
+# cronから呼び出され、~/notice${NO:?}.txtの内容を、talk.shに送る
+# crontabの設定例
+# */5 * * * * /home/pi/utils/src/sh/anaunce.sh
 #
 ###############################################################################
 NAME=${0##*/}
+
+NO=$1
 
 LOG_DIR=~/log
 LOG_FILE=${NAME:?}.log
 LOG_PATH=${LOG_DIR:?}/${LOG_FILE:?}
 
 TALK=~/utils/src/sh/talk.sh
-NOTICE=~/notice.txt
-TMP_NOTICE=~/tmp/notice.txt
-TMP_COUNT=~/tmp/count.txt
-OLD_NOTICE=~/tmp/notice.old
-MAX_TALK=5
+NOTICE=~/notice${NO:?}.txt
+TMP_NOTICE=~/tmp/${NAME:?}.notice${NO:?}.txt
+TMP_COUNT=~/tmp/${NAME:?}.count${NO:?}.txt
+OLD_NOTICE=~/tmp/${NAME:?}.notice${NO:?}.old
+MAX_TALK=2
 
 DATE_FORMAT='+%Y%m%d.%H%M%S'
 
@@ -49,12 +53,12 @@ else
 fi
 
 if ! diff ${TMP_NOTICE:?} ${OLD_NOTICE:?} > /dev/null; then
-  cat ${TMP_NOTICE:?} | ${TALK:?}
-  echo "`date ${DATE_FORMAT:?}`:${NAME:?}:TALK:`nkf ${TMP_NOTICE:?}`" >> ${LOG_PATH:?}
   NOW=1
+  echo "`cat ${TMP_NOTICE:?}`。${NOW:?}回目のアナウンスです。" | ${TALK:?}
+  echo "`date ${DATE_FORMAT:?}`:${NAME:?}:TALK:`nkf ${TMP_NOTICE:?}`" >> ${LOG_PATH:?}
 else
   if [ ${NOW:?} -le ${MAX_TALK:?} ]; then
-    cat ${TMP_NOTICE:?} | ${TALK:?}
+    echo "`cat ${TMP_NOTICE:?}`。${NOW:?}回目のアナウンスです。" | ${TALK:?}
     echo "`date ${DATE_FORMAT:?}`:${NAME:?}:TALK:`nkf ${TMP_NOTICE:?}`" >> ${LOG_PATH:?}
   fi
 fi
