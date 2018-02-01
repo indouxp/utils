@@ -1,22 +1,24 @@
 #!/bin/sh
 ###############################################################################
 #
-# cronから呼び出され、~/notice.txtの内容を、talk.shに送る
+# cronから呼び出され、~/notice${NO:?}.txtの内容を、talk.shに送る
 # crontabの設定例
 # */5 * * * * /home/pi/utils/src/sh/anaunce.sh
 #
 ###############################################################################
 NAME=${0##*/}
 
+NO=$1
+
 LOG_DIR=~/log
 LOG_FILE=${NAME:?}.log
 LOG_PATH=${LOG_DIR:?}/${LOG_FILE:?}
 
 TALK=~/utils/src/sh/talk.sh
-NOTICE=~/notice.txt
-TMP_NOTICE=~/tmp/${NAME:?}.notice.txt
-TMP_COUNT=~/tmp/${NAME:?}.count.txt
-OLD_NOTICE=~/tmp/${NAME:?}.notice.old
+NOTICE=~/notice${NO:?}.txt
+TMP_NOTICE=~/tmp/${NAME:?}.notice${NO:?}.txt
+TMP_COUNT=~/tmp/${NAME:?}.count${NO:?}.txt
+OLD_NOTICE=~/tmp/${NAME:?}.notice${NO:?}.old
 MAX_TALK=2
 
 DATE_FORMAT='+%Y%m%d.%H%M%S'
