@@ -6,6 +6,7 @@
 ###############################################################################
 VOICE=/tmp/${0##*/}.$$.voice
 WAV=/tmp/${0##*/}.$$.wav
+SPEED=0.5
 
 sudo amixer cset numid=1 98.4% > /dev/null 2>&1
 sudo alsactl store
@@ -19,6 +20,7 @@ if open_jtalk \
     -m ${LADY:?} \
     -x /var/lib/mecab/dic/open-jtalk/naist-jdic \
     -ow ${WAV:?} \
+    -r ${SPEED:?}\
     ${VOICE:?}; then
 
   aplay --quiet ${WAV:?}
