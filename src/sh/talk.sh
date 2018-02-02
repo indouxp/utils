@@ -26,7 +26,7 @@ done
 
 VOICE=/tmp/${0##*/}.$$.voice
 WAV=/tmp/${0##*/}.$$.wav
-SPEED=0.5
+SPEED=0.7
 
 sudo amixer cset numid=1 98.4% > /dev/null 2>&1
 sudo alsactl store
