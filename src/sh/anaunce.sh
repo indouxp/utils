@@ -1,7 +1,7 @@
 #!/bin/sh
 ###############################################################################
 #
-# cronから呼び出され、~/notice${NO:?}.txtの内容を、talk.shに送る
+# cronから呼び出され、~/notice${NO}.txtの内容を、talk.shに送る
 # crontabの設定例
 # */5 * * * * /home/pi/utils/src/sh/anaunce.sh
 #
@@ -15,17 +15,17 @@ LOG_FILE=${NAME:?}.log
 LOG_PATH=${LOG_DIR:?}/${LOG_FILE:?}
 
 TALK=~/utils/src/sh/talk.sh
-NOTICE=~/notice${NO:?}.txt
-TMP_NOTICE=~/tmp/${NAME:?}.notice${NO:?}.txt
-TMP_COUNT=~/tmp/${NAME:?}.count${NO:?}.txt
-OLD_NOTICE=~/tmp/${NAME:?}.notice${NO:?}.old
+NOTICE=~/notice${NO}.txt
+TMP_NOTICE=~/tmp/${NAME:?}.notice${NO}.txt
+TMP_COUNT=~/tmp/${NAME:?}.count${NO}.txt
+OLD_NOTICE=~/tmp/${NAME:?}.notice${NO}.old
 MAX_TALK=2
 
 DATE_FORMAT='+%Y%m%d.%H%M%S'
 
 if [ ! -e ${NOTICE:?} ]; then
   echo "`date ${DATE_FORMAT:?}`:${NAME:?}:${NOTICE:?}がありません。" >> ${LOG_PATH:?}
-  exit0
+  exit 0
 fi
 
 # ~/notice.txtの更新時刻の取得
