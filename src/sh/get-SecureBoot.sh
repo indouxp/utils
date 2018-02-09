@@ -5,5 +5,5 @@
 #
 ###############################################################################
 
-od -An -t u1 /sys/firmware/efi/vars/SecureBoot*
+od -An -t u1 /sys/firmware/efi/vars/SecureBoot-*/data
 
