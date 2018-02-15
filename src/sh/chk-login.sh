@@ -59,7 +59,7 @@ main() {
     for i in `awk 'BEGIN{for (i = 0; i < 5; i++) {print i;}}'`
     do
       echo "mpg321"                                                      >> ${LOG:?}
-      ssh pi@rpi-bp "mpg321 /home/pi/data/se_maoudamashii_chime01.mp3 &" >> ${LOG:?} 2>&1
+      su - pi -c ssh pi@rpi-bp "mpg321 /home/pi/data/se_maoudamashii_chime01.mp3 &" >> ${LOG:?} 2>&1
       echo "RC:$?"                                                       >> ${LOG:?}
     done
   fi
