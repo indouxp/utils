@@ -20,18 +20,21 @@ MAIN() {
     USAGE
     exit 1
   fi
+
   FROM_EPOCH=$(date '+%s')
-  FROM_BYTE=$(du -sk ${DIR:?} | awk '{print $1;}')
+  FROM_KBYTE=$(du -sk ${DIR:?} | awk '{print $1;}')
   sleep ${SEC:?}
   TO_EPOCH=$(date '+%s')
-  TO_BYTE=$(du -sk ${DIR:?} | awk '{print $1;}')
+  TO_KBYTE=$(du -sk ${DIR:?} | awk '{print $1;}')
+
   if [ "$(which bc)" != "" ]; then
-    RESULT=`echo "scale=2; (${TO_BYTE:?} - ${FROM_BYTE:?}) / (${TO_EPOCH:?} - ${FROM_EPOCH:?})" | bc`
-    echo "${RESULT:?} Kbytes/sec"
+    RESULT1=`echo "scale=2; (${TO_KBYTE:?} - ${FROM_KBYTE:?}) / (${TO_EPOCH:?} - ${FROM_EPOCH:?})" | bc`
+    RESULT2=`echo "scale=2; (${TO_KBYTE:?} - ${FROM_KBYTE:?}) / (${TO_EPOCH:?} - ${FROM_EPOCH:?}) / 1024" | bc`
+    echo "${RESULT1:?} Kbytes/sec, ${RESULT2:?} Mbytes/sec"
   else
-    expr "(${TO_BYTE:?} - ${FROM_BYTE:?}) / (${TO_EPOCH:?} - ${FROM_EPOCH:?}) "
-    echo "echo \"(${TO_BYTE:?} - ${FROM_BYTE:?}) / (${TO_EPOCH:?} - ${FROM_EPOCH:?})\" | bc"
-    #expr (${TO_BYTE:?} - ${FROM_BYTE:?}) / (${TO_EPOCH:?} - ${FROM_EPOCH:?})
+    expr "(${TO_KBYTE:?} - ${FROM_KBYTE:?}) / (${TO_EPOCH:?} - ${FROM_EPOCH:?}) "
+    echo "echo \"(${TO_KBYTE:?} - ${FROM_KBYTE:?}) / (${TO_EPOCH:?} - ${FROM_EPOCH:?})\" | bc"
+    #expr (${TO_KBYTE:?} - ${FROM_KBYTE:?}) / (${TO_EPOCH:?} - ${FROM_EPOCH:?})
   fi
 }
 
