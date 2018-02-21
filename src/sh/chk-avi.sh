@@ -27,7 +27,7 @@ do
     LAST=`ls -1 ${TARGET_DIR:?}/*.avi | tail -1 | sed "s%${TARGET_DIR:?}%%"`
     SIZE=`stat -c %s ${TARGET_DIR:?}${LAST:?}`
     echo "DEBUG:$LAST:$SIZE"
-    if [ 200000 -le ${SIZE:?} ]; then
+    if [ 100000 -le ${SIZE:?} ]; then
       cat <<EOT | tee ${UTF8:?} | nkf -s > ${SJIS:?}
 動体を検知しました。AVIファイルが、${ORG_AVI:?}ファイルから、${NOW_AVI:?}ファイルに増加しました。"
 EOT
