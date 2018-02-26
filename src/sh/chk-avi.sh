@@ -36,7 +36,7 @@ EOT
 ${NOW:?}
       http://192.168.0.254/${LAST:?}
 EOT
-      cat ${UTF8:?}   | mail -s "${NAME:?}" indou.tsystem@gmail.com,toshikoyumechan@ezweb.ne.jp
+      cat ${UTF8:?}   | mail -s "${NAME:?}" indou.tsystem@gmail.com
       cat ${SJIS:?}   | mail -s "${NAME:?}" indou.tsystem@docomo.ne.jp
     fi
     echo "動体を検知しました。${ORG_AVI:?} -> ${NOW_AVI:?} ${NOW:?}"              >> ${LOG:?}
