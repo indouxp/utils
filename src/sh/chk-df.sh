@@ -1,13 +1,20 @@
 #!/bin/sh
 TMP=/tmp/${0##*/}.tmp
+MAX_RETIO=90
+
+DONE(){
+  rm -f /tmp/${0##*/}.tmp*
+}
+
+trap 'DONE' 0 
 
 LANG=C df -h |
-awk '
+awk -vMAX_RETIO=${MAX_RETIO:?} '
   BEGIN{ERR=0;}
   {
     RETIO=$5;
     sub(/%/, "", RETIO);
-    if (90 <= (RETIO+0)){
+    if (MAX_RETIO <= (RETIO+0)){
       print $0; ERR = 1;
     }
   }
