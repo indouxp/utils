@@ -1,6 +1,6 @@
 #!/bin/sh
 TMP=/tmp/${0##*/}.tmp
-MAX_RETIO=90
+MAX_USE=90
 
 DONE(){
   rm -f /tmp/${0##*/}.tmp*
@@ -9,12 +9,14 @@ DONE(){
 trap 'DONE' 0 
 
 LANG=C df -h |
-awk -vMAX_RETIO=${MAX_RETIO:?} '
-  BEGIN{ERR=0;}
+awk -vMAX_USE=${MAX_USE:?} '
+  BEGIN{
+    ERR=0;
+  }
   {
-    RETIO=$5;
-    sub(/%/, "", RETIO);
-    if (MAX_RETIO <= (RETIO+0)){
+    USE=$5; # Use%
+    sub(/%/, "", USE);
+    if (MAX_USE <= (USE+0)){
       print $0; ERR = 1;
     }
   }
