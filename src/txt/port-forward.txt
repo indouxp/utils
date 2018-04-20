@@ -1,0 +1,52 @@
+port forwarding                                       *--------------*
+                                                   |  |              |
+*-----------*                   *---*              *--+ 192.168.0.40 |
+| TERMINAL1 |    106.158.220.236| R |192.168.0.1   |  |              |
+| TERMINAL2 +--//---------------+   +--------------*  *--------------*
+| TERMINAL3 |                   *---*              |
+*-----------*                                  192.168.0.0/24
+                                                   |
+
+TERMINAL1
+
+0 180309-162724 Downloads$ ssh pi@106.158.220.236 -L 10010:192.168.0.40:22 -N
+Enter proxy authentication password for 20166038@iproxy02.intra.hitachi.co.jp:
+Enter passphrase for key '/home/20166038/.ssh/id_rsa':
+packet_write_wait: Connection to UNKNOWN port 65535: Broken pipe
+255 180309-163155 Downloads$ ssh pi@106.158.220.236 -L 10010:192.168.0.40:22 -N
+Enter proxy authentication password for 20166038@iproxy02.intra.hitachi.co.jp:
+Enter passphrase for key '/home/20166038/.ssh/id_rsa':
+
+TERMINAL2
+
+0 180309-163337 Downloads$ ssh indou@localhost -p 10010
+The authenticity of host '[localhost]:10010 ([::1]:10010)' can't be established.
+ECDSA key fingerprint is SHA256:kMrsancfmwjVSJPA8yxVej+L7g5Cepk4ygs0f52JlCE.
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added '[localhost]:10010' (ECDSA) to the list of known hosts.
+indou@localhost's password:
+Linux macmini2010 4.9.0-3-amd64 #1 SMP Debian 4.9.30-2+deb9u5 (2017-09-19) x86_64
+
+The programs included with the Debian GNU/Linux system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+permitted by applicable law.
+Last login: Fri Mar  9 15:26:46 2018 from 192.168.0.251
+0 180309-163356 indou@macmini2010:~:$ exit
+ログアウト
+Connection to localhost closed.
+0 180309-163405 Downloads$
+
+TERMINAL3
+
+0 180309-163735 Downloads$ scp -P 10010 ./rhel-server-7.3-x86_64-dvd.iso indou@localhost:/tmp
+indou@localhost's password:
+rhel-server-7.3-x86_64-dvd.iso                                        0% 7936KB 304.5KB/s 3:22:22 ETA
+
+
+0 180309-163735 Downloads$ scp -P 10010 ./rhel-server-7.3-x86_64-dvd.iso indou@localhost:/tmp
+indou@localhost's password:
+rhel-server-7.3-x86_64-dvd.iso                                        0%   17MB 175.2KB/s 5:50:48 ETA
+
