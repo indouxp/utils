@@ -38,6 +38,10 @@ cat <<EOT
 このターミナルで、${CMD:?}を実行します。
 他ターミナル上で、${TARGET:?}:${PORT:?}への接続を、localhost:${LOCALPORT:?}宛てに
 実行できます。
+ex)
+$ scp -P 10010 ./rhel-server-7.3-x86_64-dvd.iso indou@localhost:/tmp
+$ ssh indou@localhost -p 10010
+
 EOT
 ${CMD:?}
 
