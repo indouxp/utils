@@ -1,0 +1,5 @@
+Applications && API
+
+Personal access tokens <- DIGITALOCEAN_API2_KEY
+
+Spaces access keys     <- DIGITALOCEAN_CLIENT_ID, DIGITALOCEAN_API_KEY
