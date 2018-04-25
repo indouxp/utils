@@ -1,5 +1,4 @@
 #!/bin/sh
-# 20180425:-regexp \"\.\r\$\"まで
 NAME=${0##*/}
 
 USER="indou.tsystem@gmail.com"
@@ -21,8 +20,10 @@ expect -c "
       send \"list\n\"
       exp_continue
     }
-    -regexp \"\.\r\$\" {
+    -regexp \"\\n\\.\\r\" {
       exit 0
     }
   }
 "
+exit 0
+# 20180425:-regexp \"\\n\\.\\r\" {成功
