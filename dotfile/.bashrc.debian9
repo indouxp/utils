@@ -115,6 +115,22 @@ if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
 
+# ts:20180221:https://qiita.com/yunzeroin/items/33a51c805e60ed5eca0e
+export RBENV_ROOT="${HOME}/.rbenv"
+if [ -d "${RBENV_ROOT}" ]; then
+  export PATH="${RBENV_ROOT}/bin:${PATH}"
+  eval "$(rbenv init -)"
+fi
+
+# ts:20180312
+if [ -d ${HOME:?}/bin ]; then
+  if echo ${PATH:?} | grep "${HOME:?}/bin"; then
+    :
+  else
+    export PATH=${PATH:?}:${HOME:?}/bin
+  fi
+fi
+
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
