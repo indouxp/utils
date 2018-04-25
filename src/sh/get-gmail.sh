@@ -1,8 +1,6 @@
 #!/bin/sh
 NAME=${0##*/}
-
-USER="indou.tsystem@gmail.com"
-PASS=homfmingwdzqkkik
+. ${NAME:?}.conf
 expect -c "
   set timeout 30
   log_file -noappend ${NAME:?}.log
