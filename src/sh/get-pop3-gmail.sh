@@ -41,6 +41,7 @@ expect -c "
 " > ${TMP:?}
 
 LAST_NO=$(awk '{if ($1 !~ /\./) {LAST_NO = $1;}}END{print LAST_NO;}' ${TMP:?})
+echo $LAST_NO
 
 expect -c "
   set timeout 30
@@ -57,6 +58,7 @@ expect -c "
     }
     -glob \"+OK Welcome\" {
       send \"retr ${LAST_NO:?}\n\"
+      exp_continue
     }
   }
 "
