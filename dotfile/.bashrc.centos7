@@ -13,3 +13,7 @@ export LANG=ja_JP.UTF-8
 if [ -f ~/utils/dotfile/.PS1.bash ]; then
   . ~/utils/dotfile/.PS1.bash
 fi
+
+alias rm='rm -i'
+alias mv='mv -i'
+alias cp='cp -i'
