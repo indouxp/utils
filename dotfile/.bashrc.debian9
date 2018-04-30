@@ -126,7 +126,7 @@ fi
 
 # ts:20180312
 if [ -d ${HOME:?}/bin ]; then
-  if echo ${PATH:?} | grep "${HOME:?}/bin"; then
+  if echo ${PATH:?} | grep "${HOME:?}/bin" > /dev/null; then
     :
   else
     export PATH=${PATH:?}:${HOME:?}/bin
