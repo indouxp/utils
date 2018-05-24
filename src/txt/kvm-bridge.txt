@@ -1,0 +1,45 @@
+
+※実NICはeth0
+
+- 1. 仮想NIC定義
+
+  - 1.1. eth0
+    /etc/sysconfig/network-scripts/ifcfg-eth0
+
+      DEVICE="eth0"
+      BOOTPROTO="none"
+      HWADDR="XX:XX:XX:XX:XX:XX"
+      NM_CONATROLLED="no"
+      ONBOOT="yes"
+      TYPE="Ethernet"
+      BRIDGE=br0
+      NM_CONTROLLED=no
+
+  - 1.2. br0
+    /etc/sysconfig/network-scripts/ifcfg-br0
+
+      DEVICE="br0"
+      BOOTPROTO="static"
+      ONBOOT="yes"
+      IPADDR=XXX.XXX.XXX.XXX
+      NETMASK=XXX.XXX.XXX.XXX
+      TYPE="Bridge"
+      NM_CONTROLLED=no
+
+- 2. ブリッジ定義
+
+  - 2.1. ブリッジ確認 
+
+    brctl show
+
+  - 2.2. ブリッジ作成
+
+    brctl addbr br0
+
+  - 2.3. 実NICをブリッジに接続
+
+    brctl addif br0 eth0
+
+- 3. ネットワーク再起動
+
+  systemctl restart network
