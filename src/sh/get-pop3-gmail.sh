@@ -1,13 +1,13 @@
 #!/bin/sh
 ###############################################################################
 #
-# gmail$BFI$_9~$_(B
+# gmail読み込み。でも化ける。
 # REFERENCE:http://www.atmarkit.co.jp/fnetwork/rensai/netpro07/pop3-commands.html
 #
 #
 ###############################################################################
 NAME=${0##*/}
-. ~/.ssh/${NAME:?}.conf
+. ~/.ssh/gmail.conf
 
 TMP=/tmp/${NAME:?}.$$.tmp
 
