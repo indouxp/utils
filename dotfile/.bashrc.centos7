@@ -17,3 +17,8 @@ fi
 alias rm='rm -i'
 alias mv='mv -i'
 alias cp='cp -i'
+alias sqlplus='rlwrap -i sqlplus'
+
+if [ -f .oraenv ]; then
+  . .oraenv
+fi
