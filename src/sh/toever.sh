@@ -30,7 +30,7 @@ RC=0
 if [ "$#" -eq "0" ]; then
   while read line
   do
-    echo ${line:?}
+    echo ${line}
   done > ${TMPFILE:?} 
   mail2 ${TMPFILE:?}
 else
