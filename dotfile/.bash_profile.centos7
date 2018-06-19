@@ -1,0 +1,21 @@
+# .bash_profile
+
+# Get the aliases and functions
+if [ -f ~/.bashrc ]; then
+	. ~/.bashrc
+fi
+
+# User specific environment and startup programs
+
+PATH=$HOME/heroku-client/bin:$PATH:$HOME/.local/bin:$HOME/bin:$HOME/heroku/bin/
+
+# ts:2018????
+export PATH="$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init -)"
+
+# add2bash_profile.sh: 20180511
+export PYENV_PATH="$HOME/.pyenv"
+# add2bash_profile.sh: 20180511
+export PATH="$PATH:$PYENV_PATH/bin"
+# add2bash_profile.sh: 20180511
+eval "$(pyenv init -)"
