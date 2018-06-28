@@ -7,7 +7,7 @@ fi
 
 # User specific environment and startup programs
 
-PATH=$HOME/heroku-client/bin:$PATH:$HOME/.local/bin:$HOME/bin:$HOME/heroku/bin/
+export PATH=$PATH:$HOME/.local/bin:$HOME/bin:$HOME/heroku/bin/
 
 # ts:2018????
 export PATH="$HOME/.rbenv/bin:$PATH"

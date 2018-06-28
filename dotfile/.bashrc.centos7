@@ -18,6 +18,7 @@ alias rm='rm -i'
 alias mv='mv -i'
 alias cp='cp -i'
 alias sqlplus='rlwrap -i sqlplus'
+export NLS_LANG=Japanese_Japan.al32utf8
 
 if [ -f .oraenv ]; then
   . .oraenv
