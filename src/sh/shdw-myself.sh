@@ -7,7 +7,7 @@ export LANG=ja_JP.utf8
 LOG=/var/log/${0##*/}.log
 TMP=/var/tmp/${0##*/}.tmp
 GW=192.168.0.1
-DF='+%Y%m%d.%H%M%S'`
+DF='+%Y%m%d.%H%M%S'
 NAME=${0##*/}
 MAILTO="indou.tsystem@docomo.ne.jp,toshikoyumechan@yahoo.ne.jp"
 
