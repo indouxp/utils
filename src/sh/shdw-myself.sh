@@ -9,6 +9,7 @@ TMP=/var/tmp/${0##*/}.tmp
 GW=192.168.0.1
 DF='+%Y%m%d.%H%M%S'`
 NAME=${0##*/}
+MAILTO="indou.tsystem@docomo.ne.jp,toshikoyumechan@yahoo.ne.jp"
 
 # 初期化メッセージ
 #msg="`date ${DF:?}`:${NAME:?}:init"
@@ -45,6 +46,7 @@ done
 # シャットダウン
 msg="`date ${DF:?}`:${NAME:?}:shutdown"
 echo ${msg:?} | tee -a ${LOG:?} | logger
+echo "${msg:?} `hostname`" | mail -s "shutdown" ${MAILTO:?}
 tail -n 100 ${LOG:?} > ${TMP:?} &&  mv ${TMP:?} ${LOG:?}
 shutdown -h now
 
