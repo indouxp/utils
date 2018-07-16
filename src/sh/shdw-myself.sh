@@ -1,30 +1,36 @@
 #!/bin/sh
 ###############################################################################
-# shoutdown host by ping dns
+# shoutdown host by ping default gateway
 #
 ###############################################################################
 export LANG=ja_JP.utf8
 LOG=/var/log/${0##*/}.log
 TMP=/var/tmp/${0##*/}.tmp
-DNS=192.168.0.254
+GW=192.168.0.1
+DF='+%Y%m%d.%H%M%S'`
+NAME=${0##*/}
 
-msg="`date '+%Y%m%d.%H%M%S'`:${0##*/}:init"
+# 初期化メッセージ
+#msg="`date ${DF:?}`:${NAME:?}:init"
+#echo ${msg:?} | tee -a ${LOG:?} | logger
+
+# ntpqで、正しく同期しているサーバーがない場合は、同期を待つ
+#while ! ntpq -p | grep -E '^(\*|\+)' > /dev/null
+#do
+#  sleep 1
+#done
+
+# 開始メッセージ
+msg="`date ${DF:?}`:${NAME:?}:start"
 echo ${msg:?} | tee -a ${LOG:?} | logger
 
-while ! ntpq -p | grep '^*' > /dev/null
-do
-  sleep 1
-done
-
-msg="`date '+%Y%m%d.%H%M%S'`:${0##*/}:start"
-echo ${msg:?} | tee -a ${LOG:?} | logger
-
+# ポーリング
 COUNT=0
 while true
 do
-  if ! ping -c1 ${DNS:?} > /dev/null 2>&1; then
+  if ! ping -c1 ${GW:?} > /dev/null 2>&1; then
     COUNT=`expr ${COUNT:?} + 1`
-    msg="`date '+%Y%m%d.%H%M%S'`:${0##*/}:ping status fail. ${COUNT:?} times."
+    msg="`date ${DF:?}`:${NAME:?}:ping status fail. ${COUNT:?} times."
     echo ${msg:?} | tee -a ${LOG:?} | logger
     if [ ${COUNT:?} -eq 5 ]; then
       break
@@ -36,7 +42,8 @@ do
   fi
 done
 
-msg="`date '+%Y%m%d.%H%M%S'`:${0##*/}:shutdown"
+# シャットダウン
+msg="`date ${DF:?}`:${NAME:?}:shutdown"
 echo ${msg:?} | tee -a ${LOG:?} | logger
 tail -n 100 ${LOG:?} > ${TMP:?} &&  mv ${TMP:?} ${LOG:?}
 shutdown -h now
