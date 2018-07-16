@@ -11,21 +11,21 @@ DF='+%Y%m%d.%H%M%S'`
 NAME=${0##*/}
 MAILTO="indou.tsystem@docomo.ne.jp,toshikoyumechan@yahoo.ne.jp"
 
-# $B=i4|2=%a%C%;!<%8(B
+# 初期化メッセージ
 #msg="`date ${DF:?}`:${NAME:?}:init"
 #echo ${msg:?} | tee -a ${LOG:?} | logger
 
-# ntpq$B$G!"@5$7$/F14|$7$F$$$k%5!<%P!<$,$J$$>l9g$O!"F14|$rBT$D(B
+# ntpqで、正しく同期しているサーバーがない場合は、同期を待つ
 #while ! ntpq -p | grep -E '^(\*|\+)' > /dev/null
 #do
 #  sleep 1
 #done
 
-# $B3+;O%a%C%;!<%8(B
+# 開始メッセージ
 msg="`date ${DF:?}`:${NAME:?}:start"
 echo ${msg:?} | tee -a ${LOG:?} | logger
 
-# $B%]!<%j%s%0(B
+# ポーリング
 COUNT=0
 while true
 do
@@ -43,7 +43,7 @@ do
   fi
 done
 
-# $B%7%c%C%H%@%&%s(B
+# シャットダウン
 msg="`date ${DF:?}`:${NAME:?}:shutdown"
 echo ${msg:?} | tee -a ${LOG:?} | logger
 echo "${msg:?} `hostname`" | mail -s "shutdown" ${MAILTO:?}
