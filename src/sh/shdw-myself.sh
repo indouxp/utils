@@ -27,6 +27,7 @@ echo ${msg:?} | tee -a ${LOG:?} | logger
 
 # ポーリング
 COUNT=0
+NTPQ=0
 while true
 do
   if ! ping -c1 ${GW:?} > /dev/null 2>&1; then
@@ -38,6 +39,13 @@ do
     fi
     sleep 1
   else
+    if [ "${NTPQ:?}" -eq "0" ]; then
+      if ntpq -p | grep -E '^\*'; then
+        msg="`date ${DF:?}`:${NAME:?}:time synchronization success."
+        echo ${msg:?} | tee -a ${LOG:?} | logger
+        NTPQ=1
+      fi
+    fi
     COUNT=0
     sleep 30
   fi
