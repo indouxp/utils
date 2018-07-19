@@ -11,3 +11,5 @@ pyenv(https://qiita.com/mogom625/items/b1b673f530a05ec6b423)
   $ exec $SHELL
 
   $ pyenv -v
+
+  $ pyenv install 3.6.1
