@@ -1,0 +1,13 @@
+pyenv(https://qiita.com/mogom625/items/b1b673f530a05ec6b423)
+
+  $ git clone https://github.com/yyuu/pyenv.git ~/.pyenv
+
+  $ cat <<EOT >> ~/.bashrc
+  > export PYENV_ROOT="$HOME/.pyenv"
+  > export PATH="$PYENV_ROOT/bin:$PATH"
+  > eval "$(pyenv init -)"
+  > EOT
+
+  $ exec $SHELL
+
+  $ pyenv -v
