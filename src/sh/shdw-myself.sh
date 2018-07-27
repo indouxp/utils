@@ -52,9 +52,9 @@ do
 done
 
 # シャットダウン
-msg="`date ${DF:?}`:${NAME:?}:shutdown"
+msg="`date ${DF:?}`:${NAME:?}:`hostname` shutdown"
 echo ${msg:?} | tee -a ${LOG:?} | logger
-echo "${msg:?} `hostname`" | mail -s "shutdown" ${MAILTO:?}
+echo ${msg:?} | mail -s "shutdown" ${MAILTO:?}
 tail -n 100 ${LOG:?} > ${TMP:?} &&  mv ${TMP:?} ${LOG:?}
 shutdown -h now
 
