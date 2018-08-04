@@ -17,5 +17,6 @@ eval "$(rbenv init -)"
 export PYENV_PATH="$HOME/.pyenv"
 # add2bash_profile.sh: 20180511
 export PATH="$PATH:$PYENV_PATH/bin"
-# add2bash_profile.sh: 20180511
+
 eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
