@@ -40,8 +40,8 @@ EOT
       cat ${SJIS:?}   | mail -s "${NAME:?}" indou.tsystem@docomo.ne.jp
     fi
     echo "動体を検知しました。${ORG_AVI:?} -> ${NOW_AVI:?} ${NOW:?}"              >> ${LOG:?}
-#  else
-#    echo "変化はありません。${ORG_AVI:?} -> ${NOW_AVI:?} ${NOW:?}"                >> ${LOG:?}
+  else
+    echo "変化はありません。${ORG_AVI:?} -> ${NOW_AVI:?} ${NOW:?}"                >> ${LOG:?}
   fi
   sleep ${SLEEP_SEC:?}
   ORG_AVI=${NOW_AVI:?}

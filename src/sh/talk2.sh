@@ -24,12 +24,12 @@ do
   sleep 1
 done
 
-VOLUME=30
+VOLUME=$1
+amixer set PCM ${VOLUME:?}%
 VOICE=/tmp/${0##*/}.$$.voice
 WAV=/tmp/${0##*/}.$$.wav
-SPEED=0.7
+SPEED=0.5
 
-sudo amixer set PCM ${VOLUME:?}%
 sudo amixer cset numid=1 98.4% > /dev/null 2>&1
 sudo alsactl store
 
