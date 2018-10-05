@@ -29,7 +29,7 @@ fi
 
 cat <<EOT
 docker runします。
-パスワードはoracleです。 ORACLE_SID=orcl ORACLE_PDB=pdb1 です。
+-p 1521:1521 -p 5500:5500しているので、ホスト上のsqlplus で接続可能です。
 EOT
 cat ./12.2.0.1/oracle.env
 
