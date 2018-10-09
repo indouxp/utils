@@ -1,0 +1,19 @@
+https://github.com/oracle/docker-images
+
+1. Docker
+  # sudo systemctl status docker
+  # sudo systemctl start docker
+
+2. buildDockerImage.sh
+  2.1. LINUX.X64_180000_db_home.zip
+  2.2. buildDockerImage.sh -v 18.3.0 -e 
+
+3. docker run
+  # sudo docker run --name orcl18c                                  \
+                    -p 1521:1521                                    \
+                    -e ORACLE_SID=orcl18c                           \
+                    -e ORACLE_PDB=pdb18c                            \
+                    -e ORACLE_PWD=oracle                            \
+                    -e ORACLE_CHARACTERSEAT=AL32UTF8                \
+                    -v /home/indou/work/oradata:/opt/oracle/oradata \
+                    oracle/database:18.3.0-ee
