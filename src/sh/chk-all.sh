@@ -5,7 +5,7 @@
 # -c: パケット数
 # -W: レスポンスの待ち時間(秒)
 
-NAMES="ml110g7 ml110g7-2 t3600 vip rpi-bp rpi2 rpi-b macbook macmini2010 rpi3-1 rpi3-2 stormZ170 r60e $*"
+NAMES="ml110g7 ml110g7-2 t3600 vip rpi-bp rpi2 rpi-b macbook macmini2010 rpi3-1 rpi3-2 stormZ170 r60e ha8000 $*"
 
 for NAME in ${NAMES:?}
 do
