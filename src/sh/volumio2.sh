@@ -18,10 +18,10 @@ fi
 PLAYLIST=$1
 VOL=$2
 
-curl "http://rpi2/api/v1/commands?cmd=playplaylist&name=${PLAYLIST:?}" \
+curl "http://volumio.local/api/v1/commands?cmd=playplaylist&name=${PLAYLIST:?}" \
   >> ${LOG_PATH:?} 2>&1                                      |\
   jq '.response' >> ${LOG_PATH:?}
 
-curl "http://rpi2/api/v1/commands?cmd=volume&volume=${VOL:?}" \
+curl "http://volumio.local/api/v1/commands?cmd=volume&volume=${VOL:?}" \
   >> ${LOG_PATH:?} 2>&1                                      |\
   jq '.response' >> ${LOG_PATH:?}
