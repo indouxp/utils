@@ -14,7 +14,12 @@ if [ "${RC:?}" -ne "0" ]; then
   exit 9
 fi
 
-ADDRESS=$(grep -o '^(([1-9]?[0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3} ([1-9]?[0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$' ${TMP:?})
+ADDRESS=$(grep -o '([0-9]{1,3}\.){3}[0-9]{1,3}' ${TMP:?})
+RC=$?
+if [ "${RC:?}" -ne "0" ]; then
+  echo "${SCRIPT:?}: grep fail. ${RC:?}" >> ${LOG:?}
+  exit 9
+fi
 
 echo ${ADDRESS:?}
 
