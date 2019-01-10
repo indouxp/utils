@@ -14,6 +14,8 @@ if [ -f ~/utils/dotfile/.PS1.bash ]; then
   . ~/utils/dotfile/.PS1.bash
 fi
 
+export PATH=${PATH:?}:${HOME:?}/heroku/bin
+
 alias rm='rm -i'
 alias mv='mv -i'
 alias cp='cp -i'
