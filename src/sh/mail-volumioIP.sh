@@ -27,9 +27,8 @@ if [ "${RC:?}" -ne "0" ]; then
 fi
 
 cat <<EOT | mail -s "${DATE:?} Volumio's IP" ${MAILTO:?}
- ** volumio **
-${ADDRESS:?}
-</body>
+   ** volumio **
+http://${ADDRESS:?}
 EOT
 
 exit 0
