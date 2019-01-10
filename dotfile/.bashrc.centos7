@@ -15,6 +15,8 @@ if [ -f ~/utils/dotfile/.PS1.bash ]; then
 fi
 
 export PATH=${PATH:?}:${HOME:?}/heroku/bin
+# ts:20180801
+complete -cf sudo
 
 alias rm='rm -i'
 alias mv='mv -i'
