@@ -8,7 +8,9 @@ TERM() {
   rm -f /tmp/${0##*/}.$$.tmp
 }
 
-#trap 'TERM' 0
+trap 'TERM' 0
+
+sleep 60
 
 DATE=`date '+%Y%m%d %H%M%S'`
 
