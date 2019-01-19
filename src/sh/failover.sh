@@ -17,11 +17,12 @@ main() {
     echo -n "." >> ${LOG:?}
     sleep 1
     if [ "${BEF:?}" -ne "$(date ${HFMT:?})" ]; then
-      echo "" >> ${LOG:?}
+      echo ""                                       >> ${LOG:?}
       echo -n "${SCRIPT:?}: $(date ${FMT:?}): WAIT" >>${LOG:?}
     fi
     BEF=$(date ${HFMT:?})
   done
+  echo ""                                          >> ${LOG:?}
   echo "${SCRIPT:?}: $(date ${FMT:?}): fail over!" >> ${LOG:?}
   ip_takeover
   echo "${SCRIPT:?}: $(date ${FMT:?}): DONE" >> ${LOG:?} 
