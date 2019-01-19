@@ -6,19 +6,18 @@ SCRIPT=`basename $0`
 VIP="192.168.0.254"  # 仮想IP
 DEV="eth0"           # NIC名
 LOG=/tmp/${0##*/}.log
+FORMAT='+%Y%m%d%H%M%S'
 
 main() {
-  echo "${SCRIPT:?}: $(date '+%Y%m%d%H%M%S'): START" > ${LOG:?} 
-  while true
+  echo "${SCRIPT:?}: $(date ${FORMAT:?}): START" > ${LOG:?} 
+  while healthcheck
   do
-    while healthcheck
-    do
-      echo "${SCRIPT:?}: $(date '+%Y%m%d%H%M%S'): ${VIP:?} health ok!" >> ${LOG:?} 
-      sleep 1
-    done
-    echo "${SCRIPT:?}: $(date '+%Y%m%d%H%M%S'): fail over!" >> ${LOG:?}
-    ip_takeover
+    echo "${SCRIPT:?}: $(date ${FORMAT:?}): ${VIP:?} health ok!" >> ${LOG:?}
+    sleep 1
   done
+  echo "${SCRIPT:?}: $(date ${FORMAT:?}): fail over!" >> ${LOG:?}
+  ip_takeover
+  echo "${SCRIPT:?}: $(date ${FORMAT:?}): DONE" >> ${LOG:?} 
 }
 
 # $VIPの生死監視
