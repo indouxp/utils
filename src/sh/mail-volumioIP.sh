@@ -10,7 +10,9 @@ TERM() {
 
 trap 'TERM' 0
 
+echo "sleeping .." 1>&2
 sleep 60
+echo "done .." 1>&2
 
 DATE=`date '+%Y%m%d %H%M%S'`
 
