@@ -8,6 +8,7 @@ DEV="eth0"           # NIC名
 LOG=/tmp/${0##*/}.log
 
 main() {
+  echo "${SCRIPT:?}: $(date '+%Y%m%d%H%M%S'): START" | tee ${LOG:?} 
   while true
   do
     while healthcheck
