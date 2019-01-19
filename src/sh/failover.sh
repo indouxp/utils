@@ -8,15 +8,15 @@ DEV="eth0"           # NIC名
 LOG=/tmp/${0##*/}.log
 
 main() {
-  echo "${SCRIPT:?}: $(date '+%Y%m%d%H%M%S'): START" | tee ${LOG:?} 
+  echo "${SCRIPT:?}: $(date '+%Y%m%d%H%M%S'): START" > ${LOG:?} 
   while true
   do
     while healthcheck
     do
-      echo "${SCRIPT:?}: $(date '+%Y%m%d%H%M%S'): ${VIP:?} health ok!" | tee -a ${LOG:?} 
+      echo "${SCRIPT:?}: $(date '+%Y%m%d%H%M%S'): ${VIP:?} health ok!" >> ${LOG:?} 
       sleep 1
     done
-    echo "${SCRIPT:?}: $(date '+%Y%m%d%H%M%S'): fail over!" | tee -a ${LOG:?}
+    echo "${SCRIPT:?}: $(date '+%Y%m%d%H%M%S'): fail over!" >> ${LOG:?}
     ip_takeover
   done
 }
