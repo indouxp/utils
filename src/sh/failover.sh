@@ -34,9 +34,8 @@ main() {
 healthcheck() {
   # c1 1 : 一回
   # -w 1 : タイムアウト1sec
-  #ping -c 1 -w 1 $VIP >/dev/null
-  
-  curl $VIP > /dev/null 2>&1
+  ping -c 1 -w 1 $VIP >/dev/null
+  #curl $VIP > /dev/null 2>&1
   return $?
 }
 
