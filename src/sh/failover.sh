@@ -8,13 +8,16 @@ DEV="eth0"           # NIC名
 LOG=/tmp/${0##*/}.log
 
 main() {
-  while healthcheck
+  while true
   do
-    echo "${SCRIPT:?}: $(date '+%Y%m%d%H%M%S'): ${VIP:?} health ok!" >> ${LOG:?} 
-    sleep 1
+    while healthcheck
+    do
+      echo "${SCRIPT:?}: $(date '+%Y%m%d%H%M%S'): ${VIP:?} health ok!" | tee -a ${LOG:?} 
+      sleep 1
+    done
+    echo "${SCRIPT:?}: $(date '+%Y%m%d%H%M%S'): fail over!" | tee -a ${LOG:?}
+    ip_takeover
   done
-  echo "fail over!"
-  ip_takeover
 }
 
 # $VIPの生死監視
@@ -37,7 +40,7 @@ ip_takeover() {
   ip addr add $VIP/24 dev $DEV label $DEV:V1
   ip addr show
   ifconfig
-  # $VIPと$MAXをブロードキャスト
+  # $VIPと$MACをブロードキャスト
   send_arp ${VIP:?} ${MAC:?} 255.255.255.255 ffffffffffff
 }
 
