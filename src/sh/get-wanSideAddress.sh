@@ -10,11 +10,11 @@
 SCRIPT=${0##*/}
 TMP=/tmp/${SCRIPT:?}.$$.tmp
 LOG=/tmp/${SCRIPT:?}.$$.log
-LASTLOG=/home/pi/log/${SCRIPT:?}.log
-OUT=/home/pi/tmp/${SCRIPT:?}.out
-ORG=/home/pi/tmp/${SCRIPT:?}.org
-DATE=/home/pi/tmp/${SCRIPT:?}.date
-TXT=/home/pi/log/${SCRIPT:?}.txt
+LASTLOG=/home/${USER:?}/log/${SCRIPT:?}.log
+OUT=/home/${USER:?}/tmp/${SCRIPT:?}.out
+ORG=/home/${USER:?}/tmp/${SCRIPT:?}.org
+DATE=/home/${USER:?}/tmp/${SCRIPT:?}.date
+TXT=/home/${USER:?}/log/${SCRIPT:?}.txt
 MAILTO=indou.tsystem@docomo.ne.jp
 export LANG=C
 DF="+%Y%m%d.%H%M%S"

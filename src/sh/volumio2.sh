@@ -5,7 +5,7 @@
 #
 ###############################################################################
 NAME=${0##*/}
-LOG_DIR=/home/pi/log
+LOG_DIR=/home/${USER}/log
 LOG_PATH=$LOG_DIR/$NAME.log
 
 if [ ! -x $(which curl) ]; then
