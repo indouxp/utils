@@ -1,6 +1,22 @@
 #!/bin/sh
+###############################################################################
+# lxc上のCentOS7コンテナを作成
+#
+# CREATE: 201903??
+# UPDATE: 20190304
+###############################################################################
 NAME=${0##*/}
 DF='+%Y%m%d.%H%M%S'
+
+if [ "$#" -eq "0" ]; then
+  cat <<EOT
+\$ ${NAME:?} CONTAINER_NAME CONTAINER_IP IMAGE
+CONTAINER_NAME: コンテナ名
+CONTAINER_IP  : コンテナIPアドレス
+IMAGE         : イメージ
+EOT
+  exit 9
+fi
 
 CNAME=$1
 CIP=$2
