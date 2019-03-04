@@ -1,7 +1,7 @@
 #!/bin/sh
 ###############################################################################
 #
-# lxc上の$NODE1と$NODE2のeth0のIPと、VIPを取得し、
+# lxc上の$NODE1と$NODE2のeth0のVIPを取得し、
 #
 #
 ###############################################################################
@@ -28,5 +28,5 @@ HOST=$(curl -s ${ip:?} | grep -o "<h1>[^<]*</h1>" | sed 's/<h1>//; s/<\/h1>//')
 if [ "${HOST}" == "" ]; then
   echo no active
 else
-  echo $HOST active
+  echo $HOST VIP:${ip:?} active
 fi
