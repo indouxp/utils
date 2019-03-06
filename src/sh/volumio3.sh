@@ -18,7 +18,6 @@ fi
 
 PLAYLIST=$1
 VOL=$2
-echo "IP      : ${IP:?}"        >> ${LOG_PATH:?}
 echo "PLAYLIST: ${PLAYLIST:?}"  >> ${LOG_PATH:?}
 echo "VOLUME  : ${VOL:?}"       >> ${LOG_PATH:?}
 
