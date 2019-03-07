@@ -5,8 +5,10 @@
 #
 ###############################################################################
 NAME=${0##*/}
+USER=volumio  # cronからだと、未定義
 LOG_DIR=/home/${USER:?}/log
 LOG_PATH=$LOG_DIR/${NAME:?}.log
+PATH=/bin:/usr/bin:/usr/local/bin
 
 date                            >> ${LOG_PATH:?}
 if [ ! -x $(which curl) ]; then
