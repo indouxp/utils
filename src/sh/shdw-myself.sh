@@ -55,7 +55,7 @@ done
 msg="`date ${DF:?}`:${NAME:?}:`hostname` shutdown"
 echo ${msg:?} | tee -a ${LOG:?} | logger
 echo ${msg:?} | mail -s "shutdown" ${MAILTO:?}
-sleep 10
+sleep 10  # メールを飛ばすため
 tail -n 100 ${LOG:?} > ${TMP:?} &&  mv ${TMP:?} ${LOG:?}
 shutdown -h now
 
