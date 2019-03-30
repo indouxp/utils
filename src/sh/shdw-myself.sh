@@ -9,7 +9,7 @@ TMP=/var/tmp/${0##*/}.tmp
 GW=192.168.0.1
 DF='+%Y%m%d.%H%M%S'
 NAME=${0##*/}
-MAILTO="indou.tsystem@docomo.ne.jp,toshikoyumechan@yahoo.ne.jp"
+MAILTO="indou.tsystem@gmail.com,toshikoyumechan@yahoo.ne.jp"
 
 # 初期化メッセージ
 #msg="`date ${DF:?}`:${NAME:?}:init"
@@ -34,10 +34,10 @@ do
     COUNT=`expr ${COUNT:?} + 1`
     msg="`date ${DF:?}`:${NAME:?}:ping status fail. ${COUNT:?} times."
     echo ${msg:?} | tee -a ${LOG:?} | logger
-    if [ ${COUNT:?} -eq 5 ]; then
+    if [ ${COUNT:?} -eq 5 ]; then # 5 * sleep 10なら、shutdown
       break
     fi
-    sleep 1
+    sleep 10
   else
     if [ "${NTPQ:?}" -eq "0" ]; then
       if ntpq -p | grep -E '^\*'; then
@@ -46,7 +46,7 @@ do
         NTPQ=1
       fi
     fi
-    COUNT=0
+    COUNT=0 # shutdownまでのカウントをクリア
     sleep 30
   fi
 done
@@ -55,6 +55,7 @@ done
 msg="`date ${DF:?}`:${NAME:?}:`hostname` shutdown"
 echo ${msg:?} | tee -a ${LOG:?} | logger
 echo ${msg:?} | mail -s "shutdown" ${MAILTO:?}
+sleep 10
 tail -n 100 ${LOG:?} > ${TMP:?} &&  mv ${TMP:?} ${LOG:?}
 shutdown -h now
 
