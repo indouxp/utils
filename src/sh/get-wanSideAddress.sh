@@ -15,7 +15,7 @@ OUT=/home/${USER:?}/tmp/${SCRIPT:?}.out
 ORG=/home/${USER:?}/tmp/${SCRIPT:?}.org
 DATE=/home/${USER:?}/tmp/${SCRIPT:?}.date
 TXT=/home/${USER:?}/log/${SCRIPT:?}.txt
-MAILTO=indou.tsystem@docomo.ne.jp
+MAILTO=indou.tsystem@yahoo.ne.jp
 export LANG=C
 DF="+%Y%m%d.%H%M%S"
 
