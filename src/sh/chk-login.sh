@@ -7,7 +7,7 @@
 ###############################################################################
 SCRIPT=${0##*/}
 LOG=/var/log/${SCRIPT:?}.log
-MAIL=indou.tsystem@docomo.ne.jp
+MAIL=indou.tsystem@gmail.com
 MASTER=/var/log/${SCRIPT:?}.master
 NOW=/var/log/${SCRIPT:?}.now
 TMP=/tmp/${SCRIPT:?}.tmp
