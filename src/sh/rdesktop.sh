@@ -10,6 +10,7 @@ if [ "$#" -eq "0" ]; then
 Usage
 \${NAME:?} HOST USER 
 EOT
+  exit 0
 fi
 
 HOST=$1
