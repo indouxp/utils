@@ -8,7 +8,7 @@ NAME=${0##*/}
 if [ "$#" -eq "0" ]; then
   cat <<EOT
 Usage
-\${NAME:?} HOST USER 
+\$ ${NAME:?} HOST USER 
 EOT
   exit 0
 fi
