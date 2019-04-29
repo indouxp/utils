@@ -3,7 +3,7 @@
 #
 # REFERENCE: https://github.com/oracle/docker-images/tree/master/OracleInstantClient
 #
-# cd docker-images/OracleInstantClient/dockerfiles
+# cd docker-images/OracleInstantClient/dockerfiles/18.3.0
 # sudo docker build -t oracle/instantclient:18.3.0 .
 # sudo docker images
 #REPOSITORY             TAG                 IMAGE ID            CREATED             SIZE
