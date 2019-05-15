@@ -1,0 +1,16 @@
+ソフトウェア	Host Node	Host OS	Guest	OS	Oracle	備考
+ESXi 6.7u2	ml110g7-2	ESXi 6.7u2	w2016-1	w2016	Rac 18c	administrator/Def$Leppard1,oracle/L19..,sys/L19..,system/L19..
+ESXi 6.7u2	ml110g7-2	ESXi 6.7u2	w2016-2	w2016	Rac 18c	administrator/Def$Leppard1,oracle/L19..,sys/L19..,system/L19..
+ESXi 6.7u2	ml110g7	ESXi 6.7u2	C7-1	CentOS7	Rac 12c	oracle/oracle, sys/change_on_me, system/manager
+ESXi 6.7u2	ml110g7	ESXi 6.7u2	C7-2	CentOS7	Rac 12c	oracle/oracle, sys/change_on_me, system/manager
+ESXi 6.7u2	ml110g7	ESXi 6.7u2	w2016-1	w2016	Rac 18c	installed grid, database
+ESXi 6.7u2	ml110g7	ESXi 6.7u2	w2016-2	w2016	Rac 18c	installed grid, database
+VirtualBox	t3600	CentOS7	c7-1	CentOS7	Rac 12c	orcl, sys/L19.., installed grid, database	
+VirtualBox	t3600	CentOS7	c7-2	CentOS7	Rac 12c	orcl, sys/L19.., installed grid, database
+kvm	t3600	CentOS7	w2016-1	w2016	Rac 18c	orcl, sys/L19.., installed grid, database			
+kvm	t3600	CentOS7	w2016-2	w2016	Rac 18c	orcl, sys/L19.., installed grid, database			
+VirtualBox	stormZ170	Windows10	w2016-1	w2016	Rac 18c	installed grid, database
+VirtualBox	stormZ170	Windows10	w2016-2	w2016	Rac 18c	installed grid, database
+VirtualBox	vip	Windows7	w2012r2-1	w2012r2	Rac 11.2.0.4	administrator/Def0Leppard,sys/Def0Leppard,system/Def0Leppard,installed grid, database
+VirtualBox	vip	Windows7	w2012r2-2	w2012r2	Rac 11.2.0.4	administrator/Def0Leppard,sys/Def0Leppard,system/Def0Leppard,installed grid, database
+
