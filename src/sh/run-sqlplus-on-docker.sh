@@ -1,5 +1,8 @@
 #!/bin/sh
-#
+###############################################################################
+# EXPLANATION: sqlplus on docker
+# DATE: 20190528
+###############################################################################
 # https://hub.docker.com/r/guywithnose/sqlplus/ 
 # $ sudo docker pull guywithnose/sqlplus
 #
