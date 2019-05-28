@@ -35,12 +35,19 @@ fi
 #      --rm \
 #      oracle/instantclient:18.3.0 \
 #      sqlplus -S system/L19GgnS3@w2016scan:1521/orcl00
+#sudo docker \
+#      run \
+#      -e NLS_LANG=japanese_japan.utf8 \
+#      -ti \
+#      --rm \
+#      oracle/instantclient:18.3.0 \
+#      sqlplus -S ${USER:?}/${PASS:?}@${SCAN:?}:${PORT:?}/${DBNAME:?}
 sudo docker \
       run \
       -e NLS_LANG=japanese_japan.utf8 \
       -ti \
       --rm \
-      oracle/instantclient:18.3.0 \
+      oracle/database:18.4.0-xe \
       sqlplus -S ${USER:?}/${PASS:?}@${SCAN:?}:${PORT:?}/${DBNAME:?}
 RC=$?
 exit ${RC:?}
