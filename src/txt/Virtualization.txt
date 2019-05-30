@@ -11,6 +11,6 @@ kvm	t3600	CentOS7	w2016-1	w2016	Rac 18c	administrator/Def$Leppard1, orcl, sys/L1
 kvm	t3600	CentOS7	w2016-2	w2016	Rac 18c	administrator/Def$Leppard1, orcl, sys/L19.., installed grid, database, orcl-orcl00,orcl40			
 VirtualBox	stormZ170	Windows10	w2016-1	w2016	Rac 18c	orcl, sys/L19.., installed grid, database
 VirtualBox	stormZ170	Windows10	w2016-2	w2016	Rac 18c	orcl, sys/L19.., installed grid, database
-VirtualBox	vip	Windows7	w2012r2-1	w2012r2	Rac 11.2.0.4	administrator/Def0Leppard,sys/Def0Leppard,system/Def0Leppard,installed grid, database
-VirtualBox	vip	Windows7	w2012r2-2	w2012r2	Rac 11.2.0.4	administrator/Def0Leppard,sys/Def0Leppard,system/Def0Leppard,installed grid, database
+VirtualBox	vip	Windows7	w2012r2-1	w2012r2	Rac 11.2.0.4	administrator/Def0Leppard,oracle/Def0Leppard,sys/Def0Leppard,system/Def0Leppard,installed grid, database
+VirtualBox	vip	Windows7	w2012r2-2	w2012r2	Rac 11.2.0.4	administrator/Def0Leppard,oracle/Def0Leppard,sys/Def0Leppard,system/Def0Leppard,installed grid, database
 
