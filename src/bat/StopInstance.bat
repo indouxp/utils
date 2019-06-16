@@ -10,7 +10,7 @@ set DATABASE=%~2
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 :start_srvctl_status_instance
-  call srvctl status instance -d %DATABASE% -n %NODE% | findstr -i å®Ÿè¡Œä¸­
+  call srvctl status instance -d %DATABASE% -n %NODE% | findstr -i ŽÀs’†
   if %errorlevel% neq 0 goto :err_010
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -19,16 +19,23 @@ set DATABASE=%~2
   if %errorlevel% neq 0 goto :err_020
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+:start_srvctl_status_instance_last
+  call srvctl status instance -d %DATABASE% -n %NODE% | findstr -i ŽÀs’†
+  if %errorlevel% neq 0 goto :exit_srvctl_status_instance_last
+  timeout 10
+  goto :start_srvctl_status_instance_last
+:exit_srvctl_status_instance_last
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 :done
-  echo %NODE%ä¸Šã®%DATABASE%ã¯åœæ­¢æˆåŠŸ
+  echo %NODE%ã‚Ì%DATABASE%‚Í’âŽ~¬Œ÷
   exit /b 0
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 :err_010
-  echo %NODE%ä¸Šã®%DATABASE%ã¯åœæ­¢æ¸ˆã¿
+  echo %NODE%ã‚Ì%DATABASE%‚Í’âŽ~Ï‚Ý
   exit /b 8
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 :err_020
-  echo %NODE%ä¸Šã®%DATABASE%åœæ­¢ã‚¨ãƒ©ãƒ¼
+  echo %NODE%ã‚Ì%DATABASE%’âŽ~ƒGƒ‰[
   exit /b 12
