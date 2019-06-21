@@ -19,7 +19,7 @@ set DATABASE=%~2
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 :start_srvctl_status_instance
-  call srvctl status instance -d %DATABASE% -n %NODE% | findstr -i å®Ÿè¡Œä¸­
+  call srvctl status instance -d %DATABASE% -n %NODE% | findstr -i Às’†
   if %errorlevel% equ 0 goto :err_010
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -29,15 +29,15 @@ set DATABASE=%~2
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 :done
-  echo ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹èµ·å‹•æˆåŠŸ
+  echo ƒCƒ“ƒXƒ^ƒ“ƒX‹N“®¬Œ÷
   exit /b 0
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 :err_010
-  echo %NODE%ä¸Šã®%INSTANCE%ã¯èµ·å‹•æ¸ˆã¿
+  echo %NODE%ã‚Ì%INSTANCE%‚Í‹N“®Ï‚İ
   exit /b 8
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 :err_020
-  echo %NODE%ä¸Šã®%INSTANCE%èµ·å‹•ã‚¨ãƒ©ãƒ¼
+  echo %NODE%ã‚Ì%INSTANCE%‹N“®ƒGƒ‰[
   exit /b 12
