@@ -2,30 +2,57 @@ https://docs.oracle.com/cd/E16338_01/backup.112/b56269/osrecvry.htm#BABBBBBB
 
 データベースの完全リカバリの実行
   クローズしているデータベースのリカバリの実行
-    shutdown immediate状態であること
-    データファイルのリストア
+    1. データベースがオープンしている場合は、v$recover_fileを問合せ、リカバリする必要があるデータファイルを呼びリカバリする必要がある理由を確認
+    2. v$archived_log、v$recovery_logより必要なアーカイブログを確認
+      v$archived_log: すべてのアーカイブログ
+      v$recovery_log: メディア・リカバリを実行する必要があるアーカイブログ
+    3. デフォルトの場所ですべてのアーカイブ・ログが使用可能でない場合
+      必要なアーカイブログをリストア
+    4. shutdown immediate
+    5. メディアの検査と原因の確認
+    6. メディア障害によって破損したデータファイルのみをリストアする
+    7. データファイルのリストア
       ハードウェア問題が解決され、デフォルトの場所にデータファイルをリストアできる場合は、デフォルトの場所にデータファイルをリストア
       ハードウェア問題が解決され、デフォルトの場所にデータファイルをリストアできない場合は、代替のストレージ・デバイスにデータファイルをリストアし、ALTER DATABASE RENAME FILE文を使用してファイルの新しい場所を制御ファイルに指定する
-    startup mount
-    代替のストレージ・デバイスにデータファイルをリストアした場合
+    8. sqlplus / as sysdbaして、mount
+      startup mount
+    9. 7で、代替のストレージ・デバイスにデータファイルをリストアした場合
       ALTER DATABASE RENAME FILE 元のデータファイル TO 代替のリストアされたデータファイル
-    すべてのデータファイル名とステータスを取得
+    10. すべてのデータファイル名とステータスを取得
       SELECT NAME, STATUS FORM V$DATBASE ORDER BY NAME;
-    リカバリが必要なデータファイルをオンラインに
+    11. リカバリが必要なデータファイルをオンラインに
       ALTER DATABASE DATAFILE データファイル ONLINE;
-    アーカイブログをデフォルトの出力先以外にリストアした場合
+    12. アーカイブログをデフォルトの出力先以外にリストアした場合
       set logsource 'C:\restore'
-    リカバリ
+    13. リカバリ
       recover automatic database;
       recover automatic tablespace users
       recover automatic datafile 'データファイル'
+      ※アーカイブログがデフォルトの出力以外にリストアされていて、12を実施しない場合は、recover automatic from 'ディレクトリ' database
       
       Media recovery complete.を確認
-    オープン
+    14. オープン
       alter database open;
-    アーカイブログの削除
+    15. アーカイブログの削除
       del C:\restore\*
  
   オープンしているデータベースのリカバリの実行
-    
-    
+    1. クローズしているデータベースのリカバリの実行の、1から3を実施
+    2. 破損しているデータファイルを含む表領域をオフラインにする
+      alter tablespace ～ offline temporary;、もしくはalter tablespace ～ offline immediate;
+    3. メディアの検査と原因の確認
+      dbverifyユーティリティは、破損ブロックをレポートする
+    4. データファイルのリストア
+      ハードウェア問題が解決され、デフォルトの場所にデータファイルをリストアできる場合は、デフォルトの場所にデータファイルをリストア
+      ハードウェア問題が解決され、デフォルトの場所にデータファイルをリストアできない場合は、代替のストレージ・デバイスにデータファイルをリストアし、ALTER DATABASE RENAME FILE文を使用してファイルの新しい場所を制御ファイルに指定する
+    5. 4で、代替のストレージ・デバイスにデータファイルをリストアした場合
+      ALTER DATABASE RENAME FILE 元のデータファイル TO 代替のリストアされたデータファイル
+    6. アーカイブログをデフォルトの出力先以外にリストアした場合
+      set logsource 'C:\restore'
+    7. sqlpus / as sysdba
+       リカバリ
+      recover automatic tablespace users 
+      ※アーカイブログがデフォルトの出力以外にリストアされていて、6を実施しない場合は、recover automatic from 'ディレクトリ' tablespace
+    8. オフラインの表領域をオンラインにする
+      alter tablespace ～ online;
+      
