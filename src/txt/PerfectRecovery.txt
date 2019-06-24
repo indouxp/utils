@@ -1,0 +1,31 @@
+https://docs.oracle.com/cd/E16338_01/backup.112/b56269/osrecvry.htm#BABBBBBB
+
+データベースの完全リカバリの実行
+  クローズしているデータベースのリカバリの実行
+    shutdown immediate状態であること
+    データファイルのリストア
+      ハードウェア問題が解決され、デフォルトの場所にデータファイルをリストアできる場合は、デフォルトの場所にデータファイルをリストア
+      ハードウェア問題が解決され、デフォルトの場所にデータファイルをリストアできない場合は、代替のストレージ・デバイスにデータファイルをリストアし、ALTER DATABASE RENAME FILE文を使用してファイルの新しい場所を制御ファイルに指定する
+    startup mount
+    代替のストレージ・デバイスにデータファイルをリストアした場合
+      ALTER DATABASE RENAME FILE 元のデータファイル TO 代替のリストアされたデータファイル
+    すべてのデータファイル名とステータスを取得
+      SELECT NAME, STATUS FORM V$DATBASE ORDER BY NAME;
+    リカバリが必要なデータファイルをオンラインに
+      ALTER DATABASE DATAFILE データファイル ONLINE;
+    アーカイブログをデフォルトの出力先以外にリストアした場合
+      set logsource 'C:\restore'
+    リカバリ
+      recover automatic database;
+      recover automatic tablespace users
+      recover automatic datafile 'データファイル'
+      
+      Media recovery complete.を確認
+    オープン
+      alter database open;
+    アーカイブログの削除
+      del C:\restore\*
+ 
+  オープンしているデータベースのリカバリの実行
+    
+    
