@@ -9,9 +9,9 @@ set START_TIME=%TIME%
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 : StopInstance.bat実行
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-call %~dp0StopInstance.bat %COMPUTERNAME% orcl
+call %~dp0StopInstance.bat %COMPUTERNAME% orcl40
 set RC=%errorlevel%
-if %RC% neq 0 goto :err_020
+:if %RC% neq 0 goto :err_020
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 : StopCRS.bat実行
@@ -36,7 +36,7 @@ sc query | findstr /i "Oracle" | findstr /i "SERVICE_NAME" | sort
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 :done
   echo %START_TIME% - %TIME%
-  echo インスタンス停止成功
+  echo インスタンス・クラスタ停止成功
   exit /b 0
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
