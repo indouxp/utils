@@ -1,0 +1,49 @@
+Host obs600d
+  HostName 106.160.59.137
+  Port 22
+  IdentityFile ~/.ssh/id_rsa
+
+Host rpi3-1
+  HostName 192.168.0.80
+  User pi
+  Port 22
+  IdentityFile ~/.ssh/id_rsa
+  ProxyCommand ssh -W %h:%p obs600d
+
+Host rpi3-2
+  HostName 192.168.0.81
+  User pi
+  Port 22
+  IdentityFile ~/.ssh/id_rsa
+  ProxyCommand ssh -W %h:%p obs600d
+
+host rpi3-1-8080
+  HostName rpi3-1
+  User pi
+  LocalForward 18080 rpi3-1:8080 
+
+host rpi3-2-8080
+  HostName rpi3-1
+  User pi
+  LocalForward 28080 rpi3-2:8080 
+
+Host rpi-bp
+  HostName rpi-bp
+  ProxyCommand ssh -W %h:%p obs600d
+  User pi
+
+Host t3600
+  HostName t3600
+  User indou
+  ProxyCommand ssh -W %h:%p obs600d
+
+Host ml110g7-2
+  HostName ml110g7-2
+  User root
+  ProxyCommand ssh -W %h:%p obs600d
+
+Host ml110g7
+  HostName ml110g7
+  User root
+  ProxyCommand ssh -W %h:%p obs600d
+
