@@ -1,0 +1,31 @@
+Oracle 18c RAC on Windows 2016
+
+投票ディスクの移動
+
+>crsctl query css votedisk
+
+>crsctl replace votedisk +REDODG1
+
+>crsctl query css votedisk
+
+
+C:\Users\oracle>crsctl query css votedisk
+##  STATE    File Universal Id                File Name Disk group
+--  -----    -----------------                --------- ---------
+ 1. ONLINE   7e1c67059d7b4fafbf9a75c6af7cef81 (\\.\ORCLDISKDATADG0) [DATADG]
+1の投票ディスクを検出しました。
+
+C:\Users\oracle>crsctl replace votedisk +REDODG1
+投票ディスクac76b01565cb4fb4bf11036bbf056246が正常に追加されました。
+投票ディスク7e1c67059d7b4fafbf9a75c6af7cef81が正常に削除されました。
+投票ディスク・グループは+REDODG1と正常に置換されました。
+CRS-4266: 投票ファイルが正常に置換されました
+
+C:\Users\oracle>crsctl query css votedisk
+##  STATE    File Universal Id                File Name Disk group
+--  -----    -----------------                --------- ---------
+ 1. ONLINE   ac76b01565cb4fb4bf11036bbf056246 (\\.\ORCLDISKREDODG10) [REDODG1]
+1の投票ディスクを検出しました。
+
+C:\Users\oracle>
+

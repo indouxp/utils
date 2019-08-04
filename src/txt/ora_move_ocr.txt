@@ -1,0 +1,62 @@
+Oracle 18c RAC on Windows 2016
+
+ocrの移動
+
+c:\Users\orafw\ts>crsctl query crs activeversion
+クラスタ上のOracle Clusterwareのアクティブなバージョンは[18.0.0.0.0]です
+
+c:\Users\orafw\ts>
+c:\Users\orafw\ts>ocrconfig -add +REDODG1
+
+c:\Users\orafw\ts>ocrconfig -add +REDODG2
+
+c:\Users\orafw\ts>
+c:\Users\orafw\ts>ocrcheck
+Oracle Cluster Registryのステータスは次のとおりです:
+        バージョン                  :          4
+        領域合計(KB)     :     491684
+        使用済領域(KB)      :      84948
+        使用可能な領域(KB) :     406736
+         ID                       :  304699189
+         デバイス/ファイル名         :    +DATADG
+                                    デバイス・ファイルの整合性チェックが成功しました
+         デバイス/ファイル名         :   +REDODG1
+                                    デバイス・ファイルの整合性チェックが成功しました
+         デバイス/ファイル名         :   +REDODG2
+                                    デバイス・ファイルの整合性チェックが成功しました
+
+                                    デバイス/ファイルが構成されていません
+
+                                    デバイス/ファイルが構成されていません
+
+         クラスタ・レジストリの整合性チェックが成功しました
+
+         論理破損チェックに成功しました
+
+
+c:\Users\orafw\ts>
+c:\Users\orafw\ts>ocrconfig -delete +DATADG
+
+c:\Users\orafw\ts>ocrcheck
+Oracle Cluster Registryのステータスは次のとおりです:
+        バージョン                  :          4
+        領域合計(KB)     :     491684
+        使用済領域(KB)      :      84948
+        使用可能な領域(KB) :     406736
+         ID                       :  304699189
+         デバイス/ファイル名         :   +REDODG1
+                                    デバイス・ファイルの整合性チェックが成功しました
+         デバイス/ファイル名         :   +REDODG2
+                                    デバイス・ファイルの整合性チェックが成功しました
+
+                                    デバイス/ファイルが構成されていません
+
+                                    デバイス/ファイルが構成されていません
+
+                                    デバイス/ファイルが構成されていません
+
+         クラスタ・レジストリの整合性チェックが成功しました
+
+         論理破損チェックに成功しました
+
+
