@@ -7,6 +7,8 @@
 ###############################################################################
 NAME=${0##*/}
 TMP=/tmp/${NAME:?}.tmp
+LOG=/home/indou/${NAME:?}.log
+DF='+%Y/%m/%d %H:%M:%S'
 
 #
 # 最終ログイン履歴からindou以外を抽出
@@ -17,7 +19,7 @@ if [ "${RC:?}" -ne "0" ]; then
   echo "${NAME:?}:ERROR 010" 1>&2
   exit ${RC:?}
 fi
-echo "${NAME:?}: last, grep OK"
+echo "${NAME:?}: $(date $DF) last, grep OK" > ${LOG:?}
 
 #
 # ログイン履歴数カウント
@@ -28,7 +30,7 @@ if [ "${RC:?}" -ne "0" ]; then
   echo "${NAME:?}:ERROR 020" 1>&2
   exit ${RC:?}
 fi
-echo "${NAME:?}: awk, wc OK"
+echo "${NAME:?}: $(date $DF) awk, wc OK" > ${LOG:?}
 
 #
 # ログイン履歴がある場合は、エラー
@@ -42,7 +44,7 @@ if [ "${NUM:?}" -ne "0" ]; then
   fi
   exit ${NUM:?}
 fi
-echo "${NAME:?}: others no login"
+echo "${NAME:?}: $(date $DF) others no login" > ${LOG:?}
 
 #
 # 正常終了
