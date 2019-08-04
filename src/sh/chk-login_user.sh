@@ -36,8 +36,10 @@ echo "${NAME:?}: awk, wc OK"
 if [ "${NUM:?}" -ne "0" ]; then
   echo "${NAME:?}:ERROR 030" 1>&2
   mv ${TMP:?} /home/indou
-  logger "${NAME:?} shutdown at `date '+%Y/%m/%d %H:%M:%S'`"
-  shutdown -h now
+  if [ ! -e /tmp/${NAME:?}.stop ]; then
+    logger "${NAME:?} shutdown at `date '+%Y/%m/%d %H:%M:%S'`"
+    shutdown -h now
+  fi
   exit ${NUM:?}
 fi
 echo "${NAME:?}: others no login"
