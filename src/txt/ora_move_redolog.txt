@@ -1,0 +1,253 @@
+------------------------------------------------------------------------------
+redoログ thread1にgroup6を作ってしまっていたので、thread2に作り直す
+------------------------------------------------------------------------------
+c:\Users\orafw\ts\T20190802>set ORACLE_SID=amitscv1
+
+c:\Users\orafw\ts\T20190802>sqlplus / as sysdba
+
+SQL*Plus: Release 18.0.0.0.0 - Production on 火 8月 6 11:08:47 2019
+Version 18.3.0.0.0
+
+Copyright (c) 1982, 2018, Oracle.  All rights reserved.
+
+
+
+Oracle Database 18c Enterprise Edition Release 18.0.0.0.0 - Production
+Version 18.3.0.0.0
+に接続されました。
+SQL> show con_name
+
+CON_NAME
+------------------------------
+CDB$ROOT
+SQL> select instance_name from v$instance;
+
+INSTANCE_NAME
+----------------
+amitscv1
+
+SQL> set linesize 140
+SQL> set pagesize 20
+SQL>
+SQL> select name from v$database;
+
+NAME
+---------
+AMITSCV
+
+SQL>
+SQL> select instance_name from v$instance;
+
+INSTANCE_NAME
+----------------
+amitscv1
+
+SQL>
+SQL>
+SQL> COL MEMBER FORMAT A60
+SQL> COL STATUS FORMAT A10
+SQL>
+SQL> SELECT
+  2    LOG.THREAD#,
+  3    LOG.GROUP#,
+  4    LOG.BYTES/1024/1024 AS MBYTES,
+  5    LOG.STATUS,
+  6    LOG.ARCHIVED,
+  7    LOGFILE.MEMBER
+  8  FROM
+  9    V$LOG LOG,
+ 10    V$LOGFILE LOGFILE
+ 11  WHERE
+ 12    LOG.GROUP# = LOGFILE.GROUP#
+ 13  ORDER BY
+ 14    THREAD#,GROUP#
+ 15  ;
+
+   THREAD#     GROUP#     MBYTES STATUS     ARC MEMBER
+---------- ---------- ---------- ---------- --- ------------------------------------------------------------
+         1          1        512 INACTIVE   YES +REDODG1/AMITSCV/ONLINELOG/group_1.257.1014578705
+         1          1        512 INACTIVE   YES +REDODG2/AMITSCV/ONLINELOG/group_1.261.1014578707
+         1          2        512 INACTIVE   YES +REDODG1/AMITSCV/ONLINELOG/group_2.265.1014578707
+         1          2        512 INACTIVE   YES +REDODG2/AMITSCV/ONLINELOG/group_2.271.1014578707
+         1          5        512 INACTIVE   YES +REDODG1/AMITSCV/ONLINELOG/group_5.266.1014578707
+         1          5        512 INACTIVE   YES +REDODG2/AMITSCV/ONLINELOG/group_5.266.1014578707
+         1          6        512 CURRENT    NO  +REDODG1/AMITSCV/ONLINELOG/group_6.267.1014578709
+         1          6        512 CURRENT    NO  +REDODG2/AMITSCV/ONLINELOG/group_6.267.1014578709
+         2          3        512 CURRENT    NO  +REDODG1/AMITSCV/ONLINELOG/group_3.268.1014580925
+         2          3        512 CURRENT    NO  +REDODG2/AMITSCV/ONLINELOG/group_3.268.1014580925
+         2          4        512 INACTIVE   YES +REDODG1/AMITSCV/ONLINELOG/group_4.269.1014580925
+         2          4        512 INACTIVE   YES +REDODG2/AMITSCV/ONLINELOG/group_4.269.1014580925
+
+12行が選択されました。
+
+SQL> alter system switch logfile;
+
+システムが変更されました。
+
+SQL> SELECT
+  2    LOG.THREAD#,
+  3    LOG.GROUP#,
+  4    LOG.BYTES/1024/1024 AS MBYTES,
+  5    LOG.STATUS,
+  6    LOG.ARCHIVED,
+  7    LOGFILE.MEMBER
+  8  FROM
+  9    V$LOG LOG,
+ 10    V$LOGFILE LOGFILE
+ 11  WHERE
+ 12    LOG.GROUP# = LOGFILE.GROUP#
+ 13  ORDER BY
+ 14    THREAD#,GROUP#
+ 15  ;
+
+   THREAD#     GROUP#     MBYTES STATUS     ARC MEMBER
+---------- ---------- ---------- ---------- --- ------------------------------------------------------------
+         1          1        512 CURRENT    NO  +REDODG1/AMITSCV/ONLINELOG/group_1.257.1014578705
+         1          1        512 CURRENT    NO  +REDODG2/AMITSCV/ONLINELOG/group_1.261.1014578707
+         1          2        512 INACTIVE   YES +REDODG1/AMITSCV/ONLINELOG/group_2.265.1014578707
+         1          2        512 INACTIVE   YES +REDODG2/AMITSCV/ONLINELOG/group_2.271.1014578707
+         1          5        512 INACTIVE   YES +REDODG1/AMITSCV/ONLINELOG/group_5.266.1014578707
+         1          5        512 INACTIVE   YES +REDODG2/AMITSCV/ONLINELOG/group_5.266.1014578707
+         1          6        512 ACTIVE     YES +REDODG1/AMITSCV/ONLINELOG/group_6.267.1014578709
+         1          6        512 ACTIVE     YES +REDODG2/AMITSCV/ONLINELOG/group_6.267.1014578709
+         2          3        512 CURRENT    NO  +REDODG1/AMITSCV/ONLINELOG/group_3.268.1014580925
+         2          3        512 CURRENT    NO  +REDODG2/AMITSCV/ONLINELOG/group_3.268.1014580925
+         2          4        512 INACTIVE   YES +REDODG1/AMITSCV/ONLINELOG/group_4.269.1014580925
+         2          4        512 INACTIVE   YES +REDODG2/AMITSCV/ONLINELOG/group_4.269.1014580925
+
+12行が選択されました。
+
+SQL> /
+
+   THREAD#     GROUP#     MBYTES STATUS     ARC MEMBER
+---------- ---------- ---------- ---------- --- ------------------------------------------------------------
+         1          1        512 CURRENT    NO  +REDODG1/AMITSCV/ONLINELOG/group_1.257.1014578705
+         1          1        512 CURRENT    NO  +REDODG2/AMITSCV/ONLINELOG/group_1.261.1014578707
+         1          2        512 INACTIVE   YES +REDODG1/AMITSCV/ONLINELOG/group_2.265.1014578707
+         1          2        512 INACTIVE   YES +REDODG2/AMITSCV/ONLINELOG/group_2.271.1014578707
+         1          5        512 INACTIVE   YES +REDODG1/AMITSCV/ONLINELOG/group_5.266.1014578707
+         1          5        512 INACTIVE   YES +REDODG2/AMITSCV/ONLINELOG/group_5.266.1014578707
+         1          6        512 ACTIVE     YES +REDODG1/AMITSCV/ONLINELOG/group_6.267.1014578709
+         1          6        512 ACTIVE     YES +REDODG2/AMITSCV/ONLINELOG/group_6.267.1014578709
+         2          3        512 CURRENT    NO  +REDODG1/AMITSCV/ONLINELOG/group_3.268.1014580925
+         2          3        512 CURRENT    NO  +REDODG2/AMITSCV/ONLINELOG/group_3.268.1014580925
+         2          4        512 INACTIVE   YES +REDODG1/AMITSCV/ONLINELOG/group_4.269.1014580925
+         2          4        512 INACTIVE   YES +REDODG2/AMITSCV/ONLINELOG/group_4.269.1014580925
+
+12行が選択されました。
+
+SQL> alter system archive log current;
+
+システムが変更されました。
+
+SQL> SELECT
+  2    LOG.THREAD#,
+  3    LOG.GROUP#,
+  4    LOG.BYTES/1024/1024 AS MBYTES,
+  5    LOG.STATUS,
+  6    LOG.ARCHIVED,
+  7    LOGFILE.MEMBER
+  8  FROM
+  9    V$LOG LOG,
+ 10    V$LOGFILE LOGFILE
+ 11  WHERE
+ 12    LOG.GROUP# = LOGFILE.GROUP#
+ 13  ORDER BY
+ 14    THREAD#,GROUP#
+ 15  ;
+
+   THREAD#     GROUP#     MBYTES STATUS     ARC MEMBER
+---------- ---------- ---------- ---------- --- ------------------------------------------------------------
+         1          1        512 ACTIVE     YES +REDODG1/AMITSCV/ONLINELOG/group_1.257.1014578705
+         1          1        512 ACTIVE     YES +REDODG2/AMITSCV/ONLINELOG/group_1.261.1014578707
+         1          2        512 CURRENT    NO  +REDODG1/AMITSCV/ONLINELOG/group_2.265.1014578707
+         1          2        512 CURRENT    NO  +REDODG2/AMITSCV/ONLINELOG/group_2.271.1014578707
+         1          5        512 INACTIVE   YES +REDODG1/AMITSCV/ONLINELOG/group_5.266.1014578707
+         1          5        512 INACTIVE   YES +REDODG2/AMITSCV/ONLINELOG/group_5.266.1014578707
+         1          6        512 INACTIVE   YES +REDODG1/AMITSCV/ONLINELOG/group_6.267.1014578709
+         1          6        512 INACTIVE   YES +REDODG2/AMITSCV/ONLINELOG/group_6.267.1014578709
+         2          3        512 ACTIVE     YES +REDODG1/AMITSCV/ONLINELOG/group_3.268.1014580925
+         2          3        512 ACTIVE     YES +REDODG2/AMITSCV/ONLINELOG/group_3.268.1014580925
+         2          4        512 CURRENT    NO  +REDODG1/AMITSCV/ONLINELOG/group_4.269.1014580925
+         2          4        512 CURRENT    NO  +REDODG2/AMITSCV/ONLINELOG/group_4.269.1014580925
+
+12行が選択されました。
+
+SQL> alter database drop logfile group 6;
+
+データベースが変更されました。
+
+SQL> SELECT
+  2    LOG.THREAD#,
+  3    LOG.GROUP#,
+  4    LOG.BYTES/1024/1024 AS MBYTES,
+  5    LOG.STATUS,
+  6    LOG.ARCHIVED,
+  7    LOGFILE.MEMBER
+  8  FROM
+  9    V$LOG LOG,
+ 10    V$LOGFILE LOGFILE
+ 11  WHERE
+ 12    LOG.GROUP# = LOGFILE.GROUP#
+ 13  ORDER BY
+ 14    THREAD#,GROUP#
+ 15  ;
+
+   THREAD#     GROUP#     MBYTES STATUS     ARC MEMBER
+---------- ---------- ---------- ---------- --- ------------------------------------------------------------
+         1          1        512 ACTIVE     YES +REDODG1/AMITSCV/ONLINELOG/group_1.257.1014578705
+         1          1        512 ACTIVE     YES +REDODG2/AMITSCV/ONLINELOG/group_1.261.1014578707
+         1          2        512 CURRENT    NO  +REDODG1/AMITSCV/ONLINELOG/group_2.265.1014578707
+         1          2        512 CURRENT    NO  +REDODG2/AMITSCV/ONLINELOG/group_2.271.1014578707
+         1          5        512 INACTIVE   YES +REDODG1/AMITSCV/ONLINELOG/group_5.266.1014578707
+         1          5        512 INACTIVE   YES +REDODG2/AMITSCV/ONLINELOG/group_5.266.1014578707
+         2          3        512 ACTIVE     YES +REDODG1/AMITSCV/ONLINELOG/group_3.268.1014580925
+         2          3        512 ACTIVE     YES +REDODG2/AMITSCV/ONLINELOG/group_3.268.1014580925
+         2          4        512 CURRENT    NO  +REDODG1/AMITSCV/ONLINELOG/group_4.269.1014580925
+         2          4        512 CURRENT    NO  +REDODG2/AMITSCV/ONLINELOG/group_4.269.1014580925
+
+10行が選択されました。
+
+SQL> alter database add logfile thread 2 group 6 ('+REDODG1/AMITSCV/ONLINELOG/group_6.log', '+REDODG2/AMITSCV/ONLINELOG/group_6.log') size 512M;
+
+データベースが変更されました。
+
+SQL>
+SQL> SELECT
+  2    LOG.THREAD#,
+  3    LOG.GROUP#,
+  4    LOG.BYTES/1024/1024 AS MBYTES,
+  5    LOG.STATUS,
+  6    LOG.ARCHIVED,
+  7    LOGFILE.MEMBER
+  8  FROM
+  9    V$LOG LOG,
+ 10    V$LOGFILE LOGFILE
+ 11  WHERE
+ 12    LOG.GROUP# = LOGFILE.GROUP#
+ 13  ORDER BY
+ 14    THREAD#,GROUP#
+ 15  ;
+
+   THREAD#     GROUP#     MBYTES STATUS     ARC MEMBER
+---------- ---------- ---------- ---------- --- ------------------------------------------------------------
+         1          1        512 INACTIVE   YES +REDODG1/AMITSCV/ONLINELOG/group_1.257.1014578705
+         1          1        512 INACTIVE   YES +REDODG2/AMITSCV/ONLINELOG/group_1.261.1014578707
+         1          2        512 CURRENT    NO  +REDODG1/AMITSCV/ONLINELOG/group_2.265.1014578707
+         1          2        512 CURRENT    NO  +REDODG2/AMITSCV/ONLINELOG/group_2.271.1014578707
+         1          5        512 INACTIVE   YES +REDODG1/AMITSCV/ONLINELOG/group_5.266.1014578707
+         1          5        512 INACTIVE   YES +REDODG2/AMITSCV/ONLINELOG/group_5.266.1014578707
+         2          3        512 INACTIVE   YES +REDODG1/AMITSCV/ONLINELOG/group_3.268.1014580925
+         2          3        512 INACTIVE   YES +REDODG2/AMITSCV/ONLINELOG/group_3.268.1014580925
+         2          4        512 CURRENT    NO  +REDODG1/AMITSCV/ONLINELOG/group_4.269.1014580925
+         2          4        512 CURRENT    NO  +REDODG2/AMITSCV/ONLINELOG/group_4.269.1014580925
+         2          6        512 UNUSED     YES +REDODG1/AMITSCV/ONLINELOG/group_6.log
+         2          6        512 UNUSED     YES +REDODG2/AMITSCV/ONLINELOG/group_6.log
+
+12行が選択されました。
+
+SQL> exit
+Oracle Database 18c Enterprise Edition Release 18.0.0.0.0 - Production
+Version 18.3.0.0.0との接続が切断されました。
+
+c:\Users\orafw\ts\T20190802>
