@@ -1,0 +1,40 @@
+Q:
+asmインスタンスのユーザー、sysとasmsnmpのパスワード変更方法を教えてください。
+
+また確認方法ですが、ORACLE_SIDとORACLE_HOMEを、ASMインスタンス名、
+Grid HOMEに指定し、OS認証できないユーザーで、sqlplusを使用して、
+ログインしてみると考えています。これは、正しいでしょうか。 
+
+A:
+asmインスタンスのユーザー、sysとasmsnmpのパスワード変更方法
+については、以下をご参考いただければと存じます。
+
+　orapwusr --modify <ユーザ名>
+
+例：
+
+------------
+$ asmcmd
+
+ASMCMD> lspwusr
+Username sysdba sysoper sysasm
+SYS TRUE TRUE TRUE
+ASMSNMP TRUE FALSE FALSE
+
+ASMCMD> orapwusr --modify ASMSNMP
+Enter password: *******　　<= 新パスワード
+
+ASMCMD> orapwusr --modify SYS
+Enter password: *******　　<= 新パスワード
+------------
+
+>ORACLE_SIDとORACLE_HOMEを、ASMインスタンス名、Grid HOMEに指定し、
+>OS認証できないユーザーで、sqlplusを使用して、ログイン
+>してみると考えています。これは、正しいでしょうか。
+
+こちらでも問題がございません。以下のように
+sqlplusを使用し、接続確認できます。
+
+　$ sqlplus sys/<新パスワード> as sysdba
+　$ sqlplus asmsnmp/<新パスワード> as sysdba
+
