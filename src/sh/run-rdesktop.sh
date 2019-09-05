@@ -24,11 +24,17 @@ fi
 
 while true
 do
-  nmap -P0 ${HOST:?} | grep 3389
-  RC=$?
-  if [ "${RC:?}" -eq "0" ]; then
-    break
+  if ping -c 1 ${HOST:?}; then
+    nmap -P0 ${HOST:?} | grep 3389
+    RC=$?
+    if [ "${RC:?}" -eq "0" ]; then
+      break
+    fi
+    echo ".\c"
+  else
+    echo "_\c"
   fi
+  sleep 1
 done
 
 ${DIR:?}/rdesktop.sh ${HOST:?} ${USER:?}
