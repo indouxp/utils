@@ -1,0 +1,25 @@
+17:15:36.14 GUJPVP163197103:w:\prjs\send-resources\test_folder
+>icacls to\bk\file3.3.war
+to\bk\file3.3.war GLOBAL\20166038:(DENY)(R)
+                  BUILTIN\Administrators:(I)(F)
+                  NT AUTHORITY\SYSTEM:(I)(F)
+                  GLOBAL\20166038:(I)(F)
+
+1 個のファイルが正常に処理されました。0 個のファイルを処理できませんでした
+
+17:17:05.16 GUJPVP163197103:w:\prjs\send-resources\test_folder
+>icacls to\bk\file3.3.war /grant global\20166038:R
+処理ファイル: to\bk\file3.3.war
+1 個のファイルが正常に処理されました。0 個のファイルを処理できませんでした
+
+17:17:14.25 GUJPVP163197103:w:\prjs\send-resources\test_folder
+>icacls to\bk\file3.3.war
+to\bk\file3.3.war GLOBAL\20166038:(R)
+                  BUILTIN\Administrators:(I)(F)
+                  NT AUTHORITY\SYSTEM:(I)(F)
+                  GLOBAL\20166038:(I)(F)
+
+1 個のファイルが正常に処理されました。0 個のファイルを処理できませんでした
+
+17:17:16.90 GUJPVP163197103:w:\prjs\send-resources\test_folder
+>
