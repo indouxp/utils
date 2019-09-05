@@ -24,7 +24,7 @@ OPTION=NLS_LANG=American_Japan.AL32UTF8
 #UP="system/L19GgnS3@w2016-1:17040/orcl40p"
 #UP="system/L19GgnS3@w2016-2:18040/orcl40p"
 UP='system/Def$Leppard@w2012r2scan:1521/orcl'
-UP='sys/Def$Leppard@w2012r2scan:1521/orcl as sysdba'
+UP='sys/Def0Leppard@w2012r2scan:1521/orcl as sysdba'
 
 if [ "$1" != "" ]; then
   UP=$1
