@@ -23,12 +23,25 @@ VOL=$2
 echo "PLAYLIST: ${PLAYLIST:?}"  >> ${LOG_PATH:?}
 echo "VOLUME  : ${VOL:?}"       >> ${LOG_PATH:?}
 
-if curl "http://localhost:3000/api/v1/getState" \
-  >> ${LOG_PATH:?} 2>&1                                     |\
-  jq '.status' | grep "play"
-then
+#if curl "http://localhost:3000/api/v1/getState" \
+#  >> ${LOG_PATH:?} 2>&1                                     |\
+#  jq '.status' | grep "play"
+#then
+#  echo "Now Playing. Cancel." >> ${LOG_PATH:?}
+#  exit 0
+#else
+#  echo "Now not Playing."     >> ${LOG_PATH:?}
+#fi
+#
+
+if curl "http://localhost:3000/api/v1/getState" | jq ".status" | grep "play"; then
+  echo ""                >> ${LOG_PATH:?}
+  echo "Now Playing..."  >> ${LOG_PATH:?}
   exit 0
-fi
+else
+  echo ""                >> ${LOG_PATH:?}
+  echo "No Play"         >> ${LOG_PATH:?}
+fi 
 
 curl "http://localhost:3000/api/v1/commands?cmd=playplaylist&name=${PLAYLIST:?}" \
   >> ${LOG_PATH:?} 2>&1                                      |\
