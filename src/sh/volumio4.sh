@@ -25,7 +25,7 @@ echo "VOLUME  : ${VOL:?}"       >> ${LOG_PATH:?}
 
 if curl "http://localhost:3000/api/v1/getState" \
   >> ${LOG_PATH:?} 2>&1                                     |\
-  jq '.status" | grep "play"
+  jq '.status' | grep "play"
 then
   exit 0
 fi
