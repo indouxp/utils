@@ -10,6 +10,7 @@ LOG_DIR=/home/${USER:?}/log
 LOG_PATH=$LOG_DIR/${NAME:?}.log
 PATH=/bin:/usr/bin:/usr/local/bin
 
+echo ${NAME:?}			>> ${LOG_PATH:?}
 date                            >> ${LOG_PATH:?}
 if [ ! -x $(which curl) ]; then
   echo "${NAME:?}: curl not found." | tee -a ${LOG_PATH:?}
