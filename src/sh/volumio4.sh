@@ -10,6 +10,7 @@ LOG_DIR=/home/${USER:?}/log
 LOG_PATH=$LOG_DIR/${NAME:?}.log
 PATH=/bin:/usr/bin:/usr/local/bin
 
+echo ${NAME:?}			>> ${LOG_PATH:?}
 date                            >> ${LOG_PATH:?}
 if [ ! -x $(which curl) ]; then
   echo "${NAME:?}: curl not found." | tee -a ${LOG_PATH:?}
@@ -33,6 +34,9 @@ echo "VOLUME  : ${VOL:?}"       >> ${LOG_PATH:?}
 #  echo "Now not Playing."     >> ${LOG_PATH:?}
 #fi
 #
+curl "http://localhost:3000/api/v1/commands?cmd=volume&volume=${VOL:?}" \
+  >> ${LOG_PATH:?} 2>&1                                      |\
+  jq '.response' >> ${LOG_PATH:?}
 
 if curl "http://localhost:3000/api/v1/getState" | jq ".status" | grep "play"; then
   echo ""                >> ${LOG_PATH:?}
