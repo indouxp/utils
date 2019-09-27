@@ -1,11 +1,11 @@
 #!/bin/sh
 
-[ -x /usr/sbin/ufw ] && sudo ufw disable
+#[ -x /usr/sbin/ufw ] && sudo ufw disable
 wakeonlan 00:16:d3:23:ed:02 # r60e
 RC=$?
 echo "wol:${RC:?}"
-[ -x /usr/sbin/ufw ] && sudo ufw -f enable
-[ -x /usr/sbin/ufw ] && sudo ufw status
+#[ -x /usr/sbin/ufw ] && sudo ufw -f enable
+#[ -x /usr/sbin/ufw ] && sudo ufw status
 
 NAME=${0##*/}
 LOG=/var/log/${0##*/}.log

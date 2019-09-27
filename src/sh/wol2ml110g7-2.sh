@@ -1,14 +1,14 @@
 #!/bin/sh
 
-[ -x /usr/sbin/ufw ] && sudo ufw disable
+#[ -x /usr/sbin/ufw ] && sudo ufw disable
 
 ML110G7_2="e4:11:5b:ae:d6:64"
 wakeonlan ${ML110G7_2:?}
 RC=$?
 echo "wol:${RC:?}"
 
-[ -x /usr/sbin/ufw ] && sudo ufw -f enable
-[ -x /usr/sbin/ufw ] && sudo ufw status
+#[ -x /usr/sbin/ufw ] && sudo ufw -f enable
+#[ -x /usr/sbin/ufw ] && sudo ufw status
 
 NAME=${0##*/}
 LOG=/var/log/${0##*/}.log
