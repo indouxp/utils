@@ -34,17 +34,17 @@ echo "VOLUME  : ${VOL:?}"       >> ${LOG_PATH:?}
 #  echo "Now not Playing."     >> ${LOG_PATH:?}
 #fi
 #
-curl "http://localhost:3000/api/v1/commands?cmd=volume&volume=${VOL:?}" \
-  >> ${LOG_PATH:?} 2>&1                                      |\
+curl "http://localhost:3000/api/v1/commands?cmd=volume&volume=${VOL:?}"   \
+  >> ${LOG_PATH:?} 2>/dev/null                                          | \
   jq '.response' >> ${LOG_PATH:?}
 
 if curl "http://localhost:3000/api/v1/getState" | jq ".status" | grep "play"; then
-  echo ""                >> ${LOG_PATH:?}
-  echo "Now Playing..."  >> ${LOG_PATH:?}
+  echo ""                   >> ${LOG_PATH:?}
+  echo "Currently Running." >> ${LOG_PATH:?}
   exit 0
 else
-  echo ""                >> ${LOG_PATH:?}
-  echo "No Play"         >> ${LOG_PATH:?}
+  echo ""                   >> ${LOG_PATH:?}
+  echo "Currently Stopped." >> ${LOG_PATH:?}
 fi 
 
 curl "http://localhost:3000/api/v1/commands?cmd=playplaylist&name=${PLAYLIST:?}" \
