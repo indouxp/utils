@@ -10,6 +10,16 @@ LOG_DIR=/home/${USER:?}/log
 LOG_PATH=$LOG_DIR/${NAME:?}.log
 PATH=/bin:/usr/bin:/usr/local/bin
 
+FORCE=0
+while getopts f OPT
+do
+  case $OPT in
+    f) FORCE=1
+       ;;
+  esac
+done
+shift $((OPTIND - 1))
+
 echo ${NAME:?}			>> ${LOG_PATH:?}
 date                            >> ${LOG_PATH:?}
 if [ ! -x $(which curl) ]; then
@@ -41,7 +51,9 @@ curl "http://localhost:3000/api/v1/commands?cmd=volume&volume=${VOL:?}"   \
 if curl "http://localhost:3000/api/v1/getState" | jq ".status" | grep "play"; then
   echo ""                   >> ${LOG_PATH:?}
   echo "Currently Running." >> ${LOG_PATH:?}
-  exit 0
+  if [ "$FORCE" -eq "0" ]; then
+    exit 0
+  fi
 else
   echo ""                   >> ${LOG_PATH:?}
   echo "Currently Stopped." >> ${LOG_PATH:?}
