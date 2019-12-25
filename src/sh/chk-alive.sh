@@ -20,8 +20,8 @@ TERM(){
 trap 'TERM' 0
 
 date
-echo 192.168.0.{1..254}             | # 192.168.0.0全てを確認
-  xargs -P256 -n1 ping -s1 -c1 -W1  | # １アドレス毎、256パラ
+echo 192.168.0.{1..254} 192.168.10.{1..254} | # 192.168.0.0全てを確認
+  xargs -P256 -n1 ping -s1 -c1 -W1          | # １アドレス毎、256パラ
   grep ttl |
   awk -v tmpfile=${TMPFILE:?} '
     function get_name(tmpfile){ 
