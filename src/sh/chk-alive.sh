@@ -42,4 +42,5 @@ echo 192.168.0.{1..254} 192.168.10.{1..254} | # 192.168.0.0全てを確認
       system(cmd);
       close(cmd);
       printf("%-16s %s\n", addr, get_name(tmpfile));
-    }'
+    }' |
+  sort
