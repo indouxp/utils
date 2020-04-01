@@ -9,6 +9,7 @@ USER=volumio  # cronからだと、未定義
 LOG_DIR=/home/${USER:?}/log
 LOG_PATH=$LOG_DIR/${NAME:?}.log
 PATH=/bin:/usr/bin:/usr/local/bin
+STOP=/tmp/${0##*/}.stop
 
 FORCE=0
 while getopts f OPT
@@ -33,6 +34,12 @@ PLAYLIST=$1
 VOL=$2
 echo "PLAYLIST: ${PLAYLIST:?}"  >> ${LOG_PATH:?}
 echo "VOLUME  : ${VOL:?}"       >> ${LOG_PATH:?}
+
+if [ -f ${STOP:?} ]; then
+  echo "${STOP:?}: exist"       >> ${LOG_PATH:?}
+#  rm /tmp/volumio4.sh.stop
+  exit 0
+fi
 
 #if curl "http://localhost:3000/api/v1/getState" \
 #  >> ${LOG_PATH:?} 2>&1                                     |\
