@@ -49,7 +49,7 @@ fi
 ###############################################################################
 # 前回と相違
 ###############################################################################
-if diff ${OUTPUT:?} ${PREVIOUS:?}; then
+if ! diff ${OUTPUT:?} ${PREVIOUS:?}; then
   mv ${OUTPUT:?} ${PREVIOUS:?}
   if cat ${OUTPUT:?} | mail -s ${SUBJECT:?} ${MAILTO:?}; then
     exit 0
@@ -59,4 +59,5 @@ if diff ${OUTPUT:?} ${PREVIOUS:?}; then
   fi
 fi
 
-
+cp -p ${OUTPUT:?} ${PREVIOUS:?}
+exit 0
