@@ -5,6 +5,9 @@
 # https://www.value-domain.com/ddns.php?action=howto
 # get-wanSideAddress.sh.outを元に、dyn.value-domain.comにdomainとIPを登録する
 #
+# crontab設定
+#0 * * * * /home/pi/utils/src/sh/get-wanSideAddress.sh
+#5 * * * * /home/pi/utils/src/sh/set-ddns.sh
 ###############################################################################
 NAME=${0##*/}
 DF='+%Y%m%dT%H%M%S'
