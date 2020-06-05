@@ -62,8 +62,11 @@ echo "$(date ${DF:?}): wget 終了" >> ${LOG:?}
 ###############################################################################
 # nslookupで確認
 ###############################################################################
-if nslookup ${MAIL_SERVER:?} ${DNS} | grep -E "(Name:|Address: [0-9]+\.[0-9]+\.[0-9]+\.[0-9]+)"; then
+echo "$(date ${DF:?}): nslookup 開始" >> ${LOG:?}
+if nslookup ${MAIL_SERVER:?} ${DNS} | grep -E "(Name:|Address: [0-9]+\.[0-9]+\.[0-9]+\.[0-9]+)" >> ${LOG:?}; then
+  echo "$(date ${DF:?}): nslookup 成功" >> ${LOG:?}
   exit 0
 else
+  echo "$(date ${DF:?}): nslookup 失敗" >> ${LOG:?}
   exit 9
 fi
