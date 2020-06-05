@@ -37,11 +37,11 @@ fi
 ###############################################################################
 # 午前0時台
 ###############################################################################
-if [ date '+%H' = "15" ]; then
+if [ $(date '+%H') = "15" ]; then
   if cat ${OUTPUT:?} | mail -s ${SUBJECT:?} ${MAILTO:?}; then
     exit 0
   else
-    echo "${NAME:?}: mail fail." 1>&2
+    echo "${NAME:?}: cat & mail fail." 1>&2
     exit 9
   fi
 fi
@@ -49,14 +49,14 @@ fi
 ###############################################################################
 # 前回と相違
 ###############################################################################
-if diff ${OUTPUT:} ${PREVIOUS:?}; then
+if diff ${OUTPUT:?} ${PREVIOUS:?}; then
+  mv ${OUTPUT:?} ${PREVIOUS:?}
   if cat ${OUTPUT:?} | mail -s ${SUBJECT:?} ${MAILTO:?}; then
     exit 0
   else
-    echo "${NAME:?}: mail fail." 1>&2
+    echo "${NAME:?}: cat & mail fail." 1>&2
     exit 9
   fi
 fi
 
-mv ${OUTPUT:?} ${PREVIOUS:?}
 
