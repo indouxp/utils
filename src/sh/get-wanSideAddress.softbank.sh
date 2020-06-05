@@ -1,15 +1,20 @@
 #!/bin/sh
 ###############################################################################
 # softbank光のルータ画面からwan側のアドレスを取得する。
-#
+# 以前と異なるアドレス取得時はメール
 ###############################################################################
 NAME=`basename $0`
 USERID="user"
 PASSWD="user"
 TMPFILE=/tmp/${NAME:?}.tmp
 OUTPUT=/tmp/${NAME:?}.out
+PREVIOUS=/tmp/${NAME:?}.prev
 MAILTO=indou.tsystem@yahoo.ne.jp
+SUBJECT="WAN ADDRESS address infomation."
 
+###############################################################################
+# httpアクセス
+###############################################################################
 if wget                             \
     --http-user=${USERID:?}         \
     --http-password=${PASSWD:?}     \
@@ -21,14 +26,33 @@ then
     grep -o "[0-9.][0-9.]*"         > ${OUTPUT:?}
 else
   echo "${NAME:?}: wget fail." 1>&2
-  exit 1
+  exit 9
 fi
 
-if cat ${OUTPUT:?} | mail -s "WAN ADDRESS address infomation." ${MAILTO:?}; then
-  exit 0
-else
-  echo "${NAME:?}: mail fail." 1>&2
-  exit 1
+
+###############################################################################
+# 午前0時台
+###############################################################################
+if [ date '+%H' = "00" ]; then
+  if cat ${OUTPUT:?} | mail -s ${SUBJECT:?} ${MAILTO:?}; then
+    exit 0
+  else
+    echo "${NAME:?}: mail fail." 1>&2
+    exit 9
+  fi
 fi
 
+###############################################################################
+# 前回と相違
+###############################################################################
+if diff ${OUTPUT:} ${REVIOUS:?}; then
+  if cat ${OUTPUT:?} | mail -s ${SUBJECT:?} ${MAILTO:?}; then
+    exit 0
+  else
+    echo "${NAME:?}: mail fail." 1>&2
+    exit 9
+  fi
+fi
+
+mv ${OUTPUT:?} ${PREVIOUS:?}
 
