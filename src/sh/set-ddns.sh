@@ -18,6 +18,7 @@ RESULT=/tmp/${0##*/}.result
 OUTPUT=/tmp/${0##*/}.output
 LOG=/tmp/${0##*/}.log
 #DNS=ns11.value-domain.com
+DNS=""
 MAIL_SERVER="mx1.indou.tokyo"
 
 cp /dev/null ${LOG:?}
