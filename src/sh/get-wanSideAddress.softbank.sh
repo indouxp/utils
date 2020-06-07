@@ -15,6 +15,9 @@ OUTPUT=/tmp/${NAME:?}.out
 PREVIOUS=/tmp/${NAME:?}.prev
 MAILTO=indou.tsystem@yahoo.ne.jp
 SUBJECT="WAN ADDRESS address infomation."
+LOG=/tmp/${NAME:?}.log
+
+cat /dev/null > ${LOG:?}
 
 ###############################################################################
 # httpアクセス
@@ -25,11 +28,19 @@ if wget                             \
     --output-document=${TMPFILE:?}  \
     http://172.16.255.254/settei.html > /dev/null 2>&1
 then
-  nkf -w ${TMPFILE:?}               |
+  if nkf -w ${TMPFILE:?}            |
     grep "WANIP=\"[0-9.][0-9.]*\""  |
     grep -o "[0-9.][0-9.]*"         > ${OUTPUT:?}
+  then
+    echo "${NAME:?}: nkf done." >> ${LOG:?}
+    cat ${OUTPUT:?}             >> ${LOG:?}
+  else
+    echo "${NAME:?}: nkf fail." >> ${LOG:?}
+    echo "${TMPFILE:?}"         >> ${LOG:?}
+    cat ${TMPFILE:?}            >> ${LOG:?}
+  fi
 else
-  echo "${NAME:?}: wget fail." 1>&2
+  echo "${NAME:?}: wget fail." >> ${LOG:?}
   exit 9
 fi
 
@@ -39,9 +50,10 @@ fi
 ###############################################################################
 if [ $(date '+%H') = "15" ]; then
   if cat ${OUTPUT:?} | mail -s ${SUBJECT:?} ${MAILTO:?}; then
+    echo "${NAME:?}: cat & mail done." >> ${LOG:?}
     exit 0
   else
-    echo "${NAME:?}: cat & mail fail." 1>&2
+    echo "${NAME:?}: cat & mail fail." >> ${LOG:?}
     exit 9
   fi
 fi
@@ -52,12 +64,14 @@ fi
 if ! diff ${OUTPUT:?} ${PREVIOUS:?}; then
   mv ${OUTPUT:?} ${PREVIOUS:?}
   if cat ${OUTPUT:?} | mail -s ${SUBJECT:?} ${MAILTO:?}; then
+    echo "${NAME:?}: cat & mail done." >> ${LOG:?}
     exit 0
   else
-    echo "${NAME:?}: cat & mail fail." 1>&2
+    echo "${NAME:?}: cat & mail fail." >> ${LOG:?}
     exit 9
   fi
 fi
 
 cp -p ${OUTPUT:?} ${PREVIOUS:?}
+# status 未処理
 exit 0
