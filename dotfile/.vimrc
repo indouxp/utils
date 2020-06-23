@@ -15,3 +15,4 @@ set enc=utf-8
 "set fenc=cp932
 "set enc=cp932
 
+syntax off
