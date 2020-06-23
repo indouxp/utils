@@ -1,7 +1,7 @@
 host obs600d
   HostName 106.158.220.236
-  User pi
-  IdentityFile ~/.ssh/id_rsa_sakura4home
+  User indou
+  IdentityFile ~/.ssh/id_rsa
   
 host t3600
   HostName 192.168.0.56
