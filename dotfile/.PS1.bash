@@ -14,7 +14,7 @@ BOLD="\[\e[1m\]"                          # 太字
 TURN="\[\e[7m\]"                          # 文字色と背景色の反転
 UNDER="\[\e[4m\]"                         # アンダーライン
 if id | grep "=0[^0-9]" > /dev/null; then # uid=0
-  PS1="${RED:?}\$?${CLEAR:?} \D{%y%m%d-%H%M%S} ${RED:?}\u${CLEAR:?}@${UNDER:?}${RED:?}${_BLUE:?}\h${CLEAR:?}:${YELLOW:?}\W${CLEAR:?}:\n# "
+  PS1="${RED:?}\$?${CLEAR:?} \D{%y%m%d-%H%M%S} ${RED:?}\u${CLEAR:?}@${UNDER:?}${YELLOW:?}${_BLUE:?}\h${CLEAR:?}:${YELLOW:?}\W${CLEAR:?}:\n# "
 else
-  PS1="${RED:?}\$?${CLEAR:?} \D{%y%m%d-%H%M%S} ${GREEN:?}\u${CLEAR:?}@${UNDER:?}${RED:?}${_BLUE:?}\h${CLEAR:?}:${YELLOW:?}\W${CLEAR:?}:\n\$ "
+  PS1="${RED:?}\$?${CLEAR:?} \D{%y%m%d-%H%M%S} ${GREEN:?}\u${CLEAR:?}@${UNDER:?}${YELLOW:?}${_BLUE:?}\h${CLEAR:?}:${YELLOW:?}\W${CLEAR:?}:\n\$ "
 fi
