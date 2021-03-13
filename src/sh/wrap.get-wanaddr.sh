@@ -39,7 +39,8 @@ fi
 ###############################################################################
 IPADDR=$(python3 ${PY_DIR:?}/get-wanaddr.py)
 mail -s "${NAME:?}: ${IPADDR:?}" ${MAILTO:?} <<EOT
-$(who am i | awk '{print $1;}')@$(hostname)
+$(/usr/bin/who am i | /usr/bin/awk '{print $1;}')@$(hostname)
 $(date '+%Y-%m-%d %H:%M:%S.%3N')
 WAN: ${IPADDR:?}
 EOT
+echo "${NAME:?}: done" > ${LOG_PATH:?}
